@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Container, Title, Text, SimpleGrid, Card, Stack, Group, Badge, Table } from '@mantine/core';
 import { IconTrendingUp, IconUsers, IconBox, IconShoppingCart } from '@tabler/icons-react';
 import { API_URL } from '../../services/api';
+import { formatCurrency } from '../../utils/format';
 
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState<any>(null);
@@ -46,7 +47,7 @@ export default function AdminDashboardPage() {
             </div>
             <Stack gap={0}>
               <Text size="sm" c="dimmed">Total Sales</Text>
-              <Text size="xl" fw={700}>${stats?.total_sales?.toFixed(2) || '0.00'}</Text>
+              <Text size="xl" fw={700}>${formatCurrency(stats?.total_sales)}</Text>
             </Stack>
           </Group>
         </Card>
@@ -106,7 +107,7 @@ export default function AdminDashboardPage() {
                 <Table.Tr key={order.id}>
                   <Table.Td>{order.order_number}</Table.Td>
                   <Table.Td>{order.customer_name}</Table.Td>
-                  <Table.Td>${order.total_amount.toFixed(2)}</Table.Td>
+                  <Table.Td>${formatCurrency(order.total_amount)}</Table.Td>
                   <Table.Td>
                     <Badge color={order.order_status === 'delivered' ? 'green' : 'blue'}>
                       {order.order_status}
@@ -138,7 +139,7 @@ export default function AdminDashboardPage() {
                 <Table.Tr key={product.name}>
                   <Table.Td>{product.name}</Table.Td>
                   <Table.Td>{product.total_sold}</Table.Td>
-                  <Table.Td>${product.revenue.toFixed(2)}</Table.Td>
+                  <Table.Td>${formatCurrency(product.revenue)}</Table.Td>
                 </Table.Tr>
               ))}
             </Table.Tbody>

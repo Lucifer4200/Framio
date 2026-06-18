@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Title, Text, Card, Table } from '@mantine/core';
 import { API_URL } from '../../../services/api';
+import { formatCurrency } from '../../../utils/format';
 
 export default function AdminCustomersPage() {
   const [customers, setCustomers] = useState<any[]>([]);
@@ -55,7 +56,7 @@ export default function AdminCustomersPage() {
                 <Table.Td>{customer.email}</Table.Td>
                 <Table.Td>{customer.phone || '-'}</Table.Td>
                 <Table.Td>{customer.order_count || 0}</Table.Td>
-                <Table.Td>${customer.total_spent ? customer.total_spent.toFixed(2) : '0.00'}</Table.Td>
+                <Table.Td>${formatCurrency(customer.total_spent)}</Table.Td>
                 <Table.Td>
                   <Text size="xs" c={customer.status === 'active' ? 'green' : 'red'}>
                     {customer.status}

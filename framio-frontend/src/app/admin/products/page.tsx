@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Container, Title, Text, Button, Group, Stack, Card, Table, Modal, TextInput, NumberInput, Select, Textarea } from '@mantine/core';
 import { IconPlus, IconEdit, IconTrash } from '@tabler/icons-react';
 import { API_URL } from '../../../services/api';
+import { formatCurrency } from '../../../utils/format';
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
@@ -151,7 +152,7 @@ export default function AdminProductsPage() {
               <Table.Tr key={product.id}>
                 <Table.Td>{product.name}</Table.Td>
                 <Table.Td>{product.category_name || '-'}</Table.Td>
-                <Table.Td>${product.price.toFixed(2)}</Table.Td>
+                <Table.Td>${formatCurrency(product.price)}</Table.Td>
                 <Table.Td>{product.stock}</Table.Td>
                 <Table.Td>
                   <Text size="xs" c={product.status === 'active' ? 'green' : 'red'}>

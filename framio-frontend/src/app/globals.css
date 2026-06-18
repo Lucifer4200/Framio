@@ -3,7 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-[#fdfbf7] text-[#1a1a1a] antialiased;
+  }
+
+  ::selection {
+    background: #9b6b43;
+    color: #fdfbf7;
   }
 }

@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Container, Title, Text, Card, Table, Tabs, Stack, Group } from '@mantine/core';
+import { Container, Title, Text, Card, Table, Tabs } from '@mantine/core';
 import { IconChartBar, IconBox, IconUsers } from '@tabler/icons-react';
 import { API_URL } from '../../../services/api';
+import { formatCurrency } from '../../../utils/format';
 
 export default function AdminReportsPage() {
   const [salesData, setSalesData] = useState<any[]>([]);
@@ -77,7 +78,7 @@ export default function AdminReportsPage() {
                   {salesData.map((sale) => (
                     <Table.Tr key={sale.date}>
                       <Table.Td>{sale.date}</Table.Td>
-                      <Table.Td>${sale.total?.toFixed(2) || '0.00'}</Table.Td>
+                      <Table.Td>${formatCurrency(sale.total)}</Table.Td>
                       <Table.Td>{sale.orders || 0}</Table.Td>
                     </Table.Tr>
                   ))}
@@ -112,7 +113,7 @@ export default function AdminReportsPage() {
                       <Table.Td>{product.stock}</Table.Td>
                       <Table.Td>{product.order_count || 0}</Table.Td>
                       <Table.Td>{product.total_sold || 0}</Table.Td>
-                      <Table.Td>${product.revenue ? product.revenue.toFixed(2) : '0.00'}</Table.Td>
+                      <Table.Td>${formatCurrency(product.revenue)}</Table.Td>
                     </Table.Tr>
                   ))}
                 </Table.Tbody>
@@ -142,7 +143,7 @@ export default function AdminReportsPage() {
                       <Table.Td>{customer.name}</Table.Td>
                       <Table.Td>{customer.email}</Table.Td>
                       <Table.Td>{customer.order_count || 0}</Table.Td>
-                      <Table.Td>${customer.total_spent ? customer.total_spent.toFixed(2) : '0.00'}</Table.Td>
+                      <Table.Td>${formatCurrency(customer.total_spent)}</Table.Td>
                     </Table.Tr>
                   ))}
                 </Table.Tbody>

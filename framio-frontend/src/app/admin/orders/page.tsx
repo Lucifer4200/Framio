@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import { Container, Title, Text, Button, Group, Stack, Card, Table, Modal, Select, Badge } from '@mantine/core';
 import { IconEye } from '@tabler/icons-react';
-import Link from 'next/link';
 import { API_URL } from '../../../services/api';
+import { formatCurrency } from '../../../utils/format';
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -95,7 +95,7 @@ export default function AdminOrdersPage() {
               <Table.Tr key={order.id}>
                 <Table.Td>{order.order_number}</Table.Td>
                 <Table.Td>{order.customer_name}</Table.Td>
-                <Table.Td>${order.total_amount.toFixed(2)}</Table.Td>
+                <Table.Td>${formatCurrency(order.total_amount)}</Table.Td>
                 <Table.Td>
                   <Badge color={order.payment_status === 'paid' ? 'green' : 'yellow'}>
                     {order.payment_status}
@@ -129,7 +129,7 @@ export default function AdminOrdersPage() {
 
             <Group>
               <Text fw={500}>Total:</Text>
-              <Text>${selectedOrder.total_amount.toFixed(2)}</Text>
+              <Text>${formatCurrency(selectedOrder.total_amount)}</Text>
             </Group>
 
             <Group>
