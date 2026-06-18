@@ -56,8 +56,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <AppShell padding="md">
-      <AppShell.Navbar p="md" width={{ base: 250 }}>
+      <AppShell padding="md" navbar={{ width: 250, breakpoint: 0 }}>
+        <AppShell.Navbar p="md">
         <Stack>
           <Group justify="center" mb="xl">
             <Title order={3}>Framio Admin</Title>

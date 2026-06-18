@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Container, Title, Text, Card, Table, Tabs, Stack, Group, DateInput } from '@mantine/core';
+import { Container, Title, Text, Card, Table, Tabs, Stack, Group } from '@mantine/core';
 import { IconChartBar, IconBox, IconUsers } from '@tabler/icons-react';
 import { API_URL } from '../../../services/api';
 
