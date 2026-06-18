@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { AppShell, Navbar, Text, Group, Button, UnstyledButton, Avatar, Stack, Title } from '@mantine/core';
+import { AppShell, Text, Group, Button, UnstyledButton, Avatar, Stack, Title } from '@mantine/core';
 import Link from 'next/link';
 import { API_URL } from '../../services/api';
 import { IconDashboard, IconBox, IconCategory, IconShoppingCart, IconUsers, IconChartBar, IconLogout } from '@tabler/icons-react';
