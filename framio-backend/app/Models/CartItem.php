@@ -2,30 +2,28 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+
 class CartItem extends Model
 {
-    protected static $table = 'cart_items';
-    protected static $primaryKey = 'id';
-    protected static $fillable = ['cart_id', 'product_id', 'quantity', 'price'];
-    protected static $casts = [
-        'id' => 'integer',
-        'cart_id' => 'integer',
-        'product_id' => 'integer',
+    protected $fillable = ['cart_id', 'product_id', 'quantity', 'price'];
+
+    protected $casts = [
         'quantity' => 'integer',
         'price' => 'float',
     ];
-    
+
     public function cart()
     {
-        return Cart::find($this->cart_id);
+        return $this->belongsTo(Cart::class);
     }
-    
+
     public function product()
     {
-        return Product::find($this->product_id);
+        return $this->belongsTo(Product::class);
     }
-    
-    public function getSubtotal()
+
+    public function getSubtotalAttribute()
     {
         return $this->quantity * $this->price;
     }

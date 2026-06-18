@@ -2,102 +2,86 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payment;
 use App\Models\Order;
-use App\Helpers\Auth;
+use App\Models\Payment;
+use Illuminate\Http\JsonResponse;
 
-class PaymentController
+class PaymentController extends Controller
 {
-    public function show($orderId)
+    public function show($orderId): JsonResponse
     {
-        $user = Auth::requireAuth();
-        
+        $user = auth()->user();
         $order = Order::find($orderId);
-        
+
         if (!$order) {
-            http_response_code(404);
-            echo json_encode(['error' => 'Order not found']);
-            return;
+            return response()->json(['error' => 'Order not found'], 404);
         }
-        
-        // Check if user owns this order or is admin
-        if ($order['user_id'] !== $user['id'] && $user['role'] !== 'admin') {
-            http_response_code(403);
-            echo json_encode(['error' => 'Access denied']);
-            return;
+
+        if ($order->user_id !== $user->id && !$user->isAdmin()) {
+            return response()->json(['error' => 'Access denied'], 403);
         }
-        
-        $payment = Payment::findByOrder($orderId);
-        
-        echo json_encode(['payment' => $payment]);
+
+        $payment = Payment::where('order_id', $orderId)->first();
+
+        return response()->json(['payment' => $payment]);
     }
-    
-    public function store()
+
+    public function store(): JsonResponse
     {
-        $user = Auth::requireAuth();
-        
-        $data = json_decode(file_get_contents('php://input'), true);
-        
-        // Validation
-        if (empty($data['order_id']) || empty($data['payment_method'])) {
-            http_response_code(422);
-            echo json_encode(['error' => 'Order ID and payment method are required']);
-            return;
+        $user = auth()->user();
+        $data = request()->validate([
+            'order_id' => 'required|exists:orders,id',
+            'payment_method' => 'required|in:cash_on_delivery,credit_card,paypal,stripe',
+            'transaction_id' => 'nullable|string|max:255',
+            'status' => 'nullable|in:pending,completed,failed,refunded',
+        ]);
+
+        $order = Order::findOrFail($data['order_id']);
+
+        if ($order->user_id !== $user->id) {
+            return response()->json(['error' => 'Access denied'], 403);
         }
-        
-        $order = Order::find($data['order_id']);
-        
-        if (!$order) {
-            http_response_code(404);
-            echo json_encode(['error' => 'Order not found']);
-            return;
-        }
-        
-        // Check if user owns this order
-        if ($order['user_id'] !== $user['id']) {
-            http_response_code(403);
-            echo json_encode(['error' => 'Access denied']);
-            return;
-        }
-        
+
         $paymentData = [
             'order_id' => $data['order_id'],
             'payment_method' => $data['payment_method'],
             'transaction_id' => $data['transaction_id'] ?? null,
-            'amount' => $order['total_amount'],
-            'status' => $data['status'] ?? 'pending'
+            'amount' => $order->total_amount,
+            'status' => $data['status'] ?? 'pending',
         ];
-        
-        $paymentId = Payment::create($paymentData);
-        
-        // Update order payment status
-        if ($paymentData['status'] === 'completed') {
-            Order::updatePaymentStatus($data['order_id'], 'paid');
+
+        Payment::create($paymentData);
+
+        if (($data['status'] ?? 'pending') === 'completed') {
+            $order->update(['payment_status' => 'paid']);
         }
-        
-        $payment = Payment::findByOrder($data['order_id']);
-        
-        http_response_code(201);
-        echo json_encode([
+
+        $payment = Payment::where('order_id', $data['order_id'])->first();
+
+        return response()->json([
             'message' => 'Payment created successfully',
-            'payment' => $payment
-        ]);
+            'payment' => $payment,
+        ], 201);
     }
-    
-    public function updateStatus($id)
+
+    public function updateStatus($id): JsonResponse
     {
-        $user = Auth::requireAdmin();
-        
-        $data = json_decode(file_get_contents('php://input'), true);
-        
-        if (empty($data['status'])) {
-            http_response_code(422);
-            echo json_encode(['error' => 'Status is required']);
-            return;
+        $data = request()->validate([
+            'status' => 'required|in:pending,completed,failed,refunded',
+        ]);
+
+        $payment = Payment::find($id);
+
+        if (!$payment) {
+            return response()->json(['error' => 'Payment not found'], 404);
         }
-        
-        Payment::updateStatus($id, $data['status']);
-        
-        echo json_encode(['message' => 'Payment status updated successfully']);
+
+        $payment->update(['status' => $data['status']]);
+
+        if ($data['status'] === 'completed') {
+            $payment->order->update(['payment_status' => 'paid']);
+        }
+
+        return response()->json(['message' => 'Payment status updated successfully']);
     }
 }

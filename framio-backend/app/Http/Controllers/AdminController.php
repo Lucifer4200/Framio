@@ -2,158 +2,104 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Database;
-use App\Helpers\Auth;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
-class AdminController
+class AdminController extends Controller
 {
-    public function dashboard()
+    public function dashboard(): JsonResponse
     {
-        $user = Auth::requireAdmin();
-        
-        // Get total sales
-        $totalSales = Database::fetchOne("
-            SELECT SUM(total_amount) as total 
-            FROM orders 
-            WHERE payment_status = 'paid'
-        ");
-        
-        // Get total orders
-        $totalOrders = Database::fetchOne("SELECT COUNT(*) as count FROM orders");
-        
-        // Get total customers
-        $totalCustomers = Database::fetchOne("SELECT COUNT(*) as count FROM users WHERE role = 'customer'");
-        
-        // Get total products
-        $totalProducts = Database::fetchOne("SELECT COUNT(*) as count FROM products");
-        
-        // Get recent orders
-        $recentOrders = Database::fetchAll("
-            SELECT o.*, u.name as customer_name 
-            FROM orders o 
-            JOIN users u ON o.user_id = u.id 
-            ORDER BY o.created_at DESC 
-            LIMIT 10
-        ");
-        
-        // Get best selling products
-        $bestSelling = Database::fetchAll("
-            SELECT p.name, p.slug, SUM(oi.quantity) as total_sold, SUM(oi.quantity * oi.price) as revenue
-            FROM products p
-            JOIN order_items oi ON p.id = oi.product_id
-            JOIN orders o ON oi.order_id = o.id
-            WHERE o.payment_status = 'paid'
-            GROUP BY p.id
-            ORDER BY total_sold DESC
-            LIMIT 5
-        ");
-        
-        // Get orders by status
-        $ordersByStatus = Database::fetchAll("
-            SELECT order_status, COUNT(*) as count 
-            FROM orders 
-            GROUP BY order_status
-        ");
-        
-        echo json_encode([
-            'total_sales' => $totalSales['total'] ?? 0,
-            'total_orders' => $totalOrders['count'] ?? 0,
-            'total_customers' => $totalCustomers['count'] ?? 0,
-            'total_products' => $totalProducts['count'] ?? 0,
+        $totalSales = Order::where('payment_status', 'paid')->sum('total_amount');
+        $totalOrders = Order::count();
+        $totalCustomers = User::where('role', 'customer')->count();
+        $totalProducts = Product::count();
+
+        $recentOrders = Order::with('user:id,name')
+            ->latest()
+            ->take(10)
+            ->get(['id', 'user_id', 'order_number', 'total_amount', 'order_status', 'created_at']);
+
+        $bestSelling = DB::table('products as p')
+            ->join('order_items as oi', 'p.id', '=', 'oi.product_id')
+            ->join('orders as o', 'oi.order_id', '=', 'o.id')
+            ->where('o.payment_status', 'paid')
+            ->select('p.name', 'p.slug', DB::raw('SUM(oi.quantity) as total_sold'), DB::raw('SUM(oi.quantity * oi.price) as revenue'))
+            ->groupBy('p.id', 'p.name', 'p.slug')
+            ->orderByDesc('total_sold')
+            ->take(5)
+            ->get();
+
+        $ordersByStatus = Order::select('order_status', DB::raw('COUNT(*) as count'))
+            ->groupBy('order_status')
+            ->get()
+            ->pluck('count', 'order_status');
+
+        return response()->json([
+            'total_sales' => (float) $totalSales,
+            'total_orders' => $totalOrders,
+            'total_customers' => $totalCustomers,
+            'total_products' => $totalProducts,
             'recent_orders' => $recentOrders,
             'best_selling_products' => $bestSelling,
-            'orders_by_status' => $ordersByStatus
+            'orders_by_status' => $ordersByStatus,
         ]);
     }
-    
-    public function salesReport()
+
+    public function salesReport(): JsonResponse
     {
-        $user = Auth::requireAdmin();
-        
-        $filters = $_GET;
-        $startDate = $filters['start_date'] ?? date('Y-m-01');
-        $endDate = $filters['end_date'] ?? date('Y-m-t');
-        
-        $sales = Database::fetchAll("
-            SELECT DATE(created_at) as date, SUM(total_amount) as total, COUNT(*) as orders
-            FROM orders
-            WHERE payment_status = 'paid'
-            AND created_at BETWEEN ? AND ?
-            GROUP BY DATE(created_at)
-            ORDER BY date ASC
-        ", [$startDate, $endDate]);
-        
-        echo json_encode(['sales' => $sales]);
+        $startDate = request('start_date', now()->startOfMonth()->toDateString());
+        $endDate = request('end_date', now()->endOfMonth()->toDateString());
+
+        $sales = Order::where('payment_status', 'paid')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(total_amount) as total'), DB::raw('COUNT(*) as orders'))
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->orderBy('date')
+            ->get();
+
+        return response()->json(['sales' => $sales]);
     }
-    
-    public function productReport()
+
+    public function productReport(): JsonResponse
     {
-        $user = Auth::requireAdmin();
-        
-        $products = Database::fetchAll("
-            SELECT p.*, COUNT(oi.id) as order_count, SUM(oi.quantity) as total_sold
-            FROM products p
-            LEFT JOIN order_items oi ON p.id = oi.product_id
-            LEFT JOIN orders o ON oi.order_id = o.id AND o.payment_status = 'paid'
-            GROUP BY p.id
-            ORDER BY total_sold DESC
-        ");
-        
-        echo json_encode(['products' => $products]);
+        $products = Product::withCount(['orderItems as order_count', 'orderItems as total_sold' => function ($q) {
+            $q->select(DB::raw('COALESCE(SUM(quantity), 0)'))
+              ->whereHas('order', fn($q) => $q->where('payment_status', 'paid'));
+        }])->orderByDesc('total_sold')->get();
+
+        return response()->json(['products' => $products]);
     }
-    
-    public function customerReport()
+
+    public function customerReport(): JsonResponse
     {
-        $user = Auth::requireAdmin();
-        
-        $customers = Database::fetchAll("
-            SELECT u.*, COUNT(o.id) as order_count, SUM(o.total_amount) as total_spent
-            FROM users u
-            LEFT JOIN orders o ON u.id = o.user_id AND o.payment_status = 'paid'
-            WHERE u.role = 'customer'
-            GROUP BY u.id
-            ORDER BY total_spent DESC
-        ");
-        
-        echo json_encode(['customers' => $customers]);
+        $customers = User::where('role', 'customer')
+            ->withCount(['orders as order_count' => fn($q) => $q->where('payment_status', 'paid')])
+            ->withSum(['orders as total_spent' => fn($q) => $q->where('payment_status', 'paid')], 'total_amount')
+            ->orderByDesc('total_spent')
+            ->get();
+
+        return response()->json(['customers' => $customers]);
     }
-    
-    public function allOrders()
+
+    public function allOrders(): JsonResponse
     {
-        $user = Auth::requireAdmin();
-        
-        $filters = $_GET;
-        $orders = Database::fetchAll("
-            SELECT o.*, u.name as customer_name, u.email as customer_email
-            FROM orders o
-            JOIN users u ON o.user_id = u.id
-        ");
-        
-        foreach ($orders as &$order) {
-            $order['items'] = Database::fetchAll("
-                SELECT oi.*, p.name, p.slug
-                FROM order_items oi
-                JOIN products p ON oi.product_id = p.id
-                WHERE oi.order_id = ?
-            ", [$order['id']]);
-        }
-        
-        echo json_encode(['orders' => $orders]);
+        $orders = Order::with('user:id,name,email', 'items.product:id,name,slug')
+            ->latest()
+            ->get();
+
+        return response()->json(['orders' => $orders]);
     }
-    
-    public function allCustomers()
+
+    public function allCustomers(): JsonResponse
     {
-        $user = Auth::requireAdmin();
-        
-        $customers = Database::fetchAll("
-            SELECT u.*, COUNT(o.id) as order_count
-            FROM users u
-            LEFT JOIN orders o ON u.id = o.user_id
-            WHERE u.role = 'customer'
-            GROUP BY u.id
-            ORDER BY u.created_at DESC
-        ");
-        
-        echo json_encode(['customers' => $customers]);
+        $customers = User::where('role', 'customer')
+            ->withCount('orders')
+            ->latest()
+            ->get();
+
+        return response()->json(['customers' => $customers]);
     }
 }

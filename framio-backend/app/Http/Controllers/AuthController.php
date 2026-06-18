@@ -2,101 +2,100 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\AuthenticateToken;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
-use App\Helpers\Auth;
-use App\Helpers\ApiResponse;
-use App\Http\Requests\Auth\RegisterRequest;
-use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Http\JsonResponse;
 
-class AuthController
+class AuthController extends Controller
 {
-    public function register(RegisterRequest $request)
+    public function register(RegisterRequest $request): JsonResponse
     {
-        $data = $request->all();
-        
-        // Check if email already exists
-        $existingUser = User::findByEmail($data['email']);
-        if ($existingUser) {
-            ApiResponse::error('Email already registered', 409);
+        $data = $request->validated();
+        $data['password'] = bcrypt($data['password']);
+
+        $user = User::create($data);
+        $token = AuthenticateToken::generateToken($user->id, $user->role);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Registration successful',
+            'data' => [
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'role' => $user->role,
+                ],
+                'token' => $token,
+                'token_type' => 'Bearer',
+            ],
+        ], 201);
+    }
+
+    public function login(LoginRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $user = User::where('email', $data['email'])->first();
+
+        if (!$user || !password_verify($data['password'], $user->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid credentials',
+            ], 401);
         }
-        
-        // Create user
-        $userId = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => $data['password'],
-            'phone' => $data['phone'] ?? null,
-            'role' => $data['role'] ?? 'customer'
+
+        if ($user->status !== 'active') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Account is inactive',
+            ], 403);
+        }
+
+        $token = AuthenticateToken::generateToken($user->id, $user->role);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Login successful',
+            'data' => [
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'role' => $user->role,
+                ],
+                'token' => $token,
+                'token_type' => 'Bearer',
+            ],
         ]);
-        
-        $user = User::find($userId);
-        $token = Auth::generateToken($userId, $user['role']);
-        
-        ApiResponse::created([
-            'user' => [
-                'id' => $user['id'],
-                'name' => $user['name'],
-                'email' => $user['email'],
-                'role' => $user['role']
+    }
+
+    public function logout(): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'message' => 'Logout successful',
+        ]);
+    }
+
+    public function me(): JsonResponse
+    {
+        $user = auth()->user();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Success',
+            'data' => [
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'role' => $user->role,
+                ],
             ],
-            'token' => $token,
-            'token_type' => 'Bearer'
-        ], 'Registration successful');
-    }
-    
-    public function login(LoginRequest $request)
-    {
-        
-        $data = $request->all();
-        
-        // Find user
-        $user = User::findByEmail($data['email']);
-        if (!$user) {
-            ApiResponse::unauthorized('Invalid credentials');
-        }
-        
-        // Verify password
-        if (!password_verify($data['password'], $user['password'])) {
-            ApiResponse::unauthorized('Invalid credentials');
-        }
-        
-        // Check user status
-        if ($user['status'] !== 'active') {
-            ApiResponse::forbidden('Account is inactive');
-        }
-        
-        $token = Auth::generateToken($user['id'], $user['role']);
-        
-        ApiResponse::success([
-            'user' => [
-                'id' => $user['id'],
-                'name' => $user['name'],
-                'email' => $user['email'],
-                'role' => $user['role']
-            ],
-            'token' => $token,
-            'token_type' => 'Bearer'
-        ], 'Login successful');
-    }
-    
-    public function logout()
-    {
-        // In a real implementation, you would blacklist the token
-        ApiResponse::success(null, 'Logout successful');
-    }
-    
-    public function me()
-    {
-        $user = Auth::requireAuth();
-        
-        ApiResponse::success([
-            'user' => [
-                'id' => $user['id'],
-                'name' => $user['name'],
-                'email' => $user['email'],
-                'phone' => $user['phone'],
-                'role' => $user['role']
-            ]
         ]);
     }
 }

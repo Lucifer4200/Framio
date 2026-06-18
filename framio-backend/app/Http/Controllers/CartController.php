@@ -3,125 +3,152 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Helpers\Auth;
+use App\Models\CartItem;
+use App\Models\Product;
+use Illuminate\Http\JsonResponse;
 
-class CartController
+class CartController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
-        $user = Auth::requireAuth();
-        
-        $cart = Cart::findByUser($user['id']);
-        $items = Cart::getItems($cart['id']);
-        $total = Cart::getTotal($cart['id']);
-        
-        echo json_encode([
-            'cart_id' => $cart['id'],
-            'items' => $items,
-            'total' => $total
+        $user = auth()->user();
+        $cart = Cart::firstOrCreate(['user_id' => $user->id]);
+
+        $cart->load('items.product.primaryImage');
+
+        return response()->json([
+            'cart_id' => $cart->id,
+            'items' => $cart->items,
+            'total' => $cart->total,
         ]);
     }
-    
-    public function add()
+
+    public function add(): JsonResponse
     {
-        $user = Auth::requireAuth();
-        
-        $data = json_decode(file_get_contents('php://input'), true);
-        
-        // Validation
-        if (empty($data['product_id']) || empty($data['quantity'])) {
-            http_response_code(422);
-            echo json_encode(['error' => 'Product ID and quantity are required']);
-            return;
+        $user = auth()->user();
+        $data = request()->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        $product = Product::findOrFail($data['product_id']);
+
+        if (!$product->isInStock() || $product->stock < $data['quantity']) {
+            return response()->json([
+                'error' => 'Could not add item to cart (insufficient stock or product not found)',
+            ], 400);
         }
-        
-        $cart = Cart::findByUser($user['id']);
-        $success = Cart::addItem($cart['id'], $data['product_id'], $data['quantity']);
-        
-        if (!$success) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Could not add item to cart (insufficient stock or product not found)']);
-            return;
+
+        $cart = Cart::firstOrCreate(['user_id' => $user->id]);
+        $existingItem = CartItem::where('cart_id', $cart->id)
+            ->where('product_id', $data['product_id'])
+            ->first();
+
+        if ($existingItem) {
+            $newQuantity = $existingItem->quantity + $data['quantity'];
+
+            if ($product->stock < $newQuantity) {
+                return response()->json([
+                    'error' => 'Insufficient stock',
+                ], 400);
+            }
+
+            $existingItem->update([
+                'quantity' => $newQuantity,
+                'price' => $product->final_price,
+            ]);
+        } else {
+            CartItem::create([
+                'cart_id' => $cart->id,
+                'product_id' => $data['product_id'],
+                'quantity' => $data['quantity'],
+                'price' => $product->final_price,
+            ]);
         }
-        
-        $items = Cart::getItems($cart['id']);
-        $total = Cart::getTotal($cart['id']);
-        
-        echo json_encode([
+
+        $cart->load('items.product.primaryImage');
+
+        return response()->json([
             'message' => 'Item added to cart successfully',
-            'cart_id' => $cart['id'],
-            'items' => $items,
-            'total' => $total
+            'cart_id' => $cart->id,
+            'items' => $cart->items,
+            'total' => $cart->total,
         ]);
     }
-    
-    public function update()
+
+    public function update(): JsonResponse
     {
-        $user = Auth::requireAuth();
-        
-        $data = json_decode(file_get_contents('php://input'), true);
-        
-        // Validation
-        if (empty($data['product_id']) || empty($data['quantity'])) {
-            http_response_code(422);
-            echo json_encode(['error' => 'Product ID and quantity are required']);
-            return;
+        $user = auth()->user();
+        $data = request()->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:0',
+        ]);
+
+        $product = Product::findOrFail($data['product_id']);
+
+        if (!$product->isInStock() || $product->stock < $data['quantity']) {
+            return response()->json([
+                'error' => 'Could not update item (insufficient stock or product not found)',
+            ], 400);
         }
-        
-        $cart = Cart::findByUser($user['id']);
-        $success = Cart::updateItem($cart['id'], $data['product_id'], $data['quantity']);
-        
-        if (!$success) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Could not update item (insufficient stock or product not found)']);
-            return;
+
+        $cart = Cart::firstOrCreate(['user_id' => $user->id]);
+        $item = CartItem::where('cart_id', $cart->id)
+            ->where('product_id', $data['product_id'])
+            ->first();
+
+        if (!$item) {
+            return response()->json(['error' => 'Item not found in cart'], 404);
         }
-        
-        $items = Cart::getItems($cart['id']);
-        $total = Cart::getTotal($cart['id']);
-        
-        echo json_encode([
+
+        if ($data['quantity'] === 0) {
+            $item->delete();
+        } else {
+            $item->update([
+                'quantity' => $data['quantity'],
+                'price' => $product->final_price,
+            ]);
+        }
+
+        $cart->load('items.product.primaryImage');
+
+        return response()->json([
             'message' => 'Cart updated successfully',
-            'cart_id' => $cart['id'],
-            'items' => $items,
-            'total' => $total
+            'cart_id' => $cart->id,
+            'items' => $cart->items,
+            'total' => $cart->total,
         ]);
     }
-    
-    public function remove()
+
+    public function remove(): JsonResponse
     {
-        $user = Auth::requireAuth();
-        
-        $data = json_decode(file_get_contents('php://input'), true);
-        
-        // Validation
-        if (empty($data['product_id'])) {
-            http_response_code(422);
-            echo json_encode(['error' => 'Product ID is required']);
-            return;
-        }
-        
-        $cart = Cart::findByUser($user['id']);
-        Cart::removeItem($cart['id'], $data['product_id']);
-        
-        $items = Cart::getItems($cart['id']);
-        $total = Cart::getTotal($cart['id']);
-        
-        echo json_encode([
+        $user = auth()->user();
+        $data = request()->validate([
+            'product_id' => 'required|exists:products,id',
+        ]);
+
+        $cart = Cart::firstOrCreate(['user_id' => $user->id]);
+
+        CartItem::where('cart_id', $cart->id)
+            ->where('product_id', $data['product_id'])
+            ->delete();
+
+        $cart->load('items.product.primaryImage');
+
+        return response()->json([
             'message' => 'Item removed from cart successfully',
-            'cart_id' => $cart['id'],
-            'items' => $items,
-            'total' => $total
+            'cart_id' => $cart->id,
+            'items' => $cart->items,
+            'total' => $cart->total,
         ]);
     }
-    
-    public function clear()
+
+    public function clear(): JsonResponse
     {
-        $user = Auth::requireAuth();
-        
-        $cart = Cart::findByUser($user['id']);
-        Cart::clear($cart['id']);
-        
-        echo json_encode(['message' => 'Cart cleared successfully']);
+        $user = auth()->user();
+        $cart = Cart::firstOrCreate(['user_id' => $user->id]);
+        $cart->items()->delete();
+
+        return response()->json(['message' => 'Cart cleared successfully']);
     }
 }

@@ -2,72 +2,95 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
-use App\Helpers\Auth;
-use App\Helpers\ApiResponse;
-use App\Http\Requests\Category\StoreCategoryRequest;
-use App\Http\Requests\Category\UpdateCategoryRequest;
+use Illuminate\Http\JsonResponse;
 
-class CategoryController
+class CategoryController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
-        $categories = Category::all();
-        ApiResponse::success(['categories' => $categories]);
+        $categories = Category::active()->orderBy('name')->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Success',
+            'data' => ['categories' => $categories],
+        ]);
     }
-    
-    public function show($id)
+
+    public function show($id): JsonResponse
     {
         $category = Category::find($id);
-        
+
         if (!$category) {
-            ApiResponse::notFound('Category not found');
+            return response()->json([
+                'success' => false,
+                'message' => 'Category not found',
+            ], 404);
         }
-        
-        ApiResponse::success(['category' => $category]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Success',
+            'data' => ['category' => $category],
+        ]);
     }
-    
-    public function store(StoreCategoryRequest $request)
+
+    public function store(StoreCategoryRequest $request): JsonResponse
     {
-        $data = $request->all();
-        
-        // Generate slug if not provided
+        $data = $request->validated();
+
         if (empty($data['slug'])) {
             $data['slug'] = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $data['name']));
         }
-        
-        $categoryId = Category::create($data);
-        $category = Category::find($categoryId);
-        
-        ApiResponse::created(['category' => $category], 'Category created successfully');
+
+        $category = Category::create($data);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Category created successfully',
+            'data' => ['category' => $category],
+        ], 201);
     }
-    
-    public function update($id, UpdateCategoryRequest $request)
+
+    public function update($id, UpdateCategoryRequest $request): JsonResponse
     {
-        $data = $request->all();
-        
         $category = Category::find($id);
+
         if (!$category) {
-            ApiResponse::notFound('Category not found');
+            return response()->json([
+                'success' => false,
+                'message' => 'Category not found',
+            ], 404);
         }
-        
-        Category::updateStatic($id, $data);
-        $updatedCategory = Category::find($id);
-        
-        ApiResponse::success(['category' => $updatedCategory], 'Category updated successfully');
+
+        $category->update($request->validated());
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Category updated successfully',
+            'data' => ['category' => $category->fresh()],
+        ]);
     }
-    
-    public function destroy($id)
+
+    public function destroy($id): JsonResponse
     {
-        $user = Auth::requireAdmin();
-        
         $category = Category::find($id);
+
         if (!$category) {
-            ApiResponse::notFound('Category not found');
+            return response()->json([
+                'success' => false,
+                'message' => 'Category not found',
+            ], 404);
         }
-        
-        Category::deleteStatic($id);
-        
-        ApiResponse::success(null, 'Category deleted successfully');
+
+        $category->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Category deleted successfully',
+        ]);
     }
 }

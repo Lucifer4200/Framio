@@ -1,17 +1,20 @@
 <?php
 
-// Load autoloader
-require_once __DIR__ . '/../app/autoload.php';
+use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 
-// Load environment variables
-$env = parse_ini_file(__DIR__ . '/../.env');
+define('LARAVEL_START', microtime(true));
 
-// Set environment variables as constants
-foreach ($env as $key => $value) {
-    if (!defined($key)) {
-        define($key, $value);
-    }
+// Determine if the application is in maintenance mode...
+if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
+    require $maintenance;
 }
 
-// Load API routes
-require_once __DIR__ . '/../routes/api.php';
+// Register the Composer autoloader...
+require __DIR__.'/../vendor/autoload.php';
+
+// Bootstrap Laravel and handle the request...
+/** @var Application $app */
+$app = require_once __DIR__.'/../bootstrap/app.php';
+
+$app->handleRequest(Request::capture());

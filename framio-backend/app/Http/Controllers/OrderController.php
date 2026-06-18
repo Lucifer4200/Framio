@@ -2,133 +2,110 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
 use App\Models\Cart;
-use App\Helpers\Auth;
+use App\Models\Order;
+use Illuminate\Http\JsonResponse;
 
-class OrderController
+class OrderController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
-        $user = Auth::requireAuth();
-        
-        $filters = ['user_id' => $user['id']];
-        $orders = Order::all($filters);
-        
-        foreach ($orders as &$order) {
-            $order['items'] = Order::getItems($order['id']);
-        }
-        
-        echo json_encode(['orders' => $orders]);
+        $user = auth()->user();
+        $orders = Order::where('user_id', $user->id)
+            ->with('items.product:id,name,slug')
+            ->latest()
+            ->get();
+
+        return response()->json(['orders' => $orders]);
     }
-    
-    public function show($id)
+
+    public function show($id): JsonResponse
     {
-        $user = Auth::requireAuth();
-        
-        $order = Order::find($id);
-        
+        $user = auth()->user();
+        $order = Order::with('items.product:id,name,slug')->find($id);
+
         if (!$order) {
-            http_response_code(404);
-            echo json_encode(['error' => 'Order not found']);
-            return;
+            return response()->json(['error' => 'Order not found'], 404);
         }
-        
-        // Check if user owns this order or is admin
-        if ($order['user_id'] !== $user['id'] && $user['role'] !== 'admin') {
-            http_response_code(403);
-            echo json_encode(['error' => 'Access denied']);
-            return;
+
+        if ($order->user_id !== $user->id && !$user->isAdmin()) {
+            return response()->json(['error' => 'Access denied'], 403);
         }
-        
-        $order['items'] = Order::getItems($order['id']);
-        
-        echo json_encode(['order' => $order]);
+
+        return response()->json(['order' => $order]);
     }
-    
-    public function store()
+
+    public function store(): JsonResponse
     {
-        $user = Auth::requireAuth();
-        
-        $data = json_decode(file_get_contents('php://input'), true);
-        
-        // Validation
-        if (empty($data['items']) || empty($data['shipping_address']) || empty($data['billing_address'])) {
-            http_response_code(422);
-            echo json_encode(['error' => 'Items, shipping address, and billing address are required']);
-            return;
+        $user = auth()->user();
+        $data = request()->validate([
+            'shipping_address' => 'required|string',
+            'billing_address' => 'required|string',
+            'phone' => 'nullable|string|max:20',
+            'notes' => 'nullable|string',
+            'payment_status' => 'nullable|in:pending,paid,failed,refunded',
+            'order_status' => 'nullable|in:pending,confirmed,processing,shipped,delivered,cancelled',
+        ]);
+
+        $cart = Cart::where('user_id', $user->id)->first();
+
+        if (!$cart || $cart->items->isEmpty()) {
+            return response()->json(['error' => 'Cart is empty'], 400);
         }
-        
-        // Get cart and calculate total
-        $cart = Cart::findByUser($user['id']);
-        $cartItems = Cart::getItems($cart['id']);
-        $total = Cart::getTotal($cart['id']);
-        
-        if (empty($cartItems)) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Cart is empty']);
-            return;
-        }
-        
-        // Create order
+
+        $cart->load('items.product');
+
         $orderData = [
-            'user_id' => $user['id'],
-            'total_amount' => $total,
+            'user_id' => $user->id,
+            'order_number' => Order::generateOrderNumber(),
+            'total_amount' => $cart->total,
             'payment_status' => $data['payment_status'] ?? 'pending',
             'order_status' => $data['order_status'] ?? 'pending',
             'shipping_address' => $data['shipping_address'],
             'billing_address' => $data['billing_address'],
             'phone' => $data['phone'] ?? null,
             'notes' => $data['notes'] ?? null,
-            'items' => array_map(function($item) {
-                return [
-                    'product_id' => $item['product_id'],
-                    'quantity' => $item['quantity'],
-                    'price' => $item['price']
-                ];
-            }, $cartItems)
         ];
-        
-        $orderId = Order::create($orderData);
-        
-        // Clear cart
-        Cart::clear($cart['id']);
-        
-        $order = Order::find($orderId);
-        $order['items'] = Order::getItems($orderId);
-        
-        http_response_code(201);
-        echo json_encode([
+
+        $order = Order::create($orderData);
+
+        foreach ($cart->items as $item) {
+            $order->items()->create([
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'price' => $item->price,
+            ]);
+
+            $item->product->decrement('stock', $item->quantity);
+        }
+
+        $cart->items()->delete();
+
+        $order->load('items.product:id,name,slug');
+
+        return response()->json([
             'message' => 'Order created successfully',
-            'order' => $order
-        ]);
+            'order' => $order,
+        ], 201);
     }
-    
-    public function updateStatus($id)
+
+    public function updateStatus($id): JsonResponse
     {
-        $user = Auth::requireAdmin();
-        
-        $data = json_decode(file_get_contents('php://input'), true);
-        
-        if (empty($data['status'])) {
-            http_response_code(422);
-            echo json_encode(['error' => 'Status is required']);
-            return;
-        }
-        
+        $data = request()->validate([
+            'status' => 'required|in:pending,confirmed,processing,shipped,delivered,cancelled',
+        ]);
+
         $order = Order::find($id);
+
         if (!$order) {
-            http_response_code(404);
-            echo json_encode(['error' => 'Order not found']);
-            return;
+            return response()->json(['error' => 'Order not found'], 404);
         }
-        
-        Order::updateStatus($id, $data['status']);
-        $updatedOrder = Order::find($id);
-        
-        echo json_encode([
+
+        $order->update(['order_status' => $data['status']]);
+
+        return response()->json([
             'message' => 'Order status updated successfully',
-            'order' => $updatedOrder
+            'order' => $order->fresh()->load('items.product:id,name,slug'),
         ]);
     }
 }

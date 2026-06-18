@@ -3,77 +3,79 @@
 namespace App\Http\Controllers;
 
 use App\Models\Wishlist;
-use App\Helpers\Auth;
+use Illuminate\Http\JsonResponse;
 
-class WishlistController
+class WishlistController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
-        $user = Auth::requireAuth();
-        
-        $items = Wishlist::findByUser($user['id']);
-        
-        echo json_encode(['items' => $items]);
+        $user = auth()->user();
+        $items = Wishlist::where('user_id', $user->id)
+            ->with('product.primaryImage')
+            ->latest()
+            ->get();
+
+        return response()->json(['items' => $items]);
     }
-    
-    public function add()
+
+    public function add(): JsonResponse
     {
-        $user = Auth::requireAuth();
-        
-        $data = json_decode(file_get_contents('php://input'), true);
-        
-        // Validation
-        if (empty($data['product_id'])) {
-            http_response_code(422);
-            echo json_encode(['error' => 'Product ID is required']);
-            return;
+        $user = auth()->user();
+        $data = request()->validate([
+            'product_id' => 'required|exists:products,id',
+        ]);
+
+        $exists = Wishlist::where('user_id', $user->id)
+            ->where('product_id', $data['product_id'])
+            ->exists();
+
+        if ($exists) {
+            return response()->json(['error' => 'Product already in wishlist'], 400);
         }
-        
-        $success = Wishlist::add($user['id'], $data['product_id']);
-        
-        if (!$success) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Product already in wishlist']);
-            return;
-        }
-        
-        $items = Wishlist::findByUser($user['id']);
-        
-        echo json_encode([
+
+        Wishlist::create([
+            'user_id' => $user->id,
+            'product_id' => $data['product_id'],
+        ]);
+
+        $items = Wishlist::where('user_id', $user->id)
+            ->with('product.primaryImage')
+            ->latest()
+            ->get();
+
+        return response()->json([
             'message' => 'Product added to wishlist successfully',
-            'items' => $items
+            'items' => $items,
         ]);
     }
-    
-    public function remove()
+
+    public function remove(): JsonResponse
     {
-        $user = Auth::requireAuth();
-        
-        $data = json_decode(file_get_contents('php://input'), true);
-        
-        // Validation
-        if (empty($data['product_id'])) {
-            http_response_code(422);
-            echo json_encode(['error' => 'Product ID is required']);
-            return;
-        }
-        
-        Wishlist::remove($user['id'], $data['product_id']);
-        
-        $items = Wishlist::findByUser($user['id']);
-        
-        echo json_encode([
+        $user = auth()->user();
+        $data = request()->validate([
+            'product_id' => 'required|exists:products,id',
+        ]);
+
+        Wishlist::where('user_id', $user->id)
+            ->where('product_id', $data['product_id'])
+            ->delete();
+
+        $items = Wishlist::where('user_id', $user->id)
+            ->with('product.primaryImage')
+            ->latest()
+            ->get();
+
+        return response()->json([
             'message' => 'Product removed from wishlist successfully',
-            'items' => $items
+            'items' => $items,
         ]);
     }
-    
-    public function clear()
+
+    public function clear(): JsonResponse
     {
-        $user = Auth::requireAuth();
-        
-        Wishlist::clear($user['id']);
-        
-        echo json_encode(['message' => 'Wishlist cleared successfully']);
+        $user = auth()->user();
+        Wishlist::where('user_id', $user->id)->delete();
+
+        return response()->json(['message' => 'Wishlist cleared successfully']);
     }
 }

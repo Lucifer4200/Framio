@@ -2,55 +2,44 @@
 
 namespace App\Models;
 
-use App\Helpers\Database;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class User extends Authenticatable
 {
-    protected static $table = 'users';
-    protected static $primaryKey = 'id';
-    protected static $fillable = ['name', 'email', 'password', 'phone', 'role', 'status'];
-    protected static $casts = [
-        'id' => 'integer',
+    use Notifiable;
+
+    protected $fillable = ['name', 'email', 'password', 'phone', 'role', 'status'];
+
+    protected $casts = [
         'role' => 'string',
         'status' => 'string',
     ];
-    
-    public static function findByEmail($email)
-    {
-        $sql = "SELECT * FROM " . static::$table . " WHERE email = ? LIMIT 1";
-        $data = Database::fetchOne($sql, [$email]);
-        
-        return $data ? static::newInstance($data) : null;
-    }
-    
+
+    protected $hidden = ['password'];
+
     public function orders()
     {
-        return Order::where('user_id', $this->id);
+        return $this->hasMany(Order::class);
     }
-    
+
     public function cart()
     {
-        return Cart::where('user_id', $this->id);
+        return $this->hasOne(Cart::class);
     }
-    
-    public function wishlist()
+
+    public function wishlists()
     {
-        return Wishlist::where('user_id', $this->id);
+        return $this->hasMany(Wishlist::class);
     }
-    
-    public function isAdmin()
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function isAdmin(): bool
     {
         return $this->role === 'admin';
-    }
-    
-    public function setPassword($password)
-    {
-        $this->password = password_hash($password, PASSWORD_BCRYPT);
-        return $this;
-    }
-    
-    public function verifyPassword($password)
-    {
-        return password_verify($password, $this->password);
     }
 }

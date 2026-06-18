@@ -1,4 +1,4 @@
-// File: C:\xampp\htdocs\Framio\framio-frontend\src\app\products\page.tsx
+// File: E:\laragon\www\Framio\framio-frontend\src\app\products\page.tsx
 import * as entry from '../../../../src/app/products/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

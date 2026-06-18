@@ -2,30 +2,28 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+
 class OrderItem extends Model
 {
-    protected static $table = 'order_items';
-    protected static $primaryKey = 'id';
-    protected static $fillable = ['order_id', 'product_id', 'quantity', 'price'];
-    protected static $casts = [
-        'id' => 'integer',
-        'order_id' => 'integer',
-        'product_id' => 'integer',
+    protected $fillable = ['order_id', 'product_id', 'quantity', 'price'];
+
+    protected $casts = [
         'quantity' => 'integer',
         'price' => 'float',
     ];
-    
+
     public function order()
     {
-        return Order::find($this->order_id);
+        return $this->belongsTo(Order::class);
     }
-    
+
     public function product()
     {
-        return Product::find($this->product_id);
+        return $this->belongsTo(Product::class);
     }
-    
-    public function getSubtotal()
+
+    public function getSubtotalAttribute()
     {
         return $this->quantity * $this->price;
     }

@@ -2,84 +2,142 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\ProductImage;
-use App\Helpers\Auth;
-use App\Helpers\ApiResponse;
-use App\Http\Requests\Product\StoreProductRequest;
-use App\Http\Requests\Product\UpdateProductRequest;
+use Illuminate\Http\JsonResponse;
 
-class ProductController
+class ProductController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
-        $filters = $_GET;
-        $products = Product::all($filters);
-        
-        foreach ($products as &$product) {
-            $product['images'] = ProductImage::findByProduct($product['id']);
-            $product['average_rating'] = Product::getAverageRating($product['id']);
+        $query = Product::active()->with(['category:id,name', 'images', 'primaryImage']);
+
+        if ($categoryId = request('category_id')) {
+            $query->where('category_id', $categoryId);
         }
-        
-        ApiResponse::success(['products' => $products]);
+
+        if ($search = request('search')) {
+            $query->search($search);
+        }
+
+        if ($minPrice = request('min_price')) {
+            $query->where('price', '>=', $minPrice);
+        }
+
+        if ($maxPrice = request('max_price')) {
+            $query->where('price', '<=', $maxPrice);
+        }
+
+        if ($frameType = request('frame_type')) {
+            $query->where('frame_type', $frameType);
+        }
+
+        if ($size = request('size')) {
+            $query->where('size', $size);
+        }
+
+        if ($color = request('color')) {
+            $query->where('color', $color);
+        }
+
+        $orderBy = request('sort', 'created_at');
+        $orderDir = request('order', 'DESC');
+        $query->orderBy($orderBy, $orderDir);
+
+        if ($limit = request('limit')) {
+            $query->limit($limit);
+        }
+
+        $products = $query->get();
+
+        $products->each(function ($product) {
+            $product->average_rating = $product->reviews()->where('status', 'active')->avg('rating');
+            $product->average_rating = $product->average_rating ? round($product->average_rating, 1) : 0;
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Success',
+            'data' => ['products' => $products],
+        ]);
     }
-    
-    public function show($id)
+
+    public function show($id): JsonResponse
     {
-        $product = Product::find($id);
-        
+        $product = Product::with(['category:id,name', 'images', 'reviews.user:id,name'])->find($id);
+
         if (!$product) {
-            ApiResponse::notFound('Product not found');
+            return response()->json([
+                'success' => false,
+                'message' => 'Product not found',
+            ], 404);
         }
-        
-        $product['images'] = ProductImage::findByProduct($product['id']);
-        $product['reviews'] = Product::getReviews($product['id']);
-        $product['average_rating'] = Product::getAverageRating($product['id']);
-        
-        ApiResponse::success(['product' => $product]);
+
+        $product->average_rating = $product->reviews()->where('status', 'active')->avg('rating');
+        $product->average_rating = $product->average_rating ? round($product->average_rating, 1) : 0;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Success',
+            'data' => ['product' => $product],
+        ]);
     }
-    
-    public function store(StoreProductRequest $request)
+
+    public function store(StoreProductRequest $request): JsonResponse
     {
-        $data = $request->all();
-        
-        // Generate slug if not provided
+        $data = $request->validated();
+
         if (empty($data['slug'])) {
             $data['slug'] = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $data['name']));
         }
-        
-        $productId = Product::create($data);
-        $product = Product::find($productId);
-        
-        ApiResponse::created(['product' => $product], 'Product created successfully');
+
+        $product = Product::create($data);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Product created successfully',
+            'data' => ['product' => $product->fresh()],
+        ], 201);
     }
-    
-    public function update($id, UpdateProductRequest $request)
+
+    public function update($id, UpdateProductRequest $request): JsonResponse
     {
-        $data = $request->all();
-        
         $product = Product::find($id);
+
         if (!$product) {
-            ApiResponse::notFound('Product not found');
+            return response()->json([
+                'success' => false,
+                'message' => 'Product not found',
+            ], 404);
         }
-        
-        Product::updateStatic($id, $data);
-        $updatedProduct = Product::find($id);
-        
-        ApiResponse::success(['product' => $updatedProduct], 'Product updated successfully');
+
+        $product->update($request->validated());
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Product updated successfully',
+            'data' => ['product' => $product->fresh()],
+        ]);
     }
-    
-    public function destroy($id)
+
+    public function destroy($id): JsonResponse
     {
-        $user = Auth::requireAdmin();
-        
         $product = Product::find($id);
+
         if (!$product) {
-            ApiResponse::notFound('Product not found');
+            return response()->json([
+                'success' => false,
+                'message' => 'Product not found',
+            ], 404);
         }
-        
-        Product::deleteStatic($id);
-        
-        ApiResponse::success(null, 'Product deleted successfully');
+
+        $product->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Product deleted successfully',
+        ]);
     }
 }
