@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { Container, Title, Text, Button, Group, Stack, Card, SimpleGrid, Badge, Rating, TextInput, NumberInput } from '@mantine/core';
 import Link from 'next/link';
+import { API_URL } from '../../../services/api';
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -20,7 +21,7 @@ export default function ProductDetailPage() {
   const fetchProduct = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`);
+      const response = await fetch(`${API_URL}/products/${productId}`);
       const data = await response.json();
       setProduct(data.product);
     } catch (error) {
@@ -38,7 +39,7 @@ export default function ProductDetailPage() {
         return;
       }
 
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/add`, {
+      await fetch(`${API_URL}/cart/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,7 +62,7 @@ export default function ProductDetailPage() {
         return;
       }
 
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/wishlist/add`, {
+      await fetch(`${API_URL}/wishlist/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

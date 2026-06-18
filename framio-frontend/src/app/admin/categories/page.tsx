@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Title, Text, Button, Group, Stack, Card, Table, Modal, TextInput, Switch } from '@mantine/core';
 import { IconPlus, IconEdit, IconTrash } from '@tabler/icons-react';
+import { API_URL } from '../../../services/api';
 
 export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<any[]>([]);
@@ -24,7 +25,7 @@ export default function AdminCategoriesPage() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`, {
+      const response = await fetch(`${API_URL}/categories`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await response.json();
@@ -63,7 +64,7 @@ export default function AdminCategoriesPage() {
 
     try {
       const token = localStorage.getItem('token');
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/${id}`, {
+      await fetch(`${API_URL}/categories/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -79,8 +80,8 @@ export default function AdminCategoriesPage() {
     try {
       const token = localStorage.getItem('token');
       const url = editingCategory
-        ? `${process.env.NEXT_PUBLIC_API_URL}/categories/${editingCategory.id}`
-        : `${process.env.NEXT_PUBLIC_API_URL}/categories`;
+        ? `${API_URL}/categories/${editingCategory.id}`
+        : `${API_URL}/categories`;
       const method = editingCategory ? 'PUT' : 'POST';
 
       await fetch(url, {

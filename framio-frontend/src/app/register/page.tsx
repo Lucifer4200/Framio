@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Container, Title, TextInput, PasswordInput, Button, Paper, Group, Text, Anchor, Stack } from '@mantine/core';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { API_URL } from '../../services/api';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function RegisterPage() {
     setError('');
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
+      const response = await fetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password, phone }),

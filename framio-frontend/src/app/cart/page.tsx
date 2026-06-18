@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Container, Title, Text, Button, Group, Stack, Card, Table, NumberInput, Badge, TextInput } from '@mantine/core';
 import Link from 'next/link';
+import { API_URL } from '../../services/api';
 
 export default function CartPage() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function CartPage() {
         return;
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {
+      const response = await fetch(`${API_URL}/cart`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -41,7 +42,7 @@ export default function CartPage() {
   const updateQuantity = async (productId: number, quantity: number) => {
     try {
       const token = localStorage.getItem('token');
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/update`, {
+      await fetch(`${API_URL}/cart/update`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +59,7 @@ export default function CartPage() {
   const removeItem = async (productId: number) => {
     try {
       const token = localStorage.getItem('token');
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/remove`, {
+      await fetch(`${API_URL}/cart/remove`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

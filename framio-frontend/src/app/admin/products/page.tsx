@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Title, Text, Button, Group, Stack, Card, Table, Modal, TextInput, NumberInput, Select, Textarea } from '@mantine/core';
 import { IconPlus, IconEdit, IconTrash } from '@tabler/icons-react';
+import { API_URL } from '../../../services/api';
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
@@ -29,7 +30,7 @@ export default function AdminProductsPage() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
+      const response = await fetch(`${API_URL}/products`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await response.json();
@@ -78,7 +79,7 @@ export default function AdminProductsPage() {
 
     try {
       const token = localStorage.getItem('token');
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`, {
+      await fetch(`${API_URL}/products/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -94,8 +95,8 @@ export default function AdminProductsPage() {
     try {
       const token = localStorage.getItem('token');
       const url = editingProduct
-        ? `${process.env.NEXT_PUBLIC_API_URL}/products/${editingProduct.id}`
-        : `${process.env.NEXT_PUBLIC_API_URL}/products`;
+        ? `${API_URL}/products/${editingProduct.id}`
+        : `${API_URL}/products`;
       const method = editingProduct ? 'PUT' : 'POST';
 
       await fetch(url, {

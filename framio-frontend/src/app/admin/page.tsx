@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Title, Text, SimpleGrid, Card, Stack, Group, Badge, Table } from '@mantine/core';
 import { IconTrendingUp, IconUsers, IconBox, IconShoppingCart } from '@tabler/icons-react';
+import { API_URL } from '../../services/api';
 
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState<any>(null);
@@ -16,7 +17,7 @@ export default function AdminDashboardPage() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/dashboard`, {
+      const response = await fetch(`${API_URL}/admin/dashboard`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await response.json();

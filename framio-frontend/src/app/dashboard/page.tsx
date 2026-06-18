@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Container, Title, Text, Button, Group, Stack, Card, Tabs, SimpleGrid, Badge, Avatar } from '@mantine/core';
 import Link from 'next/link';
+import { API_URL } from '../../services/api';
 import { IconUser, IconShoppingBag, IconHeart, IconSettings } from '@tabler/icons-react';
 
 export default function DashboardPage() {
@@ -27,21 +28,21 @@ export default function DashboardPage() {
       }
 
       // Fetch user data
-      const userResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+      const userResponse = await fetch(`${API_URL}/auth/me`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const userData = await userResponse.json();
       setUser(userData.user);
 
       // Fetch orders
-      const ordersResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders`, {
+      const ordersResponse = await fetch(`${API_URL}/orders`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const ordersData = await ordersResponse.json();
       setOrders(ordersData.orders || []);
 
       // Fetch wishlist
-      const wishlistResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/wishlist`, {
+      const wishlistResponse = await fetch(`${API_URL}/wishlist`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const wishlistData = await wishlistResponse.json();

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Container, Title, Text, Card, Table } from '@mantine/core';
+import { API_URL } from '../../../services/api';
 
 export default function AdminCustomersPage() {
   const [customers, setCustomers] = useState<any[]>([]);
@@ -15,7 +16,7 @@ export default function AdminCustomersPage() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/customers`, {
+      const response = await fetch(`${API_URL}/admin/customers`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await response.json();

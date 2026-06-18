@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Title, TextInput, Select, RangeSlider, Button, SimpleGrid, Card, Text, Group, Badge, Stack, Pagination } from '@mantine/core';
 import Link from 'next/link';
+import { API_URL } from '../../services/api';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
@@ -28,7 +29,7 @@ export default function ProductsPage() {
       params.append('sort', sortBy);
       params.append('limit', '12');
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products?${params.toString()}`);
+      const response = await fetch(`${API_URL}/products?${params.toString()}`);
       const data = await response.json();
       setProducts(data.products || []);
     } catch (error) {

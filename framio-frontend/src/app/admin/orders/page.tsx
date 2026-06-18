@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Container, Title, Text, Button, Group, Stack, Card, Table, Modal, Select, Badge } from '@mantine/core';
 import { IconEye } from '@tabler/icons-react';
 import Link from 'next/link';
+import { API_URL } from '../../../services/api';
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -20,7 +21,7 @@ export default function AdminOrdersPage() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/orders`, {
+      const response = await fetch(`${API_URL}/admin/orders`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await response.json();
@@ -41,7 +42,7 @@ export default function AdminOrdersPage() {
   const handleStatusUpdate = async () => {
     try {
       const token = localStorage.getItem('token');
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/${selectedOrder.id}/status`, {
+      await fetch(`${API_URL}/orders/${selectedOrder.id}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

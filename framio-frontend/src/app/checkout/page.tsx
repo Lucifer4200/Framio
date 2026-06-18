@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Container, Title, Text, Button, Group, Stack, Card, TextInput, Textarea, Radio, Select } from '@mantine/core';
 import Link from 'next/link';
+import { API_URL } from '../../services/api';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -30,7 +31,7 @@ export default function CheckoutPage() {
         return;
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {
+      const response = await fetch(`${API_URL}/cart`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -66,7 +67,7 @@ export default function CheckoutPage() {
         notes,
       };
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders`, {
+      const response = await fetch(`${API_URL}/orders`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

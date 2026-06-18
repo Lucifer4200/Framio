@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Title, Text, Card, Table, Tabs, Stack, Group, DateInput } from '@mantine/core';
 import { IconChartBar, IconBox, IconUsers } from '@tabler/icons-react';
+import { API_URL } from '../../../services/api';
 
 export default function AdminReportsPage() {
   const [salesData, setSalesData] = useState<any[]>([]);
@@ -20,13 +21,13 @@ export default function AdminReportsPage() {
       const token = localStorage.getItem('token');
       
       const [salesRes, productRes, customerRes] = await Promise.all([
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/reports/sales`, {
+        fetch(`${API_URL}/admin/reports/sales`, {
           headers: { 'Authorization': `Bearer ${token}` },
         }),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/reports/products`, {
+        fetch(`${API_URL}/admin/reports/products`, {
           headers: { 'Authorization': `Bearer ${token}` },
         }),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/reports/customers`, {
+        fetch(`${API_URL}/admin/reports/customers`, {
           headers: { 'Authorization': `Bearer ${token}` },
         }),
       ]);

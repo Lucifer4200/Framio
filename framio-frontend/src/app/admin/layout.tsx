@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { AppShell, Navbar, Text, Group, Button, UnstyledButton, Avatar, Stack, Title } from '@mantine/core';
 import Link from 'next/link';
+import { API_URL } from '../../services/api';
 import { IconDashboard, IconBox, IconCategory, IconShoppingCart, IconUsers, IconChartBar, IconLogout } from '@tabler/icons-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -23,7 +24,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+      const response = await fetch(`${API_URL}/auth/me`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await response.json();
