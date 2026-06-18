@@ -155,7 +155,7 @@ export default function ProductsPage() {
               </SimpleGrid>
 
               <div className="mt-8 flex justify-center">
-                <Pagination total={10} page={page} onChange={setPage} />
+                <Pagination total={10} value={page} onChange={setPage} />
               </div>
             </>
           )}
