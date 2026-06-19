@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { Container, Title, TextInput, PasswordInput, Button, Paper, Group, Text, Anchor, Stack } from '@mantine/core';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { API_URL } from '../../services/api';
@@ -44,63 +43,120 @@ export default function RegisterPage() {
   };
 
   return (
-    <Container size={420} my={40}>
-      <Title ta="center" order={2}>
-        Create your Framio account
-      </Title>
-      <Text c="dimmed" size="sm" ta="center" mt={5}>
-        Already have an account?{' '}
-        <Anchor size="sm" component={Link} href="/login">
-          Sign in
-        </Anchor>
-      </Text>
+    <main className="min-h-screen bg-[#FDFBF7] px-6 py-12">
+      <section className="mx-auto grid min-h-screen max-w-[1280px] overflow-hidden rounded-[2rem] bg-white shadow-[0_30px_80px_rgba(0,0,0,0.08)] md:grid-cols-[1.1fr_1fr]">
+        <div
+          className="relative flex items-end justify-start bg-cover bg-center p-12 text-[#1A1A1A] h-full md:min-h-[720px]"
+          style={{
+            backgroundImage:
+              "linear-gradient(180deg, rgba(253,251,247,0.95) 0%, rgba(253,251,247,0.95) 100%), url('https://images.unsplash.com/photo-1582053628662-c65b0e0544e9?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+          }}
+        >
+          <div className="max-w-[360px] space-y-4 pb-12">
+            <p className="text-sm uppercase tracking-[0.2em] text-black/70">Framio Studio</p>
+            <h1 className="text-[2.5rem] font-serif font-semibold leading-tight tracking-[-0.03em]">
+              Create your account and start framing with ease.
+            </h1>
+            <p className="max-w-[300px] text-sm leading-7 text-slate-600">
+              Join Framio for a refined framing experience with curated art-inspired design and elegant checkout flow.
+            </p>
+          </div>
+        </div>
 
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <form onSubmit={handleSubmit}>
-          <Stack>
-            {error && (
-              <Text c="red" size="sm">
-                {error}
-              </Text>
-            )}
+        <div className="flex items-center justify-center bg-white p-10 sm:p-14">
+          <div className="w-full max-w-[440px] rounded-[1.25rem] border border-[#E5E5E5] bg-white p-9 shadow-sm">
+            <div className="space-y-4">
+              <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Create account</p>
+              <h2 className="text-[1.85rem] font-semibold text-[#111827]">Join Framio</h2>
+              <p className="text-sm leading-7 text-slate-500">
+                Start customizing your frame selection and enjoy a beautifully simple registration experience.
+              </p>
+            </div>
 
-            <TextInput
-              label="Full Name"
-              placeholder="John Doe"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            <form onSubmit={handleSubmit} className="mt-10 space-y-5">
+              {error && <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
 
-            <TextInput
-              label="Email"
-              placeholder="your@email.com"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+              <div className="space-y-2">
+                <label htmlFor="name" className="text-sm font-medium text-slate-700">
+                  Full Name
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="John Doe"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#1A1A1A] focus:ring-2 focus:ring-[#1A1A1A]/10"
+                />
+              </div>
 
-            <TextInput
-              label="Phone"
-              placeholder="+1 234 567 890"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium text-slate-700">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@framio.com"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#1A1A1A] focus:ring-2 focus:ring-[#1A1A1A]/10"
+                />
+              </div>
 
-            <PasswordInput
-              label="Password"
-              placeholder="Your password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+              <div className="space-y-2">
+                <label htmlFor="phone" className="text-sm font-medium text-slate-700">
+                  Phone
+                </label>
+                <input
+                  id="phone"
+                  type="tel"
+                  autoComplete="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="+1 234 567 890"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#1A1A1A] focus:ring-2 focus:ring-[#1A1A1A]/10"
+                />
+              </div>
 
-            <Button type="submit" fullWidth loading={loading}>
-              Create account
-            </Button>
-          </Stack>
-        </form>
-      </Paper>
-    </Container>
+              <div className="space-y-2">
+                <label htmlFor="password" className="text-sm font-medium text-slate-700">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Create a password"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#1A1A1A] focus:ring-2 focus:ring-[#1A1A1A]/10"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-2xl bg-[#1A1A1A] px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {loading ? 'Creating account…' : 'Create account'}
+              </button>
+            </form>
+
+            <p className="mt-7 text-center text-sm text-slate-600">
+              Already have an account?{' '}
+              <Link href="/login" className="font-medium text-slate-900 underline underline-offset-4">
+                Sign in
+              </Link>
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

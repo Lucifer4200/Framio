@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { Container, Title, TextInput, PasswordInput, Button, Paper, Group, Text, Anchor, Stack } from '@mantine/core';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { API_URL } from '../../services/api';
@@ -42,54 +41,95 @@ export default function LoginPage() {
   };
 
   return (
-    <Container size={420} my={40}>
-      <Title ta="center" order={2}>
-        Welcome back to Framio
-      </Title>
-      <Text c="dimmed" size="sm" ta="center" mt={5}>
-        Don't have an account?{' '}
-        <Anchor size="sm" component={Link} href="/register">
-          Create account
-        </Anchor>
-      </Text>
+    <main className="min-h-screen bg-[#FDFBF7] px-6 py-12">
+      <section className="mx-auto grid min-h-screen max-w-[1280px] overflow-hidden rounded-[2rem] bg-white shadow-[0_30px_80px_rgba(0,0,0,0.08)] md:grid-cols-[1.1fr_1fr]">
+        <div
+          className="relative flex items-end justify-start bg-cover bg-center p-12 text-[#1A1A1A] h-full md:min-h-[720px]"
+          style={{
+            backgroundImage:
+              "linear-gradient(180deg, rgba(253,251,247,0.95) 0%, rgba(253,251,247,0.95) 100%), url('https://plus.unsplash.com/premium_photo-1677851420628-18a1242a3050?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+          }}
+        >
+          <div className="max-w-[360px] space-y-4 pb-12">
+            <p className="text-sm uppercase tracking-[0.2em] text-black/70">Framio Studio</p>
+            <h1 className="text-[2.5rem] font-serif font-semibold leading-tight tracking-[-0.03em]">
+              Discover premium custom frames with gallery-level polish.
+            </h1>
+            <p className="max-w-[300px] text-sm leading-7 text-slate-600">
+              A serene, editorial welcome panel inspired by fine art spaces, designed to make every frame feel like a curated piece.
+            </p>
+          </div>
+        </div>
 
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <form onSubmit={handleSubmit}>
-          <Stack>
-            {error && (
-              <Text c="red" size="sm">
-                {error}
-              </Text>
-            )}
+        <div className="flex items-center justify-center bg-white p-10 sm:p-14">
+          <div className="w-full max-w-[440px] rounded-[1.25rem] border border-[#E5E5E5] bg-white p-9 shadow-sm">
+            <div className="space-y-4">
+              <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Welcome Back</p>
+              <h2 className="text-[1.85rem] font-semibold text-[#111827]">Sign in to Framio</h2>
+              <p className="text-sm leading-7 text-slate-500">
+                Access your custom framing dashboard and seamless checkout experience.
+              </p>
+            </div>
 
-            <TextInput
-              label="Email"
-              placeholder="your@email.com"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <form onSubmit={handleSubmit} className="mt-10 space-y-5">
+              {error && <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
 
-            <PasswordInput
-              label="Password"
-              placeholder="Your password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium text-slate-700">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@framio.com"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#1A1A1A] focus:ring-2 focus:ring-[#1A1A1A]/10"
+                />
+              </div>
 
-            <Group justify="space-between" mt="lg">
-              <Anchor component="button" size="sm" type="button">
-                Forgot password?
-              </Anchor>
-            </Group>
+              <div className="space-y-2">
+                <label htmlFor="password" className="text-sm font-medium text-slate-700">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#1A1A1A] focus:ring-2 focus:ring-[#1A1A1A]/10"
+                />
+              </div>
 
-            <Button type="submit" fullWidth loading={loading}>
-              Sign in
-            </Button>
-          </Stack>
-        </form>
-      </Paper>
-    </Container>
+              <div className="flex items-center justify-between">
+                <Link href="#" className="text-sm text-slate-600 transition hover:text-slate-900">
+                  Forgot password?
+                </Link>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-2xl bg-[#1A1A1A] px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {loading ? 'Signing in…' : 'Sign in'}
+              </button>
+            </form>
+
+            <p className="mt-7 text-center text-sm text-slate-600">
+              Don't have an account?{' '}
+              <Link href="/register" className="font-medium text-slate-900 underline underline-offset-4">
+                Sign up
+              </Link>
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
