@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Title, Text, SimpleGrid, Card, Stack, Group, Badge, Table } from '@mantine/core';
 import { IconTrendingUp, IconUsers, IconBox, IconShoppingCart } from '@tabler/icons-react';
+import DashboardCard from '../../components/cards/card';
 import { API_URL } from '../../services/api';
 import { formatCurrency } from '../../utils/format';
 
@@ -40,53 +41,45 @@ export default function AdminDashboardPage() {
 
       {/* Stats Cards */}
       <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="xl" mb="xl">
-        <Card withBorder p="xl">
-          <Group>
-            <div className="p-3 bg-blue-100 rounded-full">
-              <IconTrendingUp size={24} className="text-blue-600" />
-            </div>
-            <Stack gap={0}>
-              <Text size="sm" c="dimmed">Total Sales</Text>
-              <Text size="xl" fw={700}>${formatCurrency(stats?.total_sales)}</Text>
-            </Stack>
-          </Group>
-        </Card>
+        <DashboardCard
+          title="Total Sales"
+          value={`$${formatCurrency(stats?.total_sales)}`}
+          delta={stats?.sales_change_percent ?? undefined}
+          deltaPositive={Number(stats?.sales_change_percent) >= 0}
+          icon={<IconTrendingUp size={20} className="text-blue-600" />}
+          bgIconClass="bg-blue-100"
+          footerText="View more..."
+        />
 
-        <Card withBorder p="xl">
-          <Group>
-            <div className="p-3 bg-green-100 rounded-full">
-              <IconShoppingCart size={24} className="text-green-600" />
-            </div>
-            <Stack gap={0}>
-              <Text size="sm" c="dimmed">Total Orders</Text>
-              <Text size="xl" fw={700}>{stats?.total_orders || 0}</Text>
-            </Stack>
-          </Group>
-        </Card>
+        <DashboardCard
+          title="Total Orders"
+          value={stats?.total_orders || 0}
+          delta={stats?.orders_change_percent ?? undefined}
+          deltaPositive={Number(stats?.orders_change_percent) >= 0}
+          icon={<IconShoppingCart size={20} className="text-green-600" />}
+          bgIconClass="bg-green-100"
+          footerText="View more..."
+        />
 
-        <Card withBorder p="xl">
-          <Group>
-            <div className="p-3 bg-purple-100 rounded-full">
-              <IconUsers size={24} className="text-purple-600" />
-            </div>
-            <Stack gap={0}>
-              <Text size="sm" c="dimmed">Total Customers</Text>
-              <Text size="xl" fw={700}>{stats?.total_customers || 0}</Text>
-            </Stack>
-          </Group>
-        </Card>
+        <DashboardCard
+          title="Total Customers"
+          value={stats?.total_customers || 0}
+          delta={stats?.customers_change_percent ?? undefined}
+          deltaPositive={Number(stats?.customers_change_percent) >= 0}
+          icon={<IconUsers size={20} className="text-purple-600" />}
+          bgIconClass="bg-purple-100"
+          footerText="View more..."
+        />
 
-        <Card withBorder p="xl">
-          <Group>
-            <div className="p-3 bg-orange-100 rounded-full">
-              <IconBox size={24} className="text-orange-600" />
-            </div>
-            <Stack gap={0}>
-              <Text size="sm" c="dimmed">Total Products</Text>
-              <Text size="xl" fw={700}>{stats?.total_products || 0}</Text>
-            </Stack>
-          </Group>
-        </Card>
+        <DashboardCard
+          title="Total Products"
+          value={stats?.total_products || 0}
+          delta={stats?.products_change_percent ?? undefined}
+          deltaPositive={Number(stats?.products_change_percent) >= 0}
+          icon={<IconBox size={20} className="text-orange-600" />}
+          bgIconClass="bg-orange-100"
+          footerText="View more..."
+        />
       </SimpleGrid>
 
       {/* Recent Orders */}
