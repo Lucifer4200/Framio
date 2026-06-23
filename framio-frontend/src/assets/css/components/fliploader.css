@@ -1,0 +1,39 @@
+.flip-loader {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.flip-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #228be6 0%, #1971c2 100%);
+  animation: flip 1.4s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.flip-circle-1 {
+  animation-delay: 0s;
+}
+
+.flip-circle-2 {
+  animation-delay: 0.2s;
+}
+
+.flip-circle-3 {
+  animation-delay: 0.4s;
+}
+
+@keyframes flip {
+  0%,
+  100% {
+    transform: rotateY(0deg) rotateX(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: rotateY(180deg) rotateX(180deg);
+    opacity: 0.6;
+  }
+}

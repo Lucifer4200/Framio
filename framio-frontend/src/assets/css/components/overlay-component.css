@@ -1,0 +1,4 @@
+.full-page-overlay-component {
+  @apply w-full min-h-full relative bg-background top-0 left-0 flex flex-col overflow-y-auto;
+  z-index: 199;
+}

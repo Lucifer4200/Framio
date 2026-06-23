@@ -1,0 +1,25 @@
+.dml-RichTextEditor {
+  &-root {
+    border-radius: var(--dml-border-radius-md);
+  }
+  &-content {
+    border-end-start-radius: var(--dml-border-radius-md) !important;
+    border-end-end-radius: var(--dml-border-radius-md) !important;
+  }
+}
+.tiptap {
+  ul {
+    list-style-type: disc;
+  }
+  ol {
+    list-style-type: decimal;
+  }
+}
+.tiptap-output {
+  ul {
+    list-style-type: disc;
+  }
+  ol {
+    list-style-type: decimal;
+  }
+}

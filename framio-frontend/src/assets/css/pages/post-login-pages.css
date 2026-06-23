@@ -1,0 +1,7 @@
+.dml-ScrollArea-viewport {
+  &.only-vertical-scroll {
+    & > div {
+      display: block !important;
+    }
+  }
+}

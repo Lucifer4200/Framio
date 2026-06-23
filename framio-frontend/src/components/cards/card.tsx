@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-type DashboardCardProps = {
+type MetrixCardProps = {
   title: string;
   value: string | number;
   delta?: string | number;
@@ -12,7 +12,7 @@ type DashboardCardProps = {
   bgIconClass?: string; // Tailwind bg class for icon circle
 };
 
-export default function DashboardCard({
+export default function MetrixCard({
   title,
   value,
   delta,
@@ -20,7 +20,7 @@ export default function DashboardCard({
   icon,
   footerText = 'View more...',
   bgIconClass = 'bg-gray-100',
-}: DashboardCardProps) {
+}: MetrixCardProps) {
   return (
     <div className="bg-white rounded-xl shadow-sm p-6 relative">
       {delta !== undefined && (

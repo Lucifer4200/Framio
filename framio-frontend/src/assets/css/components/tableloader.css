@@ -1,0 +1,141 @@
+.gradient-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #efefed;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
+  animation: basePulse 2.4s ease-in-out infinite;
+}
+
+.dark .gradient-skeleton {
+  background: hsl(228, 22%, 17%);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  animation: basePulseDark 2.4s ease-in-out infinite;
+}
+
+.gradient-skeleton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /*
+    Wider beam (60% of width) so it's always partially
+    visible — no dead zone between loops
+    Transparent zones are only 20% each side
+  */
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 5%,
+    rgba(255, 255, 255, 0) 10%,
+    rgba(255, 255, 255, 0.18) 22%,
+    rgba(255, 255, 255, 0.55) 35%,
+    rgba(255, 255, 255, 0.72) 50%,
+    rgba(255, 255, 255, 0.55) 65%,
+    rgba(255, 255, 255, 0.18) 78%,
+    rgba(255, 255, 255, 0) 90%,
+    transparent 95%,
+    transparent 100%
+  );
+
+  /*
+    KEY FIX: background-size 300% gives the beam
+    enough runway so start and end are both fully
+    off-screen — no clipping at edges
+    
+    Combined with translateX(-100% → 100%) on the
+    element itself = double movement, seamless loop
+  */
+  background-size: 300% 100%;
+
+  /*
+    USE TRANSFORM not background-position
+    transform is GPU composited — zero jank
+    background-position causes layout recalc on some browsers
+    
+    translateX(-120%) = start fully off left
+    translateX(120%)  = end fully off right
+    
+    No opacity fade needed — beam enters and exits
+    naturally because it's wider than the element
+    and transform moves it completely off screen
+  */
+  transform: translateX(-120%);
+  animation: butterSweep 1.8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  will-change: transform;
+}
+
+.dark .gradient-skeleton::after {
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 5%,
+    rgba(180, 185, 255, 0) 10%,
+    rgba(180, 185, 255, 0.04) 22%,
+    rgba(180, 185, 255, 0.1) 35%,
+    rgba(180, 185, 255, 0.15) 50%,
+    rgba(180, 185, 255, 0.1) 65%,
+    rgba(180, 185, 255, 0.04) 78%,
+    rgba(180, 185, 255, 0) 90%,
+    transparent 95%,
+    transparent 100%
+  );
+  background-size: 300% 100%;
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+
+@keyframes butterSweep {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+/*
+  Pulse synced to sweep duration 1.8s
+  4 stops = sine wave approximation
+  Very tight amplitude in light (1.0 → 0.88)
+  so pulse never competes with the sweep visually
+*/
+@keyframes basePulse {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.93;
+  }
+  50% {
+    opacity: 0.88;
+  }
+  75% {
+    opacity: 0.93;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes basePulseDark {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.68;
+  }
+  75% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}

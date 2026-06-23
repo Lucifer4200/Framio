@@ -1,0 +1,54 @@
+/* all fonts family added here */
+
+@font-face {
+  font-family: "UberMove";
+  src: url("/fonts/UberMoveBold.eot");
+  src: url("/fonts/UberMoveBold.eot") format("embedded-opentype"), url("/fonts/UberMoveBold.woff2") format("woff2"),
+    url("/fonts/UberMoveBold.woff") format("woff"), url("/fonts/UberMoveBold.ttf") format("truetype"), url("/fonts/UberMoveBold.svg") format("svg");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "UberMove";
+  src: url("/fonts/UberMoveMedium.eot");
+  src: url("/fonts/UberMoveMedium.eot") format("embedded-opentype"), url("/fonts/UberMoveMedium.woff2") format("woff2"),
+    url("/fonts/UberMoveMedium.woff") format("woff"), url("/fonts/UberMoveMedium.ttf") format("truetype"),
+    url("/fonts/UberMoveMedium.svg") format("svg");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "UberMoveText";
+  src: url("/fonts/UberMoveTextBold.eot");
+  src: url("/fonts/UberMoveTextBold.eot") format("embedded-opentype"), url("/fonts/UberMoveTextBold.woff2") format("woff2"),
+    url("/fonts/UberMoveTextBold.woff") format("woff"), url("/fonts/UberMoveTextBold.ttf") format("truetype"),
+    url("/fonts/UberMoveTextBold.svg#UberMoveTextBold") format("svg");
+  font-family: 700;
+}
+
+@font-face {
+  font-family: "UberMoveText";
+  src: url("/fonts/UberMoveTextMedium.eot");
+  src: url("/fonts/UberMoveTextMedium.eot") format("embedded-opentype"), url("/fonts/UberMoveTextMedium.woff2") format("woff2"),
+    url("/fonts/UberMoveTextMedium.woff") format("woff"), url("/fonts/UberMoveTextMedium.ttf") format("truetype"),
+    url("/fonts/UberMoveTextMedium.svg#UberMoveTextMedium") format("svg");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "UberMoveText";
+  src: url("/fonts/UberMoveTextRegular.eot");
+  src: url("/fonts/UberMoveTextRegular.eot") format("embedded-opentype"), url("/fonts/UberMoveTextRegular.woff2") format("woff2"),
+    url("/fonts/UberMoveTextRegular.woff") format("woff"), url("/fonts/UberMoveTextRegular.ttf") format("truetype"),
+    url("/fonts/UberMoveTextRegular.svg#UberMoveTextRegular") format("svg");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "UberMoveText";
+  src: url("/fonts/UberMoveTextLight.eot");
+  src: url("/fonts/UberMoveTextLight.eot") format("embedded-opentype"), url("/fonts/UberMoveTextLight.woff2") format("woff2"),
+    url("/fonts/UberMoveTextLight.woff") format("woff"), url("/fonts/UberMoveTextLight.ttf") format("truetype"),
+    url("/fonts/UberMoveTextLight.svg#UberMoveTextLight") format("svg");
+  font-weight: 300;
+}

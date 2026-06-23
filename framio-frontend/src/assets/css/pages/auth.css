@@ -1,0 +1,42 @@
+@layer components {
+  .auth {
+    @apply flex h-screen;
+    &-thumbnail-col {
+      @apply w-[400px] xl:w-[559px] hidden lg:flex items-center justify-center h-full px-12 2xl:pb-[89px] bg-login-bg bg-cover bg-center relative after:absolute after:block after:inset-0 after:bg-gradient-to-b after:from-[#88B5FF] after:via-[#88B5FF] after:to-[#CC33F2] after:to-75% after:opacity-75;
+      &-inner {
+        padding: 27px 60px;
+        background-color: white;
+
+        z-index: 1;
+        border-radius: 10px;
+      }
+      .auth-image {
+        @apply w-[311px] text-natural-white;
+      }
+      .auth-text {
+        @apply text-natural-white max-w-[459px] xl:heading-xl !leading-[54px] !font-normal;
+      }
+      .ad-text {
+        @apply !text-natural-white heading-xs !font-medium text-right inline-block pt-2;
+      }
+    }
+    &-content-col {
+      @apply xl:w-[calc(100%_-_559px)] lg:w-[calc(100%_-_400px)] w-full;
+      &-inner {
+        @apply max-w-[400px] mx-auto sm:px-0 px-5 h-full flex flex-col justify-center;
+      }
+      .auth-title {
+        @apply text-secondary mb-[31px] xl:heading-xl md:heading-md heading-sm pb-[11px] font-outfit;
+        &.auth-underline {
+          @apply after:absolute after:block after:left-0 after:top-full after:h-[1px] after:w-[65%] after:bg-[#175BCC];
+        }
+      }
+      .title-description {
+        @apply text-grey text-fs-lg !leading-[25px] !font-normal pb-[30px];
+      }
+      .auth-btn {
+        @apply bg-secondary w-full mt-[30px];
+      }
+    }
+  }
+}

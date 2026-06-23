@@ -1,0 +1,19 @@
+.dml {
+  &-accordion {
+    &-item {
+      @apply !border !border-grey-shade !rounded-xl overflow-hidden mb-4 shadow-sm;
+    }
+    &-control {
+      @apply border-b border-b-grey-shade relative;
+    }
+    &-chevron {
+      @apply text-xl/none text-primary absolute right-5 top-[60px] -translate-y-[30px] transition-transform data-[rotate=true]:rotate-180;
+    }
+    &-label {
+      @apply text-foreground h6;
+    }
+    &-content {
+      @apply px-5 pt-4 pb-5;
+    }
+  }
+}

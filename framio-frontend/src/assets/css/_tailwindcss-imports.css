@@ -1,0 +1,7 @@
+/* Tailwind components & utilities */
+@tailwind components;
+@tailwind utilities;
+/* Add @layer to Tailwind Base to prevent Preflight conflicts */
+@layer tailwind {
+  @tailwind base;
+}

@@ -1,0 +1,586 @@
+.dml {
+  &-modal-btn {
+    margin: auto;
+    width: 100%;
+    max-width: 256px;
+  }
+  &-set-schedule-btn {
+    height: 50px;
+    width: 256px;
+    padding: 14px, 16px, 14px, 16px;
+    border-radius: 8px;
+    background-color: var(--dml-color-foreground);
+    color: #ffffff;
+  }
+  &-Button {
+    &-root {
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+
+      /* Prevent hover effects on touch devices */
+      @media (hover: none) and (pointer: coarse) {
+        &::after {
+          display: none !important;
+        }
+      }
+      &[disabled],
+      &[data-disabled="true"] {
+        opacity: 0.5 !important;
+        cursor: not-allowed !important;
+        filter: grayscale(0.4);
+        pointer-events: none;
+
+        /* Prevent hover ripple animation */
+        &::after {
+          display: none !important;
+        }
+      }
+
+      /* Common styles with consistent transition */
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+        opacity: 1;
+      }
+
+      /* Filled buttons */
+      &[data-variant="filled"] {
+        border: var(--dml-color-secondary);
+        --button-bg: var(--dml-color-secondary);
+        --button-hover-lighten: color-mix(in srgb, var(--button-bg), #fff 10%);
+        --button-text: var(--dml-color-natural-white);
+        background: var(--button-bg);
+        color: var(--button-text);
+        transition: color 0.3s ease;
+
+        &::after {
+          background: rgba(255, 255, 255, 0.2);
+          transition:
+            width 1s cubic-bezier(0.4, 0, 0.2, 1),
+            height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover {
+          border: rgb(19, 18, 18);
+          color: var(--button-text);
+          background: rgb(19, 18, 18);
+
+          &::after {
+            width: 300px;
+            height: 300px;
+          }
+        }
+
+        @apply dark:bg-v2primary;
+      }
+
+      &[data-variant="chat-button"] {
+        --button-bg: rgb(89, 89, 192);
+        --button-hover-lighten: color-mix(in srgb, var(--button-bg), #fff 10%);
+        --button-text: var(--dml-color-natural-white);
+
+        background: var(--button-bg);
+        color: var(--button-text);
+        transition: color 0.3s ease;
+
+        &::after {
+          background: rgba(255, 255, 255, 0.2);
+          transition:
+            width 1s cubic-bezier(0.4, 0, 0.2, 1),
+            height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover {
+          color: var(--button-text);
+          background: rgb(233, 229, 229);
+
+          &::after {
+            width: 300px;
+            height: 300px;
+          }
+        }
+      }
+
+      /* Light buttons */
+      &[data-variant="light"] {
+        --button-text: var(--dml-color-foreground);
+        --button-light-bg: var(--dml-color-grey-low);
+
+        background: var(--button-light-bg);
+        color: var(--button-text);
+        transition: background-color 0.3s ease;
+
+        &::after {
+          background: rgba(0, 0, 0, 0.08);
+          transition:
+            width 1s cubic-bezier(0.4, 0, 0.2, 1),
+            height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover {
+          background: var(--button-light-bg);
+
+          &::after {
+            width: 300px;
+            height: 300px;
+          }
+        }
+      }
+
+      /* Outline buttons */
+      &[data-variant="outline"] {
+        --button-text: var(--dml-color-v2foreground);
+        --button-outline-bg: transparent;
+        border: 1px solid var(--dml-color-v2foreground);
+        background: var(--button-light-bg);
+        color: --button-text;
+        transition: background-color 0.3s ease;
+
+        &::after {
+          background: rgba(0, 0, 0, 0.08);
+          transition:
+            width 1s cubic-bezier(0.4, 0, 0.2, 1),
+            height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover {
+          &::after {
+            width: 300px;
+            height: 300px;
+          }
+        }
+
+        @apply dark:bg-transparent dark:border-v2primary-100 dark:text-v2primary-100;
+      }
+
+      &[data-variant="outline-edit"] {
+        @apply px-6 py-2 rounded-3xl;
+        --button-text: var(--dml-color-v2foreground);
+        border: 1px solid var(--dml-color-v2foreground);
+        background: transparent;
+        color: var(--button-text);
+        transition: background-color 0.3s ease;
+
+        &::after {
+          background: rgba(0, 0, 0, 0.08);
+          transition:
+            width 1s cubic-bezier(0.4, 0, 0.2, 1),
+            height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover {
+          background: transparent;
+
+          &::after {
+            width: 300px;
+            height: 300px;
+          }
+        }
+
+        @apply dark:bg-transparent dark:border-v2primary-100 dark:text-v2primary-100;
+      }
+      &[data-variant="link-animate"] {
+        @apply text-base dark:text-rose font-medium text-primary relative;
+        background: transparent;
+        border: none;
+        padding: 0;
+        border-radius: 0;
+
+        .dml-Button-label {
+          display: inline-block;
+          position: relative;
+
+          &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 20px;
+            width: 100%;
+            height: 2px;
+            @apply dark:bg-rose bg-v2primary;
+            transition: transform 0.5s ease;
+            transform-origin: center;
+            transform: scaleX(1);
+          }
+        }
+
+        &:hover .dml-Button-label::after {
+          transform: scaleX(0);
+        }
+
+        &:hover {
+          background: transparent;
+        }
+
+        &::after {
+          display: none;
+        }
+      }
+
+      &[data-variant="outline-magenta"] {
+        --button-text: var(--dml-color-v2foreground);
+        --button-outline-bg: transparent;
+        border: 1px solid #5c61f2;
+        background: var(--button-light-bg);
+        color: #5c61f2;
+        transition: background-color 0.3s ease;
+
+        &::after {
+          background: rgba(0, 0, 0, 0.08);
+          transition:
+            width 1s cubic-bezier(0.4, 0, 0.2, 1),
+            height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover {
+          background: var(--button-light-bg);
+
+          &::after {
+            width: 300px;
+            height: 300px;
+          }
+        }
+
+        @apply dark:bg-transparent dark:border-v2primary-400 dark:text-v2primary-400 hover:dark:bg-v2foreground-900;
+      }
+
+      &[data-variant="light-table-version"] {
+        --button-text: var(--dml-color-foreground);
+        --button-light-bg: var(--mantine-color-secondary-light);
+
+        background: var(--button-light-bg);
+        color: var(--button-text);
+        transition: background-color 0.3s ease;
+
+        &::after {
+          background: rgba(0, 0, 0, 0.08);
+          transition:
+            width 1s cubic-bezier(0.4, 0, 0.2, 1),
+            height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover {
+          background: var(--button-light-bg);
+
+          &::after {
+            width: 300px;
+            height: 300px;
+          }
+        }
+        @apply dark:bg-v2foreground-200;
+      }
+      &[data-variant="lightest"] {
+        --button-text: var(--dml-color-foreground);
+        --button-light-bg: white;
+
+        background: var(--button-light-bg);
+        color: var(--button-text);
+        transition: background-color 0.3s ease;
+        border: 1px solid var(--dml-color-v2grey-200);
+
+        &::after {
+          background: rgba(0, 0, 0, 0.08);
+          transition:
+            width 1s cubic-bezier(0.4, 0, 0.2, 1),
+            height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover {
+          background: var(--button-light-bg);
+
+          &::after {
+            width: 300px;
+            height: 300px;
+          }
+        }
+        @apply dark:bg-white dark:border-[1px] dark:border-v2foreground-700;
+      }
+
+      &[data-variant="default"] {
+        --button-text: var(--dml-color-foreground);
+
+        color: var(--button-text);
+        transition: background-color 0.3s ease;
+
+        &::after {
+          background: rgba(0, 0, 0, 0.08);
+          transition:
+            width 1s cubic-bezier(0.4, 0, 0.2, 1),
+            height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover:not(:disabled) {
+          background: rgb(255, 255, 255);
+
+          &::after {
+            width: 300px;
+            height: 300px;
+          }
+        }
+
+        @apply dark:bg-v2foreground dark:hover:bg-v2foreground dark:text-white;
+
+        html.dark &::after {
+          background: rgba(255, 255, 255, 0.12);
+        }
+      }
+      /* Default variant (for filter button) */
+      &[data-variant="default-blue"] {
+        --button-text: var(--dml-color-foreground);
+        background-color: #5c61f2;
+
+        color: white;
+        transition: background-color 0.3s ease;
+
+        &::after {
+          background: rgba(0, 0, 0, 0.055);
+          transition:
+            width 1s cubic-bezier(0.4, 0, 0.2, 1),
+            height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover:not(:disabled) {
+          background: #4a4fd4;
+
+          &::after {
+            width: 300px;
+            height: 300px;
+          }
+        }
+        @apply dark:bg-v2primary dark:text-white;
+
+        @media (prefers-color-scheme: dark) {
+          &::after {
+            background: rgba(255, 255, 255, 0.15);
+          }
+        }
+      }
+      &[data-variant="long-button-outline-light"] {
+        --button-text: var(--dml-color-foreground);
+        --button-light-bg: white;
+
+        background: var(--button-light-bg);
+        color: var(--button-text);
+        transition: background-color 0.3s ease;
+
+        &::after {
+          background: rgba(0, 0, 0, 0.08);
+          transition:
+            width 1s cubic-bezier(0.4, 0, 0.2, 1),
+            height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover {
+          background: var(--button-light-bg);
+
+          &::after {
+            width: 1520px;
+            height: 1520px;
+          }
+        }
+        @media (prefers-color-scheme: dark) {
+          &::after {
+            background: rgba(31, 58, 211, 0.15);
+          }
+        }
+        @apply border-grey-medium  dark:border-white  text-foreground dark:bg-v2foreground dark:text-white;
+      }
+
+      &[data-variant="long-button-light"] {
+        --button-text: var(--dml-color-foreground);
+        --button-light-bg: var(--dml-color-grey-low);
+
+        background: var(--button-light-bg);
+        color: var(--button-text);
+        transition: background-color 0.3s ease;
+
+        &::after {
+          background: rgba(0, 0, 0, 0.08);
+          transition:
+            width 1s cubic-bezier(0.4, 0, 0.2, 1),
+            height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover {
+          background: var(--button-light-bg);
+
+          &::after {
+            width: 1500px;
+            height: 1500px;
+          }
+        }
+      }
+      /* Dark mode override */
+      .dark &[data-variant="long-button-light"] {
+        --button-light-bg: var(--dml-color-v2foreground);
+        --button-text: var(--dml-color-white);
+      }
+      &[data-variant="long-button-dark"] {
+        --button-bg: var(--dml-color-secondary);
+        --button-hover-lighten: color-mix(in srgb, var(--button-bg), #fff 10%);
+        --button-text: var(--dml-color-natural-white);
+
+        background: var(--button-bg);
+        color: var(--button-text);
+        transition: color 0.3s ease;
+
+        &::after {
+          background: rgba(255, 255, 255, 0.2);
+          transition:
+            width 1s cubic-bezier(0.4, 0, 0.2, 1),
+            height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover {
+          color: var(--button-text);
+          background: rgb(19, 18, 18);
+
+          &::after {
+            width: 1500px;
+            height: 1500px;
+          }
+        }
+      }
+      &[data-variant="no-bg"] {
+        --button-text: var(--dml-color-foreground);
+
+        color: var(--button-text);
+        background: transparent;
+      }
+
+      &[data-variant="transparent"] {
+        --button-text: var(--dml-color-foreground);
+
+        color: var(--button-text);
+        transition: background-color 0.3s ease;
+
+        &::after {
+          background: rgba(0, 0, 0, 0.055);
+          transition:
+            width 1s cubic-bezier(0.4, 0, 0.2, 1),
+            height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover:not(:disabled) {
+          background: transparent;
+
+          &::after {
+            width: 300px;
+            height: 300px;
+          }
+        }
+      }
+
+      /* Add color variants */
+      &[data-variant="filled"][data-color="primary"] {
+        --button-bg: var(--dml-color-primary);
+        --button-hover-lighten: color-mix(in srgb, var(--dml-color-primary), #fff 2%);
+      }
+
+      &[data-variant="filled"][data-color="danger"] {
+        --button-bg: var(--dml-color-danger);
+        --button-hover-lighten: color-mix(in srgb, var(--dml-color-danger), #fff 2%);
+      }
+
+      &[data-size="esm"] {
+        .dml-Button-section[data-position="left"] {
+          margin-inline-end: 8px;
+        }
+      }
+
+      .dml-Button-section {
+        position: relative;
+        z-index: 2;
+      }
+    }
+  }
+}
+.delete-icon-circle {
+  display: block !important;
+  min-width: 21px !important;
+  min-height: 21px !important;
+  width: 21px !important;
+  height: 21px !important;
+  border-radius: 50% !important;
+  background-color: rgb(241, 78, 78);
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.delete-icon-circle::before,
+.delete-icon-circle::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 2px;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+}
+
+.delete-icon-circle::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.delete-icon-circle::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.delete-icon-circle:hover {
+  background-color: #f56969;
+}
+
+.delete-icon-circle:hover::before,
+.delete-icon-circle:hover::after {
+  background-color: rgb(255, 255, 255);
+}
+
+.cross-icon {
+  display: block !important;
+  min-width: 21px !important;
+  min-height: 21px !important;
+  width: 21px !important;
+  height: 21px !important;
+  border-radius: 50% !important;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.cross-icon::before,
+.cross-icon::after {
+  content: "";
+  position: absolute;
+  width: 17px;
+
+  height: 2px;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+}
+
+.cross-icon::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.cross-icon::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.cross-icon:hover::before,
+.cross-icon:hover::after {
+  background-color: rgb(255, 255, 255);
+}

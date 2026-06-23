@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Title, Text, SimpleGrid, Card, Stack, Group, Badge, Table } from '@mantine/core';
 import { IconTrendingUp, IconUsers, IconBox, IconShoppingCart } from '@tabler/icons-react';
-import DashboardCard from '../../components/cards/card';
+import MetrixCard from '../../components/cards/card';
 import { API_URL } from '../../services/api';
 import { formatCurrency } from '../../utils/format';
 
@@ -41,7 +41,7 @@ export default function AdminDashboardPage() {
 
       {/* Stats Cards */}
       <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="xl" mb="xl">
-        <DashboardCard
+        <MetrixCard
           title="Total Sales"
           value={`$${formatCurrency(stats?.total_sales)}`}
           delta={stats?.sales_change_percent ?? undefined}
@@ -51,7 +51,7 @@ export default function AdminDashboardPage() {
           footerText="View more..."
         />
 
-        <DashboardCard
+        <MetrixCard
           title="Total Orders"
           value={stats?.total_orders || 0}
           delta={stats?.orders_change_percent ?? undefined}
@@ -61,7 +61,7 @@ export default function AdminDashboardPage() {
           footerText="View more..."
         />
 
-        <DashboardCard
+        <MetrixCard
           title="Total Customers"
           value={stats?.total_customers || 0}
           delta={stats?.customers_change_percent ?? undefined}
@@ -71,7 +71,7 @@ export default function AdminDashboardPage() {
           footerText="View more..."
         />
 
-        <DashboardCard
+        <MetrixCard
           title="Total Products"
           value={stats?.total_products || 0}
           delta={stats?.products_change_percent ?? undefined}

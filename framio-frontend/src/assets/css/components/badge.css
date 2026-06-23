@@ -1,0 +1,5 @@
+.eligible {
+  &-badge {
+    @apply px-[10px] py-2 bg-[--dml-color-tag-bg] text-secondary rounded-lg text-fs-lg font-medium;
+  }
+}

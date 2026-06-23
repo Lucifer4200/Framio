@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Container, Title, Text, Button, Group, Stack, Card, Table, Modal, TextInput, Switch } from '@mantine/core';
+import DynamicTable from '@/components/table/DynamicTable';
 import { IconPlus, IconEdit, IconTrash } from '@tabler/icons-react';
 import { API_URL } from '../../../services/api';
 
@@ -113,41 +114,43 @@ export default function AdminCategoriesPage() {
         </Button>
       </Group>
 
-      <Card withBorder p="xl">
-        <Table>
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>Name</Table.Th>
-              <Table.Th>Slug</Table.Th>
-              <Table.Th>Status</Table.Th>
-              <Table.Th>Actions</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            {categories.map((category) => (
-              <Table.Tr key={category.id}>
-                <Table.Td>{category.name}</Table.Td>
-                <Table.Td>{category.slug}</Table.Td>
-                <Table.Td>
-                  <Text size="xs" c={category.status === 'active' ? 'green' : 'red'}>
-                    {category.status}
-                  </Text>
-                </Table.Td>
-                <Table.Td>
-                  <Group gap={4}>
-                    <Button size="xs" variant="light" onClick={() => handleEdit(category)}>
-                      <IconEdit size={14} />
-                    </Button>
-                    <Button size="xs" variant="light" color="red" onClick={() => handleDelete(category.id)}>
-                      <IconTrash size={14} />
-                    </Button>
-                  </Group>
-                </Table.Td>
-              </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
-      </Card>
+      <div className="card">
+        <DynamicTable
+          columns={useMemo(() => [
+            { id: 'name', label: 'Name', accessor: 'name', align: 'left' as const },
+            { id: 'slug', label: 'Slug', accessor: 'slug', align: 'left' as const },
+            {
+              id: 'status',
+              label: 'Status',
+              accessor: (cat: any) => (
+                <Text size="xs" c={cat.status === 'active' ? 'green' : 'red'}>
+                  {cat.status}
+                </Text>
+              ),
+              align: 'left' as const,
+            },
+            {
+              id: 'actions',
+              label: 'Actions',
+              accessor: (cat: any) => (
+                <Group gap={4}>
+                  <Button size="xs" variant="light" onClick={() => handleEdit(cat)}>
+                    <IconEdit size={14} />
+                  </Button>
+                  <Button size="xs" variant="light" color="red" onClick={() => handleDelete(cat.id)}>
+                    <IconTrash size={14} />
+                  </Button>
+                </Group>
+              ),
+              align: 'center' as const,
+            },
+          ], [])}
+          data={categories}
+          isLoading={loading}
+          emptyMessage="No categories found"
+          tableProps={{ miw: 800 }}
+        />
+      </div>
 
       <Modal opened={modalOpened} onClose={() => setModalOpened(false)} title={editingCategory ? 'Edit Category' : 'Add Category'}>
         <form onSubmit={handleSubmit}>

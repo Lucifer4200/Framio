@@ -1,0 +1,13 @@
+.dml {
+  &-Anchor {
+    &-root {
+      &[data-variant="link-animate"] {
+        @apply text-base dark:!text-rose font-medium text-primary relative 
+          after:content-[''] after:absolute after:left-0 after:bottom-0 
+          after:w-full after:h-[2px] dark:after:bg-rose after:bg-v2primary 
+          after:transition-transform after:duration-500 hover:after:scale-x-0;
+        text-decoration: none;
+      }
+    }
+  }
+}

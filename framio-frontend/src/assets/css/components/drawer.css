@@ -1,0 +1,21 @@
+.dml {
+  &-Drawer {
+    &-content {
+      @apply px-0;
+    }
+    &-header {
+      @apply px-0 mx-6 py-5 min-h-0 border-b border-b-grey-shade;
+    }
+    &-title {
+      @apply h6 text-v2foreground dark:text-white;
+    }
+    &-close {
+      i {
+        @apply text-foreground text-xl/none;
+      }
+    }
+    &-body {
+      @apply px-6 pt-7 pb-10;
+    }
+  }
+}

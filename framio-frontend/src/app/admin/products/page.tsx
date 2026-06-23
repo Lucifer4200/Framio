@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Container, Title, Text, Button, Group, Stack, Card, Table, Modal, TextInput, NumberInput, Select, Textarea } from '@mantine/core';
+import DynamicTable from '@/components/table/DynamicTable';
 import { IconPlus, IconEdit, IconTrash } from '@tabler/icons-react';
 import { API_URL } from '../../../services/api';
 import { formatCurrency } from '../../../utils/format';
@@ -135,45 +136,31 @@ export default function AdminProductsPage() {
         </Button>
       </Group>
 
-      <Card withBorder p="xl">
-        <Table>
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>Name</Table.Th>
-              <Table.Th>Category</Table.Th>
-              <Table.Th>Price</Table.Th>
-              <Table.Th>Stock</Table.Th>
-              <Table.Th>Status</Table.Th>
-              <Table.Th>Actions</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            {products.map((product) => (
-              <Table.Tr key={product.id}>
-                <Table.Td>{product.name}</Table.Td>
-                <Table.Td>{product.category_name || '-'}</Table.Td>
-                <Table.Td>${formatCurrency(product.price)}</Table.Td>
-                <Table.Td>{product.stock}</Table.Td>
-                <Table.Td>
-                  <Text size="xs" c={product.status === 'active' ? 'green' : 'red'}>
-                    {product.status}
-                  </Text>
-                </Table.Td>
-                <Table.Td>
-                  <Group gap={4}>
-                    <Button size="xs" variant="light" onClick={() => handleEdit(product)}>
-                      <IconEdit size={14} />
-                    </Button>
-                    <Button size="xs" variant="light" color="red" onClick={() => handleDelete(product.id)}>
-                      <IconTrash size={14} />
-                    </Button>
-                  </Group>
-                </Table.Td>
-              </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
-      </Card>
+      <div className="card">
+        <DynamicTable
+          columns={useMemo(() => [
+            { id: 'name', label: 'Name', accessor: 'name', align: 'left' as const },
+            { id: 'category_name', label: 'Category', accessor: (p: any) => p.category_name || '-', align: 'left' as const },
+            { id: 'price', label: 'Price', accessor: (p: any) => `$${formatCurrency(p.price)}`, align: 'right' as const },
+            { id: 'stock', label: 'Stock', accessor: 'stock', align: 'right' as const },
+            { id: 'status', label: 'Status', accessor: (p: any) => <Text size="xs" c={p.status === 'active' ? 'green' : 'red'}>{p.status}</Text>, align: 'left' as const },
+            { id: 'actions', label: 'Actions', accessor: (p: any) => (
+              <Group gap={4}>
+                <Button size="xs" variant="light" onClick={() => handleEdit(p)}>
+                  <IconEdit size={14} />
+                </Button>
+                <Button size="xs" variant="light" color="red" onClick={() => handleDelete(p.id)}>
+                  <IconTrash size={14} />
+                </Button>
+              </Group>
+            ), align: 'center' as const },
+          ], [])}
+          data={products}
+          isLoading={loading}
+          emptyMessage="No products found"
+          tableProps={{ miw: 1000 }}
+        />
+      </div>
 
       <Modal opened={modalOpened} onClose={() => setModalOpened(false)} title={editingProduct ? 'Edit Product' : 'Add Product'} size="xl">
         <form onSubmit={handleSubmit}>

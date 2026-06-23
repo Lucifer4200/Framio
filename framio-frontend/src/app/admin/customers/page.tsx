@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Container, Title, Text, Card, Table } from '@mantine/core';
+import DynamicTable from '@/components/table/DynamicTable';
 import { API_URL } from '../../../services/api';
 import { formatCurrency } from '../../../utils/format';
 
@@ -37,36 +38,22 @@ export default function AdminCustomersPage() {
     <Container size="xl">
       <Title order={1} mb="xl">Customers</Title>
 
-      <Card withBorder p="xl">
-        <Table>
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>Name</Table.Th>
-              <Table.Th>Email</Table.Th>
-              <Table.Th>Phone</Table.Th>
-              <Table.Th>Orders</Table.Th>
-              <Table.Th>Total Spent</Table.Th>
-              <Table.Th>Status</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            {customers.map((customer) => (
-              <Table.Tr key={customer.id}>
-                <Table.Td>{customer.name}</Table.Td>
-                <Table.Td>{customer.email}</Table.Td>
-                <Table.Td>{customer.phone || '-'}</Table.Td>
-                <Table.Td>{customer.order_count || 0}</Table.Td>
-                <Table.Td>${formatCurrency(customer.total_spent)}</Table.Td>
-                <Table.Td>
-                  <Text size="xs" c={customer.status === 'active' ? 'green' : 'red'}>
-                    {customer.status}
-                  </Text>
-                </Table.Td>
-              </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
-      </Card>
+      <div className="card">
+        <DynamicTable
+          columns={useMemo(() => [
+            { id: 'name', label: 'Name', accessor: 'name', align: 'left' as const },
+            { id: 'email', label: 'Email', accessor: 'email', align: 'left' as const },
+            { id: 'phone', label: 'Phone', accessor: (c: any) => c.phone || '-', align: 'left' as const },
+            { id: 'orders', label: 'Orders', accessor: (c: any) => c.order_count || 0, align: 'right' as const },
+            { id: 'total_spent', label: 'Total Spent', accessor: (c: any) => `$${formatCurrency(c.total_spent)}`, align: 'right' as const },
+            { id: 'status', label: 'Status', accessor: (c: any) => <Text size="xs" c={c.status === 'active' ? 'green' : 'red'}>{c.status}</Text>, align: 'left' as const },
+          ], [])}
+          data={customers}
+          isLoading={loading}
+          emptyMessage="No customers found"
+          tableProps={{ miw: 900 }}
+        />
+      </div>
     </Container>
   );
 }

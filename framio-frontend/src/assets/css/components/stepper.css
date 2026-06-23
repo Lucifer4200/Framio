@@ -1,0 +1,99 @@
+/* Stepper Style */
+.dml {
+  &-Stepper {
+    &-steps {
+      margin: 0 auto;
+      margin-top: -10px;
+      position: relative;
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 26px;
+        left: 0%;
+        transform: translate(110px, -50%);
+        width: calc(100% - 200px);
+        height: 2px;
+        background-image: linear-gradient(90deg, var(--dml-color-grey-light) 50%, transparent 50%, transparent 70%, transparent 100%);
+        background-size: 10px 5px;
+        z-index: 0;
+      }
+    }
+    &-step {
+      flex-direction: column;
+      margin-right: -17px;
+      min-width: 190px;
+    }
+    &-stepWrapper {
+      display: flex;
+      justify-content: center;
+    }
+    &-stepBody {
+      margin-top: 15px;
+      text-align: center;
+      margin-inline-start: 0;
+    }
+    &-separator {
+      opacity: 0;
+      /* position: relative;
+      top: -30px;
+      background: transparent;
+      border: 1px solid transparent; */
+      /* background: linear-gradient(to right, var(--dml-color-grey-medium) 50%, transparent 0) 0 0; */
+      /* background-image: linear-gradient(90deg, var(--dml-color-grey-medium) 60%, transparent 60%, transparent 70%, transparent 100%);
+      background-size: 10px 5px; */
+    }
+    &-stepIcon {
+      width: 50px;
+      height: 50px;
+      font-size: 18px;
+      background-color: var(--dml-color-v2primary-50);
+      color: var(--dml-color-v2foreground);
+      border: none;
+    }
+    &-stepIcon[data-progress] {
+      background-color: var(--dml-color-v2primary);
+      color: white;
+      border: none;
+    }
+    &-stepCompletedIcon {
+      background-color: var(--dml-color-v2primary);
+      border-radius: 50%;
+    }
+
+    .dark &-stepIcon {
+      background-color: var(--dml-color-v2primary-900);
+    }
+    .dark &-stepIcon[data-progress] {
+      background-color: var(--dml-color-rose);
+      color: white;
+    }
+    .dark &-stepCompletedIcon {
+      background-color: var(--dml-color-rose);
+    }
+    &-stepLabel {
+      color: var(--dml-color-secondary);
+      font-size: 18px;
+      font-weight: 500;
+    }
+    &-stepDescription {
+      margin-top: 10px;
+      font-size: 14px;
+      margin-bottom: 0px;
+    }
+    &-content {
+      padding-top: 40px;
+    }
+  }
+
+  &-tag {
+    &-input {
+      .dml {
+        &-control {
+          padding: 10px;
+          height: unset;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.dml-Pagination {
+  &-control {
+    border-color: transparent;
+    background-color: transparent;
+    color: var(--dml-color-foreground);
+    font-weight: var(--dml-fw-medium);
+    &[data-active="true"] {
+      background-color: var(--dml-color-foreground);
+      color: var(--dml-color-natural-white);
+    }
+  }
+}

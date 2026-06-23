@@ -1,0 +1,113 @@
+.webcam {
+  &-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 400px;
+    /* img,
+    video {
+      border-radius: 8px;
+      border: 4px solid var(--dml-color-grey-low);
+    } */
+    .webcam {
+      &-frame {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 337px;
+        height: 337px;
+        pointer-events: none;
+        z-index: 1;
+        .frame-corner {
+          position: absolute;
+          width: 50px; /* Adjust corner width */
+          height: 50px; /* Adjust corner height */
+          border: 4px solid #afffa7; /* Adjust border style and color */
+          &.top-left {
+            top: 10px; /* Adjust top gap */
+            left: 10px; /* Adjust left gap */
+            border-right: 0px solid transparent;
+            border-bottom: 0px solid transparent;
+          }
+
+          &.top-right {
+            top: 10px; /* Adjust top gap */
+            right: 10px; /* Adjust right gap */
+            border-left: 0px solid transparent;
+            border-bottom: 0px solid transparent;
+          }
+
+          &.bottom-left {
+            bottom: 10px; /* Adjust bottom gap */
+            left: 10px; /* Adjust left gap */
+            border-right: 0px solid transparent;
+            border-top: 0px solid transparent;
+          }
+
+          &.bottom-right {
+            bottom: 10px; /* Adjust bottom gap */
+            right: 10px; /* Adjust right gap */
+            border-left: 0px solid transparent;
+            border-top: 0px solid transparent;
+          }
+        }
+        @media all and (max-width: 768px) {
+          display: none;
+        }
+      }
+      &-area {
+        width: 660px;
+        height: 400px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &-content {
+        width: 660px;
+        height: 400px;
+        overflow: hidden;
+        border-radius: 8px;
+        border: 4px solid var(--dml-color-grey-low);
+      }
+    }
+    @media all and (max-width: 768px) {
+      height: 300px;
+      .webcam {
+        &-frame {
+          width: 250px;
+          height: 250px;
+        }
+        &-area {
+          width: calc(100% - 10px);
+          height: 300px;
+        }
+        &-content {
+          width: calc(100% - 10px);
+          height: 300px;
+        }
+      }
+    }
+  }
+}
+
+.captured {
+  &-thumbnail {
+    width: 140px;
+    height: 140px;
+    overflow: hidden;
+    img {
+      min-height: 100%;
+      min-width: 100%;
+      width: auto;
+      height: auto;
+    }
+    &.on-camera-page {
+      @media all and (max-width: 768px) {
+        width: 85px;
+        height: 85px;
+      }
+    }
+  }
+}

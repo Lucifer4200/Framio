@@ -1,5 +1,5 @@
 import '@mantine/core/styles.css';
-import './globals.css';
+import '@/assets/css/styles.css';
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 
 export const metadata = {
@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <ColorSchemeScript defaultColorScheme="light" />
       </head>

@@ -1,0 +1,15 @@
+.external-page {
+  &-header {
+    max-width: 1240px;
+    margin: 0 auto;
+    @apply flex-col mb-6 sm:mb-0 sm:flex-row xl:pt-[80px] xl:pb-9 sm:pt-[40px] sm:pb-5;
+  }
+  &-container {
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+}
+
+.feedback-page-bg {
+  background: url("/images/repeat.svg") repeat-y top center / auto;
+}

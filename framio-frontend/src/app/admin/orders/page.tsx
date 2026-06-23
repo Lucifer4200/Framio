@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Container, Title, Text, Button, Group, Stack, Card, Table, Modal, Select, Badge } from '@mantine/core';
+import DynamicTable from '@/components/table/DynamicTable';
 import { IconEye } from '@tabler/icons-react';
 import { API_URL } from '../../../services/api';
 import { formatCurrency } from '../../../utils/format';
@@ -77,46 +78,23 @@ export default function AdminOrdersPage() {
     <Container size="xl">
       <Title order={1} mb="xl">Orders</Title>
 
-      <Card withBorder p="xl">
-        <Table>
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>Order #</Table.Th>
-              <Table.Th>Customer</Table.Th>
-              <Table.Th>Total</Table.Th>
-              <Table.Th>Payment Status</Table.Th>
-              <Table.Th>Order Status</Table.Th>
-              <Table.Th>Date</Table.Th>
-              <Table.Th>Actions</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            {orders.map((order) => (
-              <Table.Tr key={order.id}>
-                <Table.Td>{order.order_number}</Table.Td>
-                <Table.Td>{order.customer_name}</Table.Td>
-                <Table.Td>${formatCurrency(order.total_amount)}</Table.Td>
-                <Table.Td>
-                  <Badge color={order.payment_status === 'paid' ? 'green' : 'yellow'}>
-                    {order.payment_status}
-                  </Badge>
-                </Table.Td>
-                <Table.Td>
-                  <Badge color={getStatusColor(order.order_status)}>
-                    {order.order_status}
-                  </Badge>
-                </Table.Td>
-                <Table.Td>{new Date(order.created_at).toLocaleDateString()}</Table.Td>
-                <Table.Td>
-                  <Button size="xs" variant="light" onClick={() => handleView(order)}>
-                    <IconEye size={14} />
-                  </Button>
-                </Table.Td>
-              </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
-      </Card>
+      <div className="card">
+        <DynamicTable
+          columns={useMemo(() => [
+            { id: 'order_number', label: 'Order #', accessor: 'order_number', align: 'left' as const },
+            { id: 'customer_name', label: 'Customer', accessor: 'customer_name', align: 'left' as const },
+            { id: 'total', label: 'Total', accessor: (o: any) => `$${formatCurrency(o.total_amount)}`, align: 'right' as const },
+            { id: 'payment_status', label: 'Payment Status', accessor: (o: any) => <Badge color={o.payment_status === 'paid' ? 'green' : 'yellow'}>{o.payment_status}</Badge>, align: 'left' as const },
+            { id: 'order_status', label: 'Order Status', accessor: (o: any) => <Badge color={getStatusColor(o.order_status)}>{o.order_status}</Badge>, align: 'left' as const },
+            { id: 'date', label: 'Date', accessor: (o: any) => new Date(o.created_at).toLocaleDateString(), align: 'left' as const },
+            { id: 'actions', label: 'Actions', accessor: (o: any) => <Button size="xs" variant="light" onClick={() => handleView(o)}><IconEye size={14} /></Button>, align: 'center' as const },
+          ], [])}
+          data={orders}
+          isLoading={loading}
+          emptyMessage="No orders found"
+          tableProps={{ miw: 1000 }}
+        />
+      </div>
 
       <Modal opened={modalOpened} onClose={() => setModalOpened(false)} title={`Order ${selectedOrder?.order_number}`} size="xl">
         {selectedOrder && (

@@ -1,0 +1,86 @@
+.stepbar {
+  &__status {
+    padding-bottom: 0;
+    padding: 50px 0 80px;
+    max-width: 85%;
+    width: 100%;
+    position: relative;
+    left: 48%;
+    transform: translateX(-50%);
+  }
+
+  &__track {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    .tracker {
+      position: absolute;
+      top: 0;
+      width: 100%;
+
+      &__single {
+        height: 2px;
+        width: 33.33%;
+        background-image: repeating-linear-gradient(to right, var(--dml-color-grey-medium) 0, var(--dml-color-grey-medium) 5px, transparent 5px, transparent 10px);
+        display: inline-block;
+        position: relative;
+
+        &.active {
+          background-image: repeating-linear-gradient(to right, var(--dml-color-grey-medium) 0, var(--dml-color-grey-medium) 5px, transparent 5px, transparent 10px);
+          .tracker__single__number {
+            background-color: var(--dml-color-primary);
+            color: white;
+          }
+        }
+        &__number {
+          position: absolute;
+          z-index: 1;
+          width: 50px;
+          height: 50px;
+          top: 50%;
+          transform: translateY(-50%);
+          background-color: #e5efff;
+          border-radius: 40px;
+          color: var(--dml-color-secondary);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        &:last-child {
+          width: 0;
+        }
+      }
+    }
+  }
+
+  &__step {
+    /* width: 20px;
+    height: 20px;
+    border-color: var(--dml-color-primary);
+    background-color: var(--dml-color-primary);
+    border-radius: 50%; */
+    position: relative;
+    z-index: 0;
+    top: 50px;
+    left: 24px;
+
+    &.active {
+      border-color: white;
+      background: white;
+    }
+  }
+
+  &__step-label {
+    font-size: 14px;
+    display: block;
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    color: #000000;
+    white-space: nowrap;
+  }
+}

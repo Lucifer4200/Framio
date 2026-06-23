@@ -1,0 +1,244 @@
+@layer components {
+  .card {
+    @apply lg:bg-white dark:bg-v2foreground lg:shadow-dml-box-shadow rounded-[20px] overflow-hidden;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: visible;
+
+    /* Prevent layout shift - reserve minimum height */
+    min-height: 100px;
+
+    /* Left to right fade animation */
+    animation: slideInFromLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+
+    /* @media screen and (max-width: 768px) {
+      padding: 15px;
+    } */
+    &-overflow {
+      @apply !overflow-y-auto;
+    }
+
+    /* Shimmer effect on enter */
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+      animation: shimmerLeftRight 1s ease-in-out 0.4s forwards; /* ← add forwards */
+      pointer-events: none;
+    }
+
+    /* Smooth opacity transition for content loading */
+    & > * {
+      animation: fadeIn 0.4s ease-out 0.3s backwards;
+    }
+
+    &-title {
+      @apply md:px-6 px-2 md:py-5 py-2 md:bg-[#CBCDFF] bg-transparent md:dark:bg-[#404263]  dark:bg-v2foreground  dark:!text-white md:rounded-t-[20px];
+      h6 {
+        @apply text-v2foreground dark:text-white;
+        animation: fadeIn 0.5s ease-out 0.4s backwards;
+      }
+      @apply font-outfit;
+      color: var(--dml-color-foreground);
+      &.with-border {
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--dml-color-grey-low);
+        position: relative;
+
+        /* Animated underline grows from left */
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: -1px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background: var(--dml-color-primary, #3b82f6);
+        }
+      }
+    }
+
+    &-with-header {
+      @apply border border-grey-low flex flex-col divide-y divide-grey-low rounded-xl;
+      animation: slideInFromLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    }
+
+    &-thumb {
+      @apply w-full sm:w-[180px];
+      animation: fadeIn 0.5s ease-out 0.3s backwards;
+    }
+    &-body {
+      @apply py-5 px-6;
+    }
+  }
+
+  /* Skeleton loading state - add this class while fetching */
+  .card-loading {
+    pointer-events: none;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
+      animation: skeletonLoading 1.5s ease-in-out infinite;
+    }
+
+    & > * {
+      opacity: 0.5;
+      animation: none;
+    }
+  }
+
+  /* Left to right slide animation */
+  @keyframes slideInFromLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Shimmer sweep effect left to right */
+  @keyframes shimmerLeftRight {
+    from {
+      left: -100%;
+    }
+    to {
+      left: 100%;
+      opacity: 0;
+    }
+  }
+
+  /* Skeleton loading animation */
+  @keyframes skeletonLoading {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Fade in animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Expand width animation */
+  @keyframes expandWidth {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  .admin-overall-stats-cards {
+    .swiper-wrapper {
+      @media screen and (max-width: 1440px) {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 20px;
+      }
+    }
+
+    .swiper-slide {
+      min-width: 200px;
+      width: auto;
+
+      /* Stagger left-to-right animation delay for each card */
+      &:nth-child(1) {
+        .card {
+          animation-delay: 0.05s;
+        }
+      }
+      &:nth-child(2) {
+        .card {
+          animation-delay: 0.1s;
+        }
+      }
+      &:nth-child(3) {
+        .card {
+          animation-delay: 0.15s;
+        }
+      }
+      &:nth-child(4) {
+        .card {
+          animation-delay: 0.2s;
+        }
+      }
+      &:nth-child(5) {
+        .card {
+          animation-delay: 0.25s;
+        }
+      }
+      &:nth-child(6) {
+        .card {
+          animation-delay: 0.3s;
+        }
+      }
+      &:nth-child(7) {
+        .card {
+          animation-delay: 0.35s;
+        }
+      }
+      &:nth-child(8) {
+        .card {
+          animation-delay: 0.4s;
+        }
+      }
+      &:nth-child(9) {
+        .card {
+          animation-delay: 0.45s;
+        }
+      }
+      &:nth-child(10) {
+        .card {
+          animation-delay: 0.5s;
+        }
+      }
+
+      @media screen and (max-width: 1440px) {
+        width: 200px;
+      }
+
+      .card {
+        animation: slideInFromLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+      }
+    }
+  }
+
+  .admin-overall-stats-nav {
+    @media screen and (min-width: 1300px) {
+      display: none !important;
+    }
+  }
+}
+
+@layer components {
+  .info {
+    &-card {
+      &-golden {
+        @apply bg-v2gold-200 dark:bg-v2gold-400 mb-4 rounded-xl p-5 text-lg leading-6 text-v2foreground text-center shadow-[0_4px_20px_#00000005];
+
+        &-content {
+          @apply text-fs-lg dark:text-v2foreground;
+        }
+      }
+    }
+  }
+}

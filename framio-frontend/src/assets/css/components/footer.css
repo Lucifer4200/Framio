@@ -1,0 +1,10 @@
+.footer {
+  &-bottom {
+    background-color: transparent;
+    padding-inline-start: calc(var(--app-shell-navbar-offset, 0rem) + var(--app-shell-padding));
+    padding-inline-end: 0px;
+    p {
+      background: white;
+    }
+  }
+}

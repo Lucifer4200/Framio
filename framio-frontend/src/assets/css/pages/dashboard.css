@@ -1,0 +1,335 @@
+@layer components {
+  /* global css */
+
+  /* dashboard css */
+  .dashboard {
+    &-empty {
+      @apply max-w-[553px] mx-auto my-20 text-center;
+      &-title {
+        @apply text-grey font-outfit;
+      }
+      &-title-ms {
+        @apply text-secondary font-outfit pt-20;
+      }
+      &-description {
+        @apply text-fs-lg font-outfit pt-3 text-grey;
+      }
+    }
+  }
+
+  /* user profile css */
+  .dml-profile {
+    &-content {
+      @apply flex flex-col gap-5;
+      &-inner {
+        @apply bg-white rounded-md py-5 px-6;
+        .inner-wrapper {
+          /* @apply flex gap-10 py-5; */
+          &-text {
+            /* @apply grid grid-cols-2 gap-10 divide-x w-[calc(100%_-_340px)]; */
+            .wrapper-text-flex {
+              /* @apply flex flex-col gap-10; */
+            }
+            .wrapper-text {
+              /* @apply pl-10; */
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .dml-profile-content-inner {
+    @apply bg-white rounded-3xl py-5 sm:px-6 px-5;
+    .inner-title {
+      @apply flex items-center justify-between border-b border-b-grey-low pb-4;
+      h6 {
+        @apply text-secondary;
+      }
+      span.inner-title-tag {
+        @apply bg-green-low text-green-middle px-1.5 py-0.5 rounded text-xs;
+      }
+      button {
+        font-weight: 500;
+      }
+    }
+    .inner-wrapper {
+      @apply flex sm:flex-row flex-col gap-10 py-5;
+      .inner-wrapper-text {
+        @apply grid md:grid-cols-2 md:gap-0 gap-5 md:divide-x sm:w-[calc(100%_-_250px)];
+        .wrapper-text-flex {
+          @apply flex flex-col md:gap-10 gap-5;
+          .wrapper-text {
+            @apply sm:pl-10;
+          }
+        }
+      }
+    }
+  }
+
+  /* doctor details css */
+
+  .doctor-details {
+    h2 {
+      @apply text-grey-medium font-outfit;
+    }
+    &-menu {
+      @apply flex items-center gap-1 bg-grey-low py-1 px-4 mt-2.5 mb-6 scale-[1.03];
+      li {
+        @apply text-secondary text-base font-normal;
+        &.disable-text {
+          @apply text-grey-medium;
+        }
+      }
+    }
+    &-grid {
+      @apply flex flex-col gap-5;
+      &-rows {
+        @apply bg-white rounded-xl p-6 shadow-dml-box-shadow;
+        span {
+          &.badge {
+            @apply px-2 py-1 rounded w-max text-fs-xs !font-medium;
+          }
+        }
+        &.rows-column {
+          @apply flex items-start gap-5;
+        }
+        &-inner {
+          @apply flex lg:flex-row flex-col lg:items-center gap-5 w-[calc(100%_-_60px)];
+          .doctor-des {
+            @apply flex flex-col gap-2 lg:w-[calc(100%_-_170px)] w-full;
+            &-name {
+              @apply flex items-center gap-2;
+              h5 {
+                @apply heading-xs text-foreground;
+              }
+            }
+            &-row {
+              @apply grid lg:grid-cols-3 sm:grid-cols-2 gap-10;
+              &-inner,
+              &-input {
+                @apply flex flex-col gap-2;
+                h6 {
+                  @apply text-grey text-fs-lg !font-medium;
+                }
+              }
+              &-inner {
+                h6 {
+                  @apply text-foreground;
+                }
+              }
+              &-input {
+                @apply gap-0;
+              }
+            }
+            &-type {
+              @apply flex flex-col gap-2;
+              h6 {
+                @apply text-fs-md text-foreground !font-medium;
+              }
+              span.badge {
+                @apply bg-primary-light text-primary w-max px-2 py-1 rounded text-fs-xs !font-medium;
+              }
+            }
+            &-pa {
+              @apply flex flex-col gap-2 lg:col-span-1 col-span-2;
+              h6 {
+                @apply text-fs-md font-medium text-foreground;
+              }
+              &-list {
+                @apply flex items-center gap-10;
+                .view-pa {
+                  @apply text-fs-sm !font-medium text-primary underline;
+                }
+              }
+            }
+          }
+        }
+        &-drop,
+        &-details {
+          @apply w-10 text-right;
+          .view-pa {
+            @apply text-fs-sm font-medium text-primary underline;
+          }
+        }
+        &-details {
+          @apply w-24;
+        }
+        &-title {
+          @apply flex flex-wrap items-end justify-between border-b border-b-grey-low pb-4;
+          h6 {
+            @apply text-foreground;
+          }
+          .title-anchor {
+            @apply sm:flex hidden items-center gap-5;
+          }
+        }
+        .doctor-client {
+          @apply flex items-center flex-wrap gap-2.5 pt-[22px];
+          li {
+            @apply bg-[#FDF2DC] px-2 py-1 rounded text-foreground text-fs-sm font-medium;
+          }
+        }
+        &.grid-variation {
+          @apply grid grid-cols-4 gap-4 bg-transparent shadow-none p-0;
+          .grid-variation-col {
+            @apply bg-white rounded-md py-5 px-6 rounded-md shadow-dml-box-shadow;
+            h6 {
+              @apply text-secondary pb-3;
+            }
+            span {
+              @apply text-primary heading-xs;
+            }
+          }
+        }
+        &.grid-doctor-variation {
+          @apply bg-transparent p-0 shadow-none;
+          .grid-doctor-variation-col {
+            @apply grid grid-cols-3 gap-5;
+            .medicine-list {
+              @apply col-span-1 bg-white shadow-dml-box-shadow rounded-md py-5 px-6;
+              h6 {
+                @apply text-secondary pb-6;
+              }
+              .medicine-list-item {
+                @apply flex flex-col gap-5;
+                .list-title {
+                  @apply flex items-center justify-between border-b border-b-grey-low pb-3;
+                }
+                li {
+                  @apply flex items-center justify-between;
+                  span {
+                    @apply text-fs-sm text-grey-medium font-normal;
+                    &.item-name {
+                      @apply text-secondary font-medium;
+                    }
+                  }
+                }
+              }
+            }
+            .doctor-perform {
+              @apply col-span-2 bg-white shadow-dml-box-shadow rounded-md py-5 px-6;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* global breadcrumbs css */
+.page-title {
+  @apply flex flex-wrap items-center justify-between gap-5;
+  &-start {
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply text-v2foreground dark:text-white lg:h5 uppercase;
+    }
+  }
+  &-end {
+    @apply flex items-center gap-3;
+  }
+}
+
+.dml-Breadcrumbs-root {
+  @apply bg-grey-low -ml-5 -mr-6 py-1 pl-5 pr-6 mb-6 mt-2;
+  a.dml-Breadcrumbs-breadcrumb {
+    @apply text-fs-md text-grey-medium font-normal;
+    line-height: 17.6px;
+    &:last-child {
+      @apply text-secondary;
+    }
+  }
+}
+
+/* Physician */
+.dml-List-itemLabel {
+  @apply flex flex-wrap gap-4;
+}
+.physician {
+  @apply flex items-center border border-grey-low rounded-full  ps-1 pe-2 py-1;
+}
+.dml-AppShell-main {
+  --app-shell-padding: 0px;
+}
+.dml-appShell-main-custom-style {
+  /* --app-shell-padding: var(--dml-appShell-padding); */
+  @apply sm:px-6 px-4 py-3;
+}
+
+/* app sidebar scroll inner height */
+.view-port-next-inner > div {
+  @apply h-full;
+}
+.icon-view {
+  transition: all 0.5s ease-in-out;
+}
+.dml-ActionIcon-icon {
+  transition: all 0.5s ease-in-out;
+}
+.dml-ActionIcon-icon:hover {
+  transition: all 0.5s ease-in-out;
+}
+
+.a_viewLink {
+  display: block;
+  position: relative;
+  padding: 0.2em 0;
+  text-decoration: none;
+}
+
+/* Underline visible by default */
+.a_viewLink::after {
+  content: "";
+  position: absolute;
+  bottom: 0.4em;
+  left: 0;
+  width: 100%;
+  height: 0.1em;
+  background-color: rgb(52, 27, 194);
+  opacity: 1;
+  transition:
+    opacity 300ms,
+    transform 300ms;
+}
+
+/* Underline disappears on hover */
+.a_viewLink:hover::after,
+.a_viewLink:focus::after {
+  opacity: 0;
+  transform: translate3d(0, 0.2em, 0);
+}
+.icon-view:hover {
+  color: rgb(45, 45, 185);
+}
+
+.icon-pencil-edit2 {
+  color: rgb(74, 74, 212);
+  transition: all 0.5s ease-in-out;
+}
+
+.icon-pencil-edit2:hover {
+  color: rgb(45, 45, 185);
+}
+.icon-Through:hover {
+  color: rgb(45, 45, 185);
+}
+.icon-Through {
+  transition: all 0.5s ease-in-out;
+}
+.icon-cross {
+  transition: all 0.5s ease-in-out;
+}
+.icon-cross:hover {
+  color: rgb(80, 78, 78);
+}
+
+.icon-delete {
+  transition: all 0.5s ease-in-out;
+}
+.icon-delete:hover {
+  color: rgb(180, 21, 21);
+}

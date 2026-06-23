@@ -1,0 +1,123 @@
+@keyframes sparkle {
+  0%,
+  100% {
+  }
+  50% {
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.sparkle-button {
+  animation: sparkle 1.5s ease-in-out infinite, pulse-glow 2s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+.chat-button {
+  opacity: 1;
+  transition: opacity 1s cubic-bezier(0.34, 1.56, 0.4, 1);
+}
+.chat-button:hover:not(:disabled) {
+  opacity: 0.9;
+}
+.sparkle-button::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shine 2s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  50%,
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+/* Smooth textarea growth animation */
+.textarea-expanded {
+  transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.4s ease, border-color 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow-y: auto;
+  will-change: height;
+  border: 2px solid transparent;
+}
+/* Faint violet border on hover */
+.textarea-expanded:hover:not(:disabled) {
+  border-color: rgba(139, 92, 246, 0.4);
+}
+/* Growing animation when text overflows */
+
+/* Smooth focus effects */
+/* Smooth focus effects */
+
+@keyframes softPulse {
+  0%,
+  100% {
+  }
+  50% {
+  }
+}
+
+/* Enhanced scrollbar */
+.textarea-expanded::-webkit-scrollbar {
+  width: 6px;
+  transition: all 0.3s ease;
+}
+
+.textarea-expanded::-webkit-scrollbar-track {
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.textarea-expanded::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #5b3cff, #8b6cff);
+  border-radius: 10px;
+  opacity: 0.6;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.textarea-expanded:hover::-webkit-scrollbar-thumb {
+  opacity: 1;
+}
+
+/* Smooth resize handle */
+.textarea-expanded::-webkit-resizer {
+  background: linear-gradient(135deg, #5b3cff, #8b6cff);
+  border-radius: 0 0 8px 0;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.textarea-expanded:hover::-webkit-resizer {
+  opacity: 1;
+}
+  #fc_widget,
+  #freshworks-container,
+  #launcher-frame {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* This targets the <iframe> element itself */
+  iframe[name="fc_widget"],
+  iframe[id="fc_widget"] {
+    background: transparent !important;
+    color-scheme: light !important; /* prevents dark mode bleed into iframe */
+  }

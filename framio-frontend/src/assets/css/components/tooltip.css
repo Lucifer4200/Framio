@@ -1,0 +1,8 @@
+/* tooltip styles */
+
+.tooltip {
+  &-sm {
+    font-size: var(--dml-tooltip-fs);
+    line-height: var(--dml-tooltip-lh);
+  }
+}

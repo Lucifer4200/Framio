@@ -1,0 +1,32 @@
+/* 
+  Header Styles
+*/
+.dml {
+  &-header {
+    padding-inline-start: calc(var(--app-shell-navbar-offset, 0rem) + var(--app-shell-padding));
+    &-logo {
+      &-area {
+        /* removed left and right spacing from the group (268 - 24 - 16) */
+        @media screen and (min-width: 567px) {
+          width: 360px;
+        }
+      }
+    }
+  }
+}
+
+.dr-header-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  .dml {
+    &-Stepper {
+      &-steps {
+        max-width: 727px;
+      }
+    }
+  }
+}
+
+.scroll-sticky {
+  @apply sticky top-0 z-[100] bg-background dark:bg-v2foreground lg:dark:bg-v2foreground-900 py-2.5;
+}
