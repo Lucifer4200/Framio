@@ -1,10 +1,10 @@
-.dml-RichTextEditor {
+.framio-RichTextEditor {
   &-root {
-    border-radius: var(--dml-border-radius-md);
+    border-radius: var(--framio-border-radius-md);
   }
   &-content {
-    border-end-start-radius: var(--dml-border-radius-md) !important;
-    border-end-end-radius: var(--dml-border-radius-md) !important;
+    border-end-start-radius: var(--framio-border-radius-md) !important;
+    border-end-end-radius: var(--framio-border-radius-md) !important;
   }
 }
 .tiptap {

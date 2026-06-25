@@ -1,4 +1,4 @@
-.dml {
+.framio {
   &-sideNavbar {
     @media screen and (min-width: 991px) {
       top: 0;

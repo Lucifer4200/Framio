@@ -70,6 +70,17 @@ export default function AdminOrdersPage() {
     }
   };
 
+  const columns = useMemo(() => [
+    { id: 'order_number', label: 'Order #', accessor: 'order_number', align: 'left' as const },
+    { id: 'customer_name', label: 'Customer', accessor: 'customer_name', align: 'left' as const },
+    { id: 'total', label: 'Total', accessor: (o: any) => `$${formatCurrency(o.total_amount)}`, align: 'right' as const },
+    { id: 'payment_status', label: 'Payment Status', accessor: (o: any) => <Badge color={o.payment_status === 'paid' ? 'green' : 'yellow'}>{o.payment_status}</Badge>, align: 'left' as const },
+    { id: 'order_status', label: 'Order Status', accessor: (o: any) => <Badge color={getStatusColor(o.order_status)}>{o.order_status}</Badge>, align: 'left' as const },
+    { id: 'date', label: 'Date', accessor: (o: any) => new Date(o.created_at).toLocaleDateString(), align: 'left' as const },
+    { id: 'actions', label: 'Actions', accessor: (o: any) => <Button size="xs" variant="light" onClick={() => handleView(o)}><IconEye size={14} /></Button>, align: 'center' as const },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  ], []);
+
   if (loading) {
     return <Container size="xl"><Text>Loading...</Text></Container>;
   }
@@ -80,15 +91,7 @@ export default function AdminOrdersPage() {
 
       <div className="card">
         <DynamicTable
-          columns={useMemo(() => [
-            { id: 'order_number', label: 'Order #', accessor: 'order_number', align: 'left' as const },
-            { id: 'customer_name', label: 'Customer', accessor: 'customer_name', align: 'left' as const },
-            { id: 'total', label: 'Total', accessor: (o: any) => `$${formatCurrency(o.total_amount)}`, align: 'right' as const },
-            { id: 'payment_status', label: 'Payment Status', accessor: (o: any) => <Badge color={o.payment_status === 'paid' ? 'green' : 'yellow'}>{o.payment_status}</Badge>, align: 'left' as const },
-            { id: 'order_status', label: 'Order Status', accessor: (o: any) => <Badge color={getStatusColor(o.order_status)}>{o.order_status}</Badge>, align: 'left' as const },
-            { id: 'date', label: 'Date', accessor: (o: any) => new Date(o.created_at).toLocaleDateString(), align: 'left' as const },
-            { id: 'actions', label: 'Actions', accessor: (o: any) => <Button size="xs" variant="light" onClick={() => handleView(o)}><IconEye size={14} /></Button>, align: 'center' as const },
-          ], [])}
+          columns={columns}
           data={orders}
           isLoading={loading}
           emptyMessage="No orders found"

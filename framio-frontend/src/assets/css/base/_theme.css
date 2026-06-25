@@ -1,332 +1,332 @@
 :root {
-  --dml-color-background: #fbfbfb;
-  --dml-color-foreground: #0c0c0d;
-  --dml-color-v2foreground: #171829;
+  --framio-color-background: #fbfbfb;
+  --framio-color-foreground: #0c0c0d;
+  --framio-color-v2foreground: #171829;
 
   /* Foreground Scale */
-  --dml-color-v2foreground-50: #fbfbff;
-  --dml-color-v2foreground-100: #eff0fd;
-  --dml-color-v2foreground-200: #e1e2f9;
-  --dml-color-v2foreground-300: #d4d5f5;
-  --dml-color-v2foreground-400: #b1b3d8;
-  --dml-color-v2foreground-500: #9193bb;
-  --dml-color-v2foreground-600: #74769e;
-  --dml-color-v2foreground-700: #595b80;
-  --dml-color-v2foreground-800: #404263;
-  --dml-color-v2foreground-900: #2a2c46;
+  --framio-color-v2foreground-50: #fbfbff;
+  --framio-color-v2foreground-100: #eff0fd;
+  --framio-color-v2foreground-200: #e1e2f9;
+  --framio-color-v2foreground-300: #d4d5f5;
+  --framio-color-v2foreground-400: #b1b3d8;
+  --framio-color-v2foreground-500: #9193bb;
+  --framio-color-v2foreground-600: #74769e;
+  --framio-color-v2foreground-700: #595b80;
+  --framio-color-v2foreground-800: #404263;
+  --framio-color-v2foreground-900: #2a2c46;
 
-  --dml-color-v2foreground-light: #2a2c46;
-  --dml-color-foreground-3: #333333;
-  --dml-color-hover-primary: #bfbfbf;
+  --framio-color-v2foreground-light: #2a2c46;
+  --framio-color-foreground-3: #333333;
+  --framio-color-hover-primary: #bfbfbf;
 
-  --dml-color-rose: #f28b5c;
+  --framio-color-rose: #f28b5c;
 
-  --dml-color-danger: #ff5a43;
-  --dml-color-danger-medium: #e5322c;
-  --dml-color-thriveWell: #ffdc32;
+  --framio-color-danger: #ff5a43;
+  --framio-color-danger-medium: #e5322c;
+  --framio-color-thriveWell: #ffdc32;
 
-  --dml-color-danger-deep: #bb032a;
-  --dml-color-danger-badge: #f13e26;
-  --dml-color-danger-light: #fff0ee;
+  --framio-color-danger-deep: #bb032a;
+  --framio-color-danger-badge: #f13e26;
+  --framio-color-danger-light: #fff0ee;
 
-  --dml-color-grey: #7c7c7c;
-  --dml-color-grey-medium: #949494;
-  --dml-color-grey-light: #cccccc;
-  --dml-color-grey-shade: #efefef;
-  --dml-color-grey-btn: #e8e8e8;
-  --dml-color-grey-low: #cbcbcb;
+  --framio-color-grey: #7c7c7c;
+  --framio-color-grey-medium: #949494;
+  --framio-color-grey-light: #cccccc;
+  --framio-color-grey-shade: #efefef;
+  --framio-color-grey-btn: #e8e8e8;
+  --framio-color-grey-low: #cbcbcb;
 
   /* Grey Scale */
-  --dml-color-v2grey: #aeaeae;
-  --dml-color-v2grey-50: #ffffff;
-  --dml-color-v2grey-100: #ebebeb;
-  --dml-color-v2grey-200: #d6d6d6;
-  --dml-color-v2grey-300: #c2c2c2;
-  --dml-color-v2grey-400: #aeaeae;
-  --dml-color-v2grey-500: #999797;
-  --dml-color-v2grey-600: #858181;
-  --dml-color-v2grey-700: #858181;
-  --dml-color-v2grey-800: #5c5656;
-  --dml-color-v2grey-900: #484242;
+  --framio-color-v2grey: #aeaeae;
+  --framio-color-v2grey-50: #ffffff;
+  --framio-color-v2grey-100: #ebebeb;
+  --framio-color-v2grey-200: #d6d6d6;
+  --framio-color-v2grey-300: #c2c2c2;
+  --framio-color-v2grey-400: #aeaeae;
+  --framio-color-v2grey-500: #999797;
+  --framio-color-v2grey-600: #858181;
+  --framio-color-v2grey-700: #858181;
+  --framio-color-v2grey-800: #5c5656;
+  --framio-color-v2grey-900: #484242;
 
-  --dml-color-tag-bg: #fdf2dc;
-  --dml-color-tag-bg-deep: #845201;
-  --dml-color-natural-white: #fff;
-  --dml-color-disabled: #f1f3f5;
+  --framio-color-tag-bg: #fdf2dc;
+  --framio-color-tag-bg-deep: #845201;
+  --framio-color-natural-white: #fff;
+  --framio-color-disabled: #f1f3f5;
 
-  --dml-color-primary: #175bcc;
-  --dml-color-primary-light: #f3f7fc;
+  --framio-color-primary: #175bcc;
+  --framio-color-primary-light: #f3f7fc;
 
-  --dml-color-v2primary: #5c61f2;
+  --framio-color-v2primary: #5c61f2;
 
   /* Primary Scale */
-  --dml-color-v2primary-50: #efefff;
-  --dml-color-v2primary-100: #cbcdff;
-  --dml-color-v2primary-200: #a8abff;
-  --dml-color-v2primary-300: #8488fd;
-  --dml-color-v2primary-400: #5c61f2;
-  --dml-color-v2primary-500: #464bd0;
-  --dml-color-v2primary-600: #3337ae;
-  --dml-color-v2primary-700: #23278c;
-  --dml-color-v2primary-800: #16196a;
-  --dml-color-v2primary-900: #0c0e48;
+  --framio-color-v2primary-50: #efefff;
+  --framio-color-v2primary-100: #cbcdff;
+  --framio-color-v2primary-200: #a8abff;
+  --framio-color-v2primary-300: #8488fd;
+  --framio-color-v2primary-400: #5c61f2;
+  --framio-color-v2primary-500: #464bd0;
+  --framio-color-v2primary-600: #3337ae;
+  --framio-color-v2primary-700: #23278c;
+  --framio-color-v2primary-800: #16196a;
+  --framio-color-v2primary-900: #0c0e48;
 
   /* Orange Scale */
   /* Base */
-  --dml-color-v2orange: #f2cc5c;
+  --framio-color-v2orange: #f2cc5c;
 
-  --dml-color-v2orange-50: #fffbef;
-  --dml-color-v2orange-100: #fff2cb;
-  --dml-color-v2orange-200: #ffe9a8;
-  --dml-color-v2orange-300: #fddf84;
-  --dml-color-v2orange-400: #d0ae46;
-  --dml-color-v2orange-500: #f2cc5c; /* Base */
-  --dml-color-v2orange-600: #ae8f33;
-  --dml-color-v2orange-700: #8c7223;
-  --dml-color-v2orange-800: #6a5516;
-  --dml-color-v2orange-900: #48390c;
+  --framio-color-v2orange-50: #fffbef;
+  --framio-color-v2orange-100: #fff2cb;
+  --framio-color-v2orange-200: #ffe9a8;
+  --framio-color-v2orange-300: #fddf84;
+  --framio-color-v2orange-400: #d0ae46;
+  --framio-color-v2orange-500: #f2cc5c; /* Base */
+  --framio-color-v2orange-600: #ae8f33;
+  --framio-color-v2orange-700: #8c7223;
+  --framio-color-v2orange-800: #6a5516;
+  --framio-color-v2orange-900: #48390c;
 
-  --dml-color-secondary: #0c0c0d;
-  --dml-color-green: #166c3b;
-  --dml-color-green-middle: #009a51;
-  --dml-color-green-low: #eaf6ed;
+  --framio-color-secondary: #0c0c0d;
+  --framio-color-green: #166c3b;
+  --framio-color-green-middle: #009a51;
+  --framio-color-green-low: #eaf6ed;
 
   /* Purple Scale */
   /* Base */
-  --dml-color-v2purple: #ea5cf2;
+  --framio-color-v2purple: #ea5cf2;
 
-  --dml-color-v2purple-50: #feefff;
-  --dml-color-v2purple-100: #fccbff;
-  --dml-color-v2purple-200: #faa8ff;
-  --dml-color-v2purple-300: #f784fd;
-  --dml-color-v2purple-400: #c946d0;
-  --dml-color-v2purple-500: #ea5cf2; /* Base */
-  --dml-color-v2purple-600: #a833ae;
-  --dml-color-v2purple-700: #87238c;
-  --dml-color-v2purple-800: #66166a;
-  --dml-color-v2purple-900: #450c48;
+  --framio-color-v2purple-50: #feefff;
+  --framio-color-v2purple-100: #fccbff;
+  --framio-color-v2purple-200: #faa8ff;
+  --framio-color-v2purple-300: #f784fd;
+  --framio-color-v2purple-400: #c946d0;
+  --framio-color-v2purple-500: #ea5cf2; /* Base */
+  --framio-color-v2purple-600: #a833ae;
+  --framio-color-v2purple-700: #87238c;
+  --framio-color-v2purple-800: #66166a;
+  --framio-color-v2purple-900: #450c48;
 
   /* Cyan Scale */
   /* Base */
-  --dml-color-v2cyan: #5ccaf2;
-  --dml-color-v2cyan-50: #effbff;
-  --dml-color-v2cyan-100: #cbf1ff;
-  --dml-color-v2cyan-200: #a8e8ff;
-  --dml-color-v2cyan-300: #84ddfd;
-  --dml-color-v2cyan-400: #46abd0;
-  --dml-color-v2cyan-500: #5ccaf2; /* Base */
-  --dml-color-v2cyan-600: #338dae;
-  --dml-color-v2cyan-700: #23708c;
-  --dml-color-v2cyan-800: #16546a;
-  --dml-color-v2cyan-900: #0c3848;
+  --framio-color-v2cyan: #5ccaf2;
+  --framio-color-v2cyan-50: #effbff;
+  --framio-color-v2cyan-100: #cbf1ff;
+  --framio-color-v2cyan-200: #a8e8ff;
+  --framio-color-v2cyan-300: #84ddfd;
+  --framio-color-v2cyan-400: #46abd0;
+  --framio-color-v2cyan-500: #5ccaf2; /* Base */
+  --framio-color-v2cyan-600: #338dae;
+  --framio-color-v2cyan-700: #23708c;
+  --framio-color-v2cyan-800: #16546a;
+  --framio-color-v2cyan-900: #0c3848;
 
   /* rose Scale */
   /* Base */
-  --dml-color-v2rose: #ae3350;
-  --dml-color-v2rose-light: #ffeff3;
-  --dml-color-v2rose-50: #ffcbd7;
-  --dml-color-v2rose-100: #ffa8bc;
-  --dml-color-v2rose-200: #fd84a0;
-  --dml-color-v2rose-300: #f25c7f;
-  --dml-color-v2rose-400: #d04666;
-  --dml-color-v2rose-500: #ae3350; /* Base */
-  --dml-color-v2rose-600: #8c233c;
-  --dml-color-v2rose-700: #6a162a;
-  --dml-color-v2rose-800: #66166a;
-  --dml-color-v2rose-900: #480c1a;
+  --framio-color-v2rose: #ae3350;
+  --framio-color-v2rose-light: #ffeff3;
+  --framio-color-v2rose-50: #ffcbd7;
+  --framio-color-v2rose-100: #ffa8bc;
+  --framio-color-v2rose-200: #fd84a0;
+  --framio-color-v2rose-300: #f25c7f;
+  --framio-color-v2rose-400: #d04666;
+  --framio-color-v2rose-500: #ae3350; /* Base */
+  --framio-color-v2rose-600: #8c233c;
+  --framio-color-v2rose-700: #6a162a;
+  --framio-color-v2rose-800: #66166a;
+  --framio-color-v2rose-900: #480c1a;
 
   /* lime Scale */
   /* Base */
-  --dml-color-v2lime: #56ae33;
-  --dml-color-v2lime-50: #f3ffef;
-  --dml-color-v2lime-100: #daffcb;
-  --dml-color-v2lime-200: #c1ffa8;
-  --dml-color-v2lime-300: #a6fd84;
-  --dml-color-v2lime-400: #86f25c;
-  --dml-color-v2lime-500: #6dd046;
-  --dml-color-v2lime-600: #56ae33; /* Base */
-  --dml-color-v2lime-700: #418c23;
-  --dml-color-v2lime-800: #2e6a16;
-  --dml-color-v2lime-900: #1d480c;
+  --framio-color-v2lime: #56ae33;
+  --framio-color-v2lime-50: #f3ffef;
+  --framio-color-v2lime-100: #daffcb;
+  --framio-color-v2lime-200: #c1ffa8;
+  --framio-color-v2lime-300: #a6fd84;
+  --framio-color-v2lime-400: #86f25c;
+  --framio-color-v2lime-500: #6dd046;
+  --framio-color-v2lime-600: #56ae33; /* Base */
+  --framio-color-v2lime-700: #418c23;
+  --framio-color-v2lime-800: #2e6a16;
+  --framio-color-v2lime-900: #1d480c;
 
   /* Apricot Scale */
   /* Base: #F28B5C */
-  --dml-color-v2apricot: #f28b5c;
-  --dml-color-v2apricot-50: #fff4ef;
-  --dml-color-v2apricot-100: #ffdccb;
-  --dml-color-v2apricot-200: #ffc3a8;
-  --dml-color-v2apricot-300: #fdaa84;
-  --dml-color-v2apricot-400: #f28b5c;
-  --dml-color-v2apricot-500: #d07246; /* Base */
-  --dml-color-v2apricot-600: #ae5a33;
-  --dml-color-v2apricot-700: #8c4523;
-  --dml-color-v2apricot-800: #6a3116;
-  --dml-color-v2apricot-900: #481f0c;
+  --framio-color-v2apricot: #f28b5c;
+  --framio-color-v2apricot-50: #fff4ef;
+  --framio-color-v2apricot-100: #ffdccb;
+  --framio-color-v2apricot-200: #ffc3a8;
+  --framio-color-v2apricot-300: #fdaa84;
+  --framio-color-v2apricot-400: #f28b5c;
+  --framio-color-v2apricot-500: #d07246; /* Base */
+  --framio-color-v2apricot-600: #ae5a33;
+  --framio-color-v2apricot-700: #8c4523;
+  --framio-color-v2apricot-800: #6a3116;
+  --framio-color-v2apricot-900: #481f0c;
 
   /* teal Scale */
   /* Base */
-  --dml-color-v2teal: #33ae93;
-  --dml-color-v2teal-50: #effffb;
-  --dml-color-v2teal-100: #cbfff4;
-  --dml-color-v2teal-200: #a8ffec;
-  --dml-color-v2teal-300: #84fde3;
-  --dml-color-v2teal-400: #5cf2d1;
-  --dml-color-v2teal-500: #46d0b2;
-  --dml-color-v2teal-600: #33ae93; /* Base */
-  --dml-color-v2teal-700: #238c75;
-  --dml-color-v2teal-800: #166a58;
-  --dml-color-v2teal-900: #0c483b;
+  --framio-color-v2teal: #33ae93;
+  --framio-color-v2teal-50: #effffb;
+  --framio-color-v2teal-100: #cbfff4;
+  --framio-color-v2teal-200: #a8ffec;
+  --framio-color-v2teal-300: #84fde3;
+  --framio-color-v2teal-400: #5cf2d1;
+  --framio-color-v2teal-500: #46d0b2;
+  --framio-color-v2teal-600: #33ae93; /* Base */
+  --framio-color-v2teal-700: #238c75;
+  --framio-color-v2teal-800: #166a58;
+  --framio-color-v2teal-900: #0c483b;
 
   /* Base */
-  --dml-color-v2gold: #f2e35c;
+  --framio-color-v2gold: #f2e35c;
 
   /* Gold Scale */
-  --dml-color-v2gold-50: #fffdef;
-  --dml-color-v2gold-100: #fffacb;
-  --dml-color-v2gold-200: #fff6a8;
-  --dml-color-v2gold-300: #fdf184;
-  --dml-color-v2gold-400: #d0c246;
-  --dml-color-v2gold-500: #f2e35c; /* Base */
-  --dml-color-v2gold-600: #aea233;
-  --dml-color-v2gold-700: #8c8223;
-  --dml-color-v2gold-800: #6a6216;
-  --dml-color-v2gold-900: #48420c;
+  --framio-color-v2gold-50: #fffdef;
+  --framio-color-v2gold-100: #fffacb;
+  --framio-color-v2gold-200: #fff6a8;
+  --framio-color-v2gold-300: #fdf184;
+  --framio-color-v2gold-400: #d0c246;
+  --framio-color-v2gold-500: #f2e35c; /* Base */
+  --framio-color-v2gold-600: #aea233;
+  --framio-color-v2gold-700: #8c8223;
+  --framio-color-v2gold-800: #6a6216;
+  --framio-color-v2gold-900: #48420c;
 
-  --dml-color-she-purple: #6e47ff;
+  --framio-color-she-purple: #6e47ff;
   /* gradient color sets */
-  --dml-color-purple-extra-light: #f5ebff;
-  --dml-color-purple-light: #f8f1ff;
-  --dml-color-purple-medium: #e2c6ff;
-  --dml-color-purple-deep: #bf83ff;
-  --dml-color-red-light: #ffeff1;
-  --dml-color-red-medium: #ffbac2;
-  --dml-color-red-deep: #fa5a7d;
-  --dml-color-yellow-light: #fff9e8;
-  --dml-color-yellow-medium: #ffe59f;
-  --dml-color-yellow-deep: #ffaa00;
-  --dml-color-green-extra-light: #dbffe8;
-  --dml-color-green-light: #e8fff0;
-  --dml-color-green-medium: #a3ffc3;
-  --dml-color-green-deep: #3cd856;
-  --dml-color-blue-light: #ebf3ff;
-  --dml-color-blue-medium: #9cc3ff;
-  --dml-color-blue-foam: #dcf4fd;
-  --dml-color-lily-white: #e5f7ff;
-  --dml-color-titan-white: #eceafe;
-  --dml-color-serenade-white: #fff0e6;
+  --framio-color-purple-extra-light: #f5ebff;
+  --framio-color-purple-light: #f8f1ff;
+  --framio-color-purple-medium: #e2c6ff;
+  --framio-color-purple-deep: #bf83ff;
+  --framio-color-red-light: #ffeff1;
+  --framio-color-red-medium: #ffbac2;
+  --framio-color-red-deep: #fa5a7d;
+  --framio-color-yellow-light: #fff9e8;
+  --framio-color-yellow-medium: #ffe59f;
+  --framio-color-yellow-deep: #ffaa00;
+  --framio-color-green-extra-light: #dbffe8;
+  --framio-color-green-light: #e8fff0;
+  --framio-color-green-medium: #a3ffc3;
+  --framio-color-green-deep: #3cd856;
+  --framio-color-blue-light: #ebf3ff;
+  --framio-color-blue-medium: #9cc3ff;
+  --framio-color-blue-foam: #dcf4fd;
+  --framio-color-lily-white: #e5f7ff;
+  --framio-color-titan-white: #eceafe;
+  --framio-color-serenade-white: #fff0e6;
 
-  --dml-appShell-padding: 20px;
+  --framio-appShell-padding: 20px;
   /* --radius: 0.5rem; */
   /* typography  */
-  --dml-label-font-weight: 500;
+  --framio-label-font-weight: 500;
 
   /* Tooltip */
-  --dml-tooltip-fs: 12px;
-  --dml-tooltip-lh: 1.4;
+  --framio-tooltip-fs: 12px;
+  --framio-tooltip-lh: 1.4;
 
   /* Paragraph  */
-  --dml-para-fs-xs: rem(12px);
-  --dml-para-fs-sm: rem(14px);
-  --dml-para-fs-md: rem(16px);
-  --dml-para-fs-lg: rem(18px);
-  --dml-para-fs-sp: rem(17px);
+  --framio-para-fs-xs: rem(12px);
+  --framio-para-fs-sm: rem(14px);
+  --framio-para-fs-md: rem(16px);
+  --framio-para-fs-lg: rem(18px);
+  --framio-para-fs-sp: rem(17px);
 
-  --dml-para-lh-xs: 1.4;
-  --dml-para-lh-sm: 1.4;
-  --dml-para-lh-md: rem(24px);
-  --dml-para-lh-lg: rem(28px);
-  --dml-para-lh-sp: 1.4;
+  --framio-para-lh-xs: 1.4;
+  --framio-para-lh-sm: 1.4;
+  --framio-para-lh-md: rem(24px);
+  --framio-para-lh-lg: rem(28px);
+  --framio-para-lh-sp: 1.4;
 
   /* heading  */
-  --dml-heading-fs-xxs: rem(16px);
-  --dml-heading-fs-xs: rem(20px);
-  --dml-heading-fs-xs-alt: rem(22px);
-  --dml-heading-fs-sm: rem(24px);
-  --dml-heading-fs-md: rem(28px);
-  --dml-heading-fs-md-alt: rem(30px);
-  --dml-heading-fs-lg: rem(32px);
-  --dml-heading-fs-xl: rem(36px);
-  --dml-heading-fs-xxl: rem(40px);
+  --framio-heading-fs-xxs: rem(16px);
+  --framio-heading-fs-xs: rem(20px);
+  --framio-heading-fs-xs-alt: rem(22px);
+  --framio-heading-fs-sm: rem(24px);
+  --framio-heading-fs-md: rem(28px);
+  --framio-heading-fs-md-alt: rem(30px);
+  --framio-heading-fs-lg: rem(32px);
+  --framio-heading-fs-xl: rem(36px);
+  --framio-heading-fs-xxl: rem(40px);
 
-  --dml-heading-lh-xxs: 1.4;
-  --dml-heading-lh-xs: rem(28px);
-  --dml-heading-lh-sm: rem(32px);
-  --dml-heading-lh-md: 1.1;
-  --dml-heading-lh-lg: rem(40px);
-  --dml-heading-lh-xl: 1.1;
-  --dml-heading-lh-xxl: rem(52px);
+  --framio-heading-lh-xxs: 1.4;
+  --framio-heading-lh-xs: rem(28px);
+  --framio-heading-lh-sm: rem(32px);
+  --framio-heading-lh-md: 1.1;
+  --framio-heading-lh-lg: rem(40px);
+  --framio-heading-lh-xl: 1.1;
+  --framio-heading-lh-xxl: rem(52px);
 
-  --dml-label-fs-sm: rem(14px);
-  --dml-label-fs-md: rem(16px);
-  --dml-label-fs-lg: rem(18px);
+  --framio-label-fs-sm: rem(14px);
+  --framio-label-fs-md: rem(16px);
+  --framio-label-fs-lg: rem(18px);
 
-  --dml-label-lh-sm: rem(16px);
-  --dml-label-lh-md: rem(20px);
-  --dml-label-lh-lg: rem(24px);
+  --framio-label-lh-sm: rem(16px);
+  --framio-label-lh-md: rem(20px);
+  --framio-label-lh-lg: rem(24px);
 
   /* Extra */
-  --dml-extra-text-md: rem(14px), --dml-extra-btn-text: rem(16px);
-  --dml-extra-form-fs: rem(18px);
-  --dml-extra-text-12-md-fs: rem(12px);
-  --dml-extra-btn-lh: rem(22px);
-  --dml-extra-text-md-lh: rem(19.6px);
-  --dml-extra-form-lh: 1.4;
-  --dml-extra-text-12-md-lh: 1.4;
-  --dml-extra-text-12-md-fw: 500;
-  --dml-extra-form-fw: 500;
+  --framio-extra-text-md: rem(14px), --framio-extra-btn-text: rem(16px);
+  --framio-extra-form-fs: rem(18px);
+  --framio-extra-text-12-md-fs: rem(12px);
+  --framio-extra-btn-lh: rem(22px);
+  --framio-extra-text-md-lh: rem(19.6px);
+  --framio-extra-form-lh: 1.4;
+  --framio-extra-text-12-md-lh: 1.4;
+  --framio-extra-text-12-md-fw: 500;
+  --framio-extra-form-fw: 500;
 
   /* Link Button */
-  --dml-link-btn-fs-md: rem(28px);
-  --dml-link-btn-fs-sm: rem(14px);
-  --dml-link-btn-fs-xs: rem(12px);
+  --framio-link-btn-fs-md: rem(28px);
+  --framio-link-btn-fs-sm: rem(14px);
+  --framio-link-btn-fs-xs: rem(12px);
 
   /* Font weight  */
-  --dml-fw-bold: 700;
-  --dml-fw-semibold: 600;
-  --dml-fw-medium: 500;
-  --dml-fw-normal: 400;
+  --framio-fw-bold: 700;
+  --framio-fw-semibold: 600;
+  --framio-fw-medium: 500;
+  --framio-fw-normal: 400;
 
   /* box shadow */
 
-  --dml-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.02);
-  --dml-dropdown-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.12);
-  --dml-v2box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.078);
-  --dml-v2box-shadow-light: 0px 4px 21.1px 0px rgba(0, 0, 0, 0.04);
+  --framio-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.02);
+  --framio-dropdown-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.12);
+  --framio-v2box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.078);
+  --framio-v2box-shadow-light: 0px 4px 21.1px 0px rgba(0, 0, 0, 0.04);
 
   /* Button  */
-  --dml-link-btn-md: rem(14px);
-  --dml-btn-xxs-height: rem(24px);
-  --dml-btn-xs-height: rem(28px);
-  --dml-btn-sm-height: rem(36px);
-  --dml-btn-sm-2-height: rem(40px);
-  --dml-btn-md-height: rem(50px);
-  --dml-btn-lg-height: rem(61px);
-  --dml-btn-esm-height: rem(38px);
+  --framio-link-btn-md: rem(14px);
+  --framio-btn-xxs-height: rem(24px);
+  --framio-btn-xs-height: rem(28px);
+  --framio-btn-sm-height: rem(36px);
+  --framio-btn-sm-2-height: rem(40px);
+  --framio-btn-md-height: rem(50px);
+  --framio-btn-lg-height: rem(61px);
+  --framio-btn-esm-height: rem(38px);
 
-  --dml-btn-pad-x-sm: rem(12px);
-  --dml-btn-pad-x-sm-2: rem(12px);
-  --dml-btn-pad-x-esm: rem(14px);
-  --dml-btn-pad-x-xxs: rem(6px);
+  --framio-btn-pad-x-sm: rem(12px);
+  --framio-btn-pad-x-sm-2: rem(12px);
+  --framio-btn-pad-x-esm: rem(14px);
+  --framio-btn-pad-x-xxs: rem(6px);
 
   /* Action Icon */
-  --dml-action-icon-size-md: rem(48px);
+  --framio-action-icon-size-md: rem(48px);
 
   /* Input  */
-  --dml-input-label-mb: rem(8px);
-  --dml-text-input-fs: rem(17px);
-  --dml-input-height: rem(56px);
-  --dml-input-br: rem(32px);
-  --dml-otp-input-width: rem(80px);
-  --dml-otp-input-height: rem(56px);
-  --dml-input-asterisk-size: rem(6px);
+  --framio-input-label-mb: rem(8px);
+  --framio-text-input-fs: rem(17px);
+  --framio-input-height: rem(56px);
+  --framio-input-br: rem(32px);
+  --framio-otp-input-width: rem(80px);
+  --framio-otp-input-height: rem(56px);
+  --framio-input-asterisk-size: rem(6px);
 
   /* Boder Radius */
-  --dml-border-radius: rem(4px);
-  --dml-border-radius-md: rem(8px);
+  --framio-border-radius: rem(4px);
+  --framio-border-radius-md: rem(8px);
 
   /* Modal */
-  --dml-modal-width-md: 432px;
+  --framio-modal-width-md: 432px;
 
   /* Table */
-  --dml-table-vr-spacing-md: 15px;
+  --framio-table-vr-spacing-md: 15px;
 }

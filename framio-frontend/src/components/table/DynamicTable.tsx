@@ -77,7 +77,9 @@ const DynamicTable = <T extends Record<string, any>>({
       return accessor(row);
     }
     if (typeof accessor === "string") {
-      return accessor.includes(".") ? getNestedValue(row, accessor) : row[accessor as keyof T];
+      return accessor.includes(".")
+        ? getNestedValue(row, accessor)
+        : row[accessor as keyof T];
     }
     return null;
   };
@@ -85,59 +87,55 @@ const DynamicTable = <T extends Record<string, any>>({
   const colSpan = columns.length || 1;
 
   return (
-    <Paper radius="md" withBorder {...paperProps}>
-      <ScrollArea type="auto" {...scrollAreaProps}>
-        <Table {...tableProps}>
-          <Table.Thead>
-            <Table.Tr>
-              {columns.map((column) => {
-                const headerContent = (
-                  <span>{column.label}</span>
-                );
+    <ScrollArea type="auto" {...scrollAreaProps}>
+      <Table {...tableProps}>
+        <Table.Thead>
+          <Table.Tr>
+            {columns.map((column) => {
+              const headerContent = <span>{column.label}</span>;
 
-                if (column.sortable && onSort) {
-                  return (
-                    <Th
-                      key={column.id}
-                      sortBy={column.id}
-                      existingSort={sortColumn}
-                      sortDir={sortDir}
-                      onSort={onSort}
-                      align={column.align}
-                      className={column.headerClassName}
-                      style={column.headerStyle}
-                    >
-                      {headerContent}
-                    </Th>
-                  );
-                }
-
+              if (column.sortable && onSort) {
                 return (
-                  <Table.Th
+                  <Th
                     key={column.id}
+                    sortBy={column.id}
+                    existingSort={sortColumn}
+                    sortDir={sortDir}
+                    onSort={onSort}
+                    align={column.align}
                     className={column.headerClassName}
                     style={column.headerStyle}
                   >
                     {headerContent}
-                  </Table.Th>
+                  </Th>
                 );
-              })}
-            </Table.Tr>
-          </Table.Thead>
+              }
 
-          <Table.Tbody>
-            {isLoading ? (
-              <TableLoader rows={loadingRows} columns={colSpan} />
-            ) : data.length > 0 ? (
-              data.map((item, index) => (
-                <Table.Tr
-                  key={rowKey ? rowKey(item, index) : defaultRowKey(item, index)}
-                  className={rowClassName?.(item, index)}
+              return (
+                <Table.Th
+                  key={column.id}
+                  className={column.headerClassName}
+                  style={column.headerStyle}
                 >
-                  {renderRow ? (
-                    renderRow(item, index)
-                  ) : (
-                    columns.map((column) => (
+                  {headerContent}
+                </Table.Th>
+              );
+            })}
+          </Table.Tr>
+        </Table.Thead>
+
+        <Table.Tbody>
+          {isLoading ? (
+            <TableLoader rows={loadingRows} columns={colSpan} />
+          ) : data.length > 0 ? (
+            data.map((item, index) => (
+              <Table.Tr
+                key={rowKey ? rowKey(item, index) : defaultRowKey(item, index)}
+                className={rowClassName?.(item, index)}
+              >
+                {renderRow
+                  ? renderRow(item, index)
+                  : columns.map((column) => (
                       <Table.Td
                         key={`${column.id}-${index}`}
                         align={column.align}
@@ -146,20 +144,15 @@ const DynamicTable = <T extends Record<string, any>>({
                       >
                         {renderCell(item, column.accessor)}
                       </Table.Td>
-                    ))
-                  )}
-                </Table.Tr>
-              ))
-            ) : (
-              <NoTableData
-                colSpan={colSpan}
-                title={emptyMessage}
-              />
-            )}
-          </Table.Tbody>
-        </Table>
-      </ScrollArea>
-    </Paper>
+                    ))}
+              </Table.Tr>
+            ))
+          ) : (
+            <NoTableData colSpan={colSpan} title={emptyMessage} />
+          )}
+        </Table.Tbody>
+      </Table>
+    </ScrollArea>
   );
 };
 

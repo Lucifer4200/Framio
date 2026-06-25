@@ -1,8 +1,8 @@
-.dml {
+.framio {
   &-sidebar {
     &-navlink {
-      line-height: var(--dml-para-lh-md);
-      .dml-NavLink {
+      line-height: var(--framio-para-lh-md);
+      .framio-NavLink {
         &-section {
           margin-right: 16px;
           margin-inline-end: 16px !important;
@@ -13,19 +13,19 @@
   &-sideNavbar {
     &-closed {
       transition: 0.3s;
-      .dml-sidebar-navlink {
+      .framio-sidebar-navlink {
         @media screen and (min-width: 992px) {
           display: inline-flex;
           width: 84px;
           height: 72px;
           transition: 0.3s;
-          .dml-NavLink-section {
+          .framio-NavLink-section {
             margin-right: 0px;
           }
-          .dml-NavLink-body {
+          .framio-NavLink-body {
             display: inline-block;
             width: 0px;
-            .dml-NavLink-label {
+            .framio-NavLink-label {
               display: inline-block;
               width: 0px;
               font-size: 0px;
@@ -36,7 +36,7 @@
                 opacity: 0;
               }
             }
-            .dml-NavLink-description {
+            .framio-NavLink-description {
               width: 0px;
               font-size: 0px;
             }
@@ -47,19 +47,19 @@
   }
 }
 
-.dml-AppShell-navbar {
+.framio-AppShell-navbar {
   /* box-shadow: 0px 20px 50px 0px #dce0f980; */
   transition: 0.3s;
   & > div {
     overflow-x: hidden !important;
   }
-  &.dml-sidebar-navlink {
+  &.framio-sidebar-navlink {
     width: auto;
     height: auto;
     transition: 0s 0.6s;
     transition-delay: 0.6s;
-    .dml-NavLink-body {
-      .dml-NavLink-label {
+    .framio-NavLink-body {
+      .framio-NavLink-label {
         & > span {
           font-size: 1rem;
           line-height: 1.5rem;

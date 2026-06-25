@@ -1,4 +1,4 @@
-.dml {
+.framio {
   &-modal-btn {
     margin: auto;
     width: 100%;
@@ -9,7 +9,7 @@
     width: 256px;
     padding: 14px, 16px, 14px, 16px;
     border-radius: 8px;
-    background-color: var(--dml-color-foreground);
+    background-color: var(--framio-color-foreground);
     color: #ffffff;
   }
   &-Button {
@@ -53,10 +53,10 @@
 
       /* Filled buttons */
       &[data-variant="filled"] {
-        border: var(--dml-color-secondary);
-        --button-bg: var(--dml-color-secondary);
+        border: var(--framio-color-secondary);
+        --button-bg: var(--framio-color-secondary);
         --button-hover-lighten: color-mix(in srgb, var(--button-bg), #fff 10%);
-        --button-text: var(--dml-color-natural-white);
+        --button-text: var(--framio-color-natural-white);
         background: var(--button-bg);
         color: var(--button-text);
         transition: color 0.3s ease;
@@ -85,7 +85,7 @@
       &[data-variant="chat-button"] {
         --button-bg: rgb(89, 89, 192);
         --button-hover-lighten: color-mix(in srgb, var(--button-bg), #fff 10%);
-        --button-text: var(--dml-color-natural-white);
+        --button-text: var(--framio-color-natural-white);
 
         background: var(--button-bg);
         color: var(--button-text);
@@ -111,8 +111,8 @@
 
       /* Light buttons */
       &[data-variant="light"] {
-        --button-text: var(--dml-color-foreground);
-        --button-light-bg: var(--dml-color-grey-low);
+        --button-text: var(--framio-color-foreground);
+        --button-light-bg: var(--framio-color-grey-low);
 
         background: var(--button-light-bg);
         color: var(--button-text);
@@ -137,9 +137,9 @@
 
       /* Outline buttons */
       &[data-variant="outline"] {
-        --button-text: var(--dml-color-v2foreground);
+        --button-text: var(--framio-color-v2foreground);
         --button-outline-bg: transparent;
-        border: 1px solid var(--dml-color-v2foreground);
+        border: 1px solid var(--framio-color-v2foreground);
         background: var(--button-light-bg);
         color: --button-text;
         transition: background-color 0.3s ease;
@@ -163,8 +163,8 @@
 
       &[data-variant="outline-edit"] {
         @apply px-6 py-2 rounded-3xl;
-        --button-text: var(--dml-color-v2foreground);
-        border: 1px solid var(--dml-color-v2foreground);
+        --button-text: var(--framio-color-v2foreground);
+        border: 1px solid var(--framio-color-v2foreground);
         background: transparent;
         color: var(--button-text);
         transition: background-color 0.3s ease;
@@ -194,7 +194,7 @@
         padding: 0;
         border-radius: 0;
 
-        .dml-Button-label {
+        .framio-Button-label {
           display: inline-block;
           position: relative;
 
@@ -212,7 +212,7 @@
           }
         }
 
-        &:hover .dml-Button-label::after {
+        &:hover .framio-Button-label::after {
           transform: scaleX(0);
         }
 
@@ -226,7 +226,7 @@
       }
 
       &[data-variant="outline-magenta"] {
-        --button-text: var(--dml-color-v2foreground);
+        --button-text: var(--framio-color-v2foreground);
         --button-outline-bg: transparent;
         border: 1px solid #5c61f2;
         background: var(--button-light-bg);
@@ -253,7 +253,7 @@
       }
 
       &[data-variant="light-table-version"] {
-        --button-text: var(--dml-color-foreground);
+        --button-text: var(--framio-color-foreground);
         --button-light-bg: var(--mantine-color-secondary-light);
 
         background: var(--button-light-bg);
@@ -278,13 +278,13 @@
         @apply dark:bg-v2foreground-200;
       }
       &[data-variant="lightest"] {
-        --button-text: var(--dml-color-foreground);
+        --button-text: var(--framio-color-foreground);
         --button-light-bg: white;
 
         background: var(--button-light-bg);
         color: var(--button-text);
         transition: background-color 0.3s ease;
-        border: 1px solid var(--dml-color-v2grey-200);
+        border: 1px solid var(--framio-color-v2grey-200);
 
         &::after {
           background: rgba(0, 0, 0, 0.08);
@@ -305,7 +305,7 @@
       }
 
       &[data-variant="default"] {
-        --button-text: var(--dml-color-foreground);
+        --button-text: var(--framio-color-foreground);
 
         color: var(--button-text);
         transition: background-color 0.3s ease;
@@ -334,7 +334,7 @@
       }
       /* Default variant (for filter button) */
       &[data-variant="default-blue"] {
-        --button-text: var(--dml-color-foreground);
+        --button-text: var(--framio-color-foreground);
         background-color: #5c61f2;
 
         color: white;
@@ -364,7 +364,7 @@
         }
       }
       &[data-variant="long-button-outline-light"] {
-        --button-text: var(--dml-color-foreground);
+        --button-text: var(--framio-color-foreground);
         --button-light-bg: white;
 
         background: var(--button-light-bg);
@@ -395,8 +395,8 @@
       }
 
       &[data-variant="long-button-light"] {
-        --button-text: var(--dml-color-foreground);
-        --button-light-bg: var(--dml-color-grey-low);
+        --button-text: var(--framio-color-foreground);
+        --button-light-bg: var(--framio-color-grey-low);
 
         background: var(--button-light-bg);
         color: var(--button-text);
@@ -420,13 +420,13 @@
       }
       /* Dark mode override */
       .dark &[data-variant="long-button-light"] {
-        --button-light-bg: var(--dml-color-v2foreground);
-        --button-text: var(--dml-color-white);
+        --button-light-bg: var(--framio-color-v2foreground);
+        --button-text: var(--framio-color-white);
       }
       &[data-variant="long-button-dark"] {
-        --button-bg: var(--dml-color-secondary);
+        --button-bg: var(--framio-color-secondary);
         --button-hover-lighten: color-mix(in srgb, var(--button-bg), #fff 10%);
-        --button-text: var(--dml-color-natural-white);
+        --button-text: var(--framio-color-natural-white);
 
         background: var(--button-bg);
         color: var(--button-text);
@@ -450,14 +450,14 @@
         }
       }
       &[data-variant="no-bg"] {
-        --button-text: var(--dml-color-foreground);
+        --button-text: var(--framio-color-foreground);
 
         color: var(--button-text);
         background: transparent;
       }
 
       &[data-variant="transparent"] {
-        --button-text: var(--dml-color-foreground);
+        --button-text: var(--framio-color-foreground);
 
         color: var(--button-text);
         transition: background-color 0.3s ease;
@@ -481,22 +481,22 @@
 
       /* Add color variants */
       &[data-variant="filled"][data-color="primary"] {
-        --button-bg: var(--dml-color-primary);
-        --button-hover-lighten: color-mix(in srgb, var(--dml-color-primary), #fff 2%);
+        --button-bg: var(--framio-color-primary);
+        --button-hover-lighten: color-mix(in srgb, var(--framio-color-primary), #fff 2%);
       }
 
       &[data-variant="filled"][data-color="danger"] {
-        --button-bg: var(--dml-color-danger);
-        --button-hover-lighten: color-mix(in srgb, var(--dml-color-danger), #fff 2%);
+        --button-bg: var(--framio-color-danger);
+        --button-hover-lighten: color-mix(in srgb, var(--framio-color-danger), #fff 2%);
       }
 
       &[data-size="esm"] {
-        .dml-Button-section[data-position="left"] {
+        .framio-Button-section[data-position="left"] {
           margin-inline-end: 8px;
         }
       }
 
-      .dml-Button-section {
+      .framio-Button-section {
         position: relative;
         z-index: 2;
       }

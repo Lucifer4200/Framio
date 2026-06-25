@@ -1,6 +1,7 @@
 import '@mantine/core/styles.css';
 import '@/assets/css/styles.css';
-import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+import { ColorSchemeScript } from '@mantine/core';
+import { Providers } from './providers';
 
 export const metadata = {
   title: 'Framio - Premium Home Décor Frames',
@@ -18,9 +19,7 @@ export default function RootLayout({
         <ColorSchemeScript defaultColorScheme="light" />
       </head>
       <body>
-        <MantineProvider defaultColorScheme="light">
-          {children}
-        </MantineProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

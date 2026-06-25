@@ -1,22 +1,22 @@
-.dml {
+.framio {
   &-Radio {
     &-radio {
       /* border: 2px solid;
-      border-color: var(--dml-color-grey); */
+      border-color: var(--framio-color-grey); */
       transition:
         background-color 0.2s ease,
         border-color 0.2s ease;
       color: transparent;
       background-color: transparent;
-      border: 2px solid var(--dml-color-grey);
+      border: 2px solid var(--framio-color-grey);
       &:checked {
-        background-color: var(--dml-color-v2primary); /* pink in light */
-        border-color: var(--dml-color-v2primary);
+        background-color: var(--framio-color-v2primary); /* pink in light */
+        border-color: var(--framio-color-v2primary);
         @apply dark:bg-v2primary-500 dark:border-v2primary-500; /* purple in dark */
       }
       &:hover:not(:checked) {
-        background-color: var(--dml-color-v2primary);
-        border-color: var(--dml-color-v2primary);
+        background-color: var(--framio-color-v2primary);
+        border-color: var(--framio-color-v2primary);
         opacity: 0.6;
         @apply dark:bg-v2primary-600;
       }
@@ -33,12 +33,12 @@
     }
 
     &-label {
-      font-size: var(--dml-para-fs-md);
-      color: var(--dml-color-v2foreground);
+      font-size: var(--framio-para-fs-md);
+      color: var(--framio-color-v2foreground);
       transition: color 0.2s ease;
 
       &:hover {
-        color: var(--dml-color-foreground);
+        color: var(--framio-color-foreground);
       }
       @apply dark:text-v2primary-100;
     }

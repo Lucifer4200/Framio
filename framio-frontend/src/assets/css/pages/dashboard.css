@@ -18,7 +18,7 @@
   }
 
   /* user profile css */
-  .dml-profile {
+  .framio-profile {
     &-content {
       @apply flex flex-col gap-5;
       &-inner {
@@ -39,7 +39,7 @@
     }
   }
 
-  .dml-profile-content-inner {
+  .framio-profile-content-inner {
     @apply bg-white rounded-3xl py-5 sm:px-6 px-5;
     .inner-title {
       @apply flex items-center justify-between border-b border-b-grey-low pb-4;
@@ -85,7 +85,7 @@
     &-grid {
       @apply flex flex-col gap-5;
       &-rows {
-        @apply bg-white rounded-xl p-6 shadow-dml-box-shadow;
+        @apply bg-white rounded-xl p-6 shadow-framio-box-shadow;
         span {
           &.badge {
             @apply px-2 py-1 rounded w-max text-fs-xs !font-medium;
@@ -173,7 +173,7 @@
         &.grid-variation {
           @apply grid grid-cols-4 gap-4 bg-transparent shadow-none p-0;
           .grid-variation-col {
-            @apply bg-white rounded-md py-5 px-6 rounded-md shadow-dml-box-shadow;
+            @apply bg-white rounded-md py-5 px-6 rounded-md shadow-framio-box-shadow;
             h6 {
               @apply text-secondary pb-3;
             }
@@ -187,7 +187,7 @@
           .grid-doctor-variation-col {
             @apply grid grid-cols-3 gap-5;
             .medicine-list {
-              @apply col-span-1 bg-white shadow-dml-box-shadow rounded-md py-5 px-6;
+              @apply col-span-1 bg-white shadow-framio-box-shadow rounded-md py-5 px-6;
               h6 {
                 @apply text-secondary pb-6;
               }
@@ -208,7 +208,7 @@
               }
             }
             .doctor-perform {
-              @apply col-span-2 bg-white shadow-dml-box-shadow rounded-md py-5 px-6;
+              @apply col-span-2 bg-white shadow-framio-box-shadow rounded-md py-5 px-6;
             }
           }
         }
@@ -234,9 +234,9 @@
   }
 }
 
-.dml-Breadcrumbs-root {
+.framio-Breadcrumbs-root {
   @apply bg-grey-low -ml-5 -mr-6 py-1 pl-5 pr-6 mb-6 mt-2;
-  a.dml-Breadcrumbs-breadcrumb {
+  a.framio-Breadcrumbs-breadcrumb {
     @apply text-fs-md text-grey-medium font-normal;
     line-height: 17.6px;
     &:last-child {
@@ -246,17 +246,17 @@
 }
 
 /* Physician */
-.dml-List-itemLabel {
+.framio-List-itemLabel {
   @apply flex flex-wrap gap-4;
 }
 .physician {
   @apply flex items-center border border-grey-low rounded-full  ps-1 pe-2 py-1;
 }
-.dml-AppShell-main {
+.framio-AppShell-main {
   --app-shell-padding: 0px;
 }
-.dml-appShell-main-custom-style {
-  /* --app-shell-padding: var(--dml-appShell-padding); */
+.framio-appShell-main-custom-style {
+  /* --app-shell-padding: var(--framio-appShell-padding); */
   @apply sm:px-6 px-4 py-3;
 }
 
@@ -267,10 +267,10 @@
 .icon-view {
   transition: all 0.5s ease-in-out;
 }
-.dml-ActionIcon-icon {
+.framio-ActionIcon-icon {
   transition: all 0.5s ease-in-out;
 }
-.dml-ActionIcon-icon:hover {
+.framio-ActionIcon-icon:hover {
   transition: all 0.5s ease-in-out;
 }
 

@@ -1,6 +1,6 @@
 @layer components {
   .card {
-    @apply lg:bg-white dark:bg-v2foreground lg:shadow-dml-box-shadow rounded-[20px] overflow-hidden;
+    @apply lg:bg-white dark:bg-v2foreground lg:shadow-framio-box-shadow rounded-[20px] overflow-hidden;
     position: relative;
     overflow-x: hidden;
     overflow-y: visible;
@@ -43,10 +43,10 @@
         animation: fadeIn 0.5s ease-out 0.4s backwards;
       }
       @apply font-outfit;
-      color: var(--dml-color-foreground);
+      color: var(--framio-color-foreground);
       &.with-border {
         padding-bottom: 15px;
-        border-bottom: 1px solid var(--dml-color-grey-low);
+        border-bottom: 1px solid var(--framio-color-grey-low);
         position: relative;
 
         /* Animated underline grows from left */
@@ -57,7 +57,7 @@
           left: 0;
           width: 0;
           height: 2px;
-          background: var(--dml-color-primary, #3b82f6);
+          background: var(--framio-color-primary, #3b82f6);
         }
       }
     }

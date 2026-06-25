@@ -1,140 +1,140 @@
 @layer utilities {
   body {
-    font-size: var(--dml-para-fs-lg);
-    line-height: var(--dml-para-lh-lg);
-    color: var(--dml-color-grey);
+    font-size: var(--framio-para-fs-lg);
+    line-height: var(--framio-para-lh-lg);
+    color: var(--framio-color-grey);
   }
   /* Heading tag and class */
   h1,
   .h1,
   .heading-xxl {
-    font-size: var(--dml-heading-fs-xxl);
-    line-height: var(--dml-heading-lh-xxl);
-    font-weight: var(--dml-fw-bold);
+    font-size: var(--framio-heading-fs-xxl);
+    line-height: var(--framio-heading-lh-xxl);
+    font-weight: var(--framio-fw-bold);
     font-family: "Outfit", sans-serif;
   }
 
   h2,
   .h2,
   .heading-xl {
-    font-size: var(--dml-heading-fs-xl);
-    line-height: var(--dml-heading-lh-xl);
-    font-weight: var(--dml-fw-bold);
+    font-size: var(--framio-heading-fs-xl);
+    line-height: var(--framio-heading-lh-xl);
+    font-weight: var(--framio-fw-bold);
     font-family: "Outfit", sans-serif;
   }
 
   h3,
   .h3,
   .heading-lg {
-    font-size: var(--dml-heading-fs-lg);
-    line-height: var(--dml-heading-lh-lg);
-    font-weight: var(--dml-fw-bold);
+    font-size: var(--framio-heading-fs-lg);
+    line-height: var(--framio-heading-lh-lg);
+    font-weight: var(--framio-fw-bold);
     font-family: "Outfit", sans-serif;
   }
   h4,
   .h4,
   .heading-md {
-    font-size: var(--dml-heading-fs-md);
-    line-height: var(--dml-heading-lh-md);
-    font-weight: var(--dml-fw-bold);
+    font-size: var(--framio-heading-fs-md);
+    line-height: var(--framio-heading-lh-md);
+    font-weight: var(--framio-fw-bold);
     font-family: "Outfit", sans-serif;
   }
   h5,
   .h5,
   .heading-sm {
-    font-size: var(--dml-heading-fs-sm);
-    line-height: var(--dml-heading-lh-sm);
-    font-weight: var(--dml-fw-bold);
+    font-size: var(--framio-heading-fs-sm);
+    line-height: var(--framio-heading-lh-sm);
+    font-weight: var(--framio-fw-bold);
     font-family: "Outfit", sans-serif;
   }
   h6,
   .h6,
   .heading-xs {
-    font-size: var(--dml-heading-fs-xs);
-    line-height: var(--dml-heading-lh-xs);
-    font-weight: var(--dml-fw-bold);
+    font-size: var(--framio-heading-fs-xs);
+    line-height: var(--framio-heading-lh-xs);
+    font-weight: var(--framio-fw-bold);
     font-family: "Outfit", sans-serif;
   }
 
   .heading-xxs {
-    font-size: var(--dml-heading-fs-xxs);
-    line-height: var(--dml-heading-lh-xxs);
-    font-weight: var(--dml-fw-bold);
+    font-size: var(--framio-heading-fs-xxs);
+    line-height: var(--framio-heading-lh-xxs);
+    font-weight: var(--framio-fw-bold);
     font-family: "Outfit", sans-serif;
   }
 
   .heading-xxxs {
-    font-size: var(--dml-para-fs-sm);
-    line-height: var(--dml-para-lh-sm);
-    font-weight: var(--dml-fw-bold);
+    font-size: var(--framio-para-fs-sm);
+    line-height: var(--framio-para-lh-sm);
+    font-weight: var(--framio-fw-bold);
     font-family: "Outfit", sans-serif;
   }
 
   /* Paragraph classes */
   .text-fs-lg {
-    font-size: var(--dml-para-fs-lg);
-    line-height: var(--dml-para-lh-lg);
-    font-weight: var(--dml-fw-normal);
+    font-size: var(--framio-para-fs-lg);
+    line-height: var(--framio-para-lh-lg);
+    font-weight: var(--framio-fw-normal);
   }
   .text-fs-md {
-    font-size: var(--dml-para-fs-md);
-    line-height: var(--dml-para-lh-md);
-    font-weight: var(--dml-fw-normal);
+    font-size: var(--framio-para-fs-md);
+    line-height: var(--framio-para-lh-md);
+    font-weight: var(--framio-fw-normal);
   }
   .text-fs-sm {
-    font-size: var(--dml-para-fs-sm);
-    line-height: var(--dml-para-lh-sm);
-    font-weight: var(--dml-fw-normal);
+    font-size: var(--framio-para-fs-sm);
+    line-height: var(--framio-para-lh-sm);
+    font-weight: var(--framio-fw-normal);
   }
   .text-fs-xs {
-    font-size: var(--dml-para-fs-xs);
-    line-height: var(--dml-para-lh-xs);
-    font-weight: var(--dml-fw-normal);
+    font-size: var(--framio-para-fs-xs);
+    line-height: var(--framio-para-lh-xs);
+    font-weight: var(--framio-fw-normal);
   }
   .text-fs-sp {
-    font-size: var(--dml-para-fs-sp);
-    line-height: var(--dml-para-lh-sp);
+    font-size: var(--framio-para-fs-sp);
+    line-height: var(--framio-para-lh-sp);
   }
 
   .extra-btn-text {
-    font-size: var(--dml-extra-btn-text);
-    line-height: var(--dml-extra-btn-lh);
+    font-size: var(--framio-extra-btn-text);
+    line-height: var(--framio-extra-btn-lh);
   }
   .extra-form-text-regular {
-    font-size: var(--dml-extra-form-fs);
-    line-height: var(--dml-extra-form-lh);
+    font-size: var(--framio-extra-form-fs);
+    line-height: var(--framio-extra-form-lh);
   }
   .extra-form-text-medium {
-    font-size: var(--dml-extra-form-fs);
-    line-height: var(--dml-extra-form-lh);
-    font-weight: var(--dml-extra-form-fw);
+    font-size: var(--framio-extra-form-fs);
+    line-height: var(--framio-extra-form-lh);
+    font-weight: var(--framio-extra-form-fw);
   }
   .extra-text-12-med {
-    font-size: var(--dml-extra-text-12-md-fs);
-    line-height: var(--dml-extra-text-12-md-lh);
-    font-weight: var(--dml-extra-text-12-md-fw);
+    font-size: var(--framio-extra-text-12-md-fs);
+    line-height: var(--framio-extra-text-12-md-lh);
+    font-weight: var(--framio-extra-text-12-md-fw);
   }
   .extra-text-medium {
-    font-size: var(--dml-extra-text-md);
-    line-height: var(--dml-extra-text-md-lh);
-    font-weight: var(--dml-fw-medium);
+    font-size: var(--framio-extra-text-md);
+    line-height: var(--framio-extra-text-md-lh);
+    font-weight: var(--framio-fw-medium);
   }
 
   .extra-text-14-medium {
     font-size: 14px;
-    line-height: var(--dml-extra-text-md-lh);
-    font-weight: var(--dml-fw-medium);
+    line-height: var(--framio-extra-text-md-lh);
+    font-weight: var(--framio-fw-medium);
   }
   .link-text-md {
-    font-size: var(--dml-link-btn-fs-md);
-    line-height: var(--dml-para-lh-xs);
+    font-size: var(--framio-link-btn-fs-md);
+    line-height: var(--framio-para-lh-xs);
   }
   .link-text-sm {
-    font-size: var(--dml-link-btn-fs-sm);
-    line-height: var(--dml-para-lh-xs);
+    font-size: var(--framio-link-btn-fs-sm);
+    line-height: var(--framio-para-lh-xs);
   }
   .link-text-xs {
-    font-size: var(--dml-link-btn-fs-xs);
-    line-height: var(--dml-para-lh-xs);
+    font-size: var(--framio-link-btn-fs-xs);
+    line-height: var(--framio-para-lh-xs);
   }
 }

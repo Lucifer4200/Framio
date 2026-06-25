@@ -10,7 +10,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--dml-border-radius-md);
+    border-radius: var(--framio-border-radius-md);
     &-md {
       width: auto;
       padding-inline: 6px;

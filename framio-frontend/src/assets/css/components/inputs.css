@@ -2,8 +2,8 @@
   Input Styles
 */
 /* Target readonly inputs and remove hover/focus borders */
-input[readonly].dml-control:hover,
-input[readonly].dml-control:focus {
+input[readonly].framio-control:hover,
+input[readonly].framio-control:focus {
   /* border-color: transparent !important; */
   border-color: transparent;
 }
@@ -12,7 +12,7 @@ input[readonly].dml-control:focus {
 [readonly].bg-grey-btn:hover {
   border-color: transparent !important;
 }
-.dml {
+.framio {
   &-Textarea {
     &-input {
       @apply p-4;
@@ -23,12 +23,12 @@ input[readonly].dml-control:focus {
     /* padding-left: 46.6px; */
     /* padding-left: 26.6px;
 		padding-right: 26.6px; */
-    font-size: var(--dml-text-input-fs);
-    height: var(--dml-input-height);
-    min-height: var(--dml-input-height);
+    font-size: var(--framio-text-input-fs);
+    height: var(--framio-input-height);
+    min-height: var(--framio-input-height);
     background-color: transparent;
-    border: 1px solid var(--dml-color-v2primary-100);
-    border-radius: var(--dml-input-br);
+    border: 1px solid var(--framio-color-v2primary-100);
+    border-radius: var(--framio-input-br);
     --input-padding-inline-start: 16px;
     --input-padding-inline-end: 16px;
     transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
@@ -37,12 +37,12 @@ input[readonly].dml-control:focus {
     }
 
     /* &:focus {
-      border-color: var(--dml-color-primary);
+      border-color: var(--framio-color-primary);
       outline: none;
     } */
 
     &[readonly] {
-      color: var(--dml-color-grey);
+      color: var(--framio-color-grey);
       border-color: transparent !important;
       background: transparent;
     }
@@ -50,12 +50,12 @@ input[readonly].dml-control:focus {
     &-pill {
       padding-left: 56px;
       padding-right: 16px;
-      border-radius: var(--dml-input-height);
+      border-radius: var(--framio-input-height);
     }
-    &.dml-TagsInput-input {
+    &.framio-TagsInput-input {
       height: auto;
     }
-    &.dml-MultiSelect-input {
+    &.framio-MultiSelect-input {
       height: auto;
     }
     &-section {
@@ -64,31 +64,31 @@ input[readonly].dml-control:focus {
       }
     }
     &-pinInput {
-      height: var(--dml-otp-input-height);
-      width: var(--dml-otp-input-width);
+      height: var(--framio-otp-input-height);
+      width: var(--framio-otp-input-width);
       &-inputHeight {
         height: 100%;
       }
     }
 
-    &.dml-PasswordInput-input {
+    &.framio-PasswordInput-input {
       @apply dark:border-v2primary;
       &:not(:disabled):not([readonly]):hover {
         @apply dark:!border-v2primary-100 border-v2primary;
       }
     }
 
-    &.dml-PillsInput-input {
+    &.framio-PillsInput-input {
       @apply border-v2grey dark:border-v2primary-600;
       &:not(:disabled):not([readonly]):hover {
         @apply dark:!border-v2primary-100 border-v2primary;
       }
     }
 
-    &.dml-FileInput-input {
+    &.framio-FileInput-input {
       padding: 0 18px;
-      .dml-InputPlaceholder-placeholder {
-        color: var(--dml-color-foreground);
+      .framio-InputPlaceholder-placeholder {
+        color: var(--framio-color-foreground);
       }
     }
   }
@@ -105,7 +105,7 @@ input[readonly].dml-control:focus {
         right: 22.54px;
         top: 50%;
         transform: translateY(-50%);
-        color: var(--dml-color-grey);
+        color: var(--framio-color-grey);
         transition: color 0.2s ease-in-out;
         @apply dark:text-white;
       }
@@ -116,7 +116,7 @@ input[readonly].dml-control:focus {
       @apply border border-v2primary-100 dark:border-v2primary;
 
       &:not(:disabled):hover {
-        border-color: var(--dml-color-v2primary) !important;
+        border-color: var(--framio-color-v2primary) !important;
         @apply dark:!border-v2primary-100;
       }
     }
@@ -128,19 +128,19 @@ input[readonly].dml-control:focus {
       grid-template-columns: auto auto;
       grid-template-rows: auto auto;
       grid-template-areas: "label error" "input input";
-      & > .dml-Input-wrapper,
-      .dml-PasswordInput-root,
-      .dml-PinInput-root,
-      .dml-fileUploader-wrapper,
+      & > .framio-Input-wrapper,
+      .framio-PasswordInput-root,
+      .framio-PinInput-root,
+      .framio-fileUploader-wrapper,
       & > div {
         grid-area: input;
       }
-      .dml-InputWrapper-label {
+      .framio-InputWrapper-label {
         grid-area: label;
         transition: color 0.2s ease-in-out;
       }
 
-      .dml-InputWrapper-error {
+      .framio-InputWrapper-error {
         grid-area: error;
       }
       &-alternative {
@@ -151,54 +151,54 @@ input[readonly].dml-control:focus {
           align-items: center;
           text-align: center;
 
-          .dml-InputWrapper-label {
+          .framio-InputWrapper-label {
             align-self: center;
           }
-          .dml-InputWrapper-error {
+          .framio-InputWrapper-error {
             align-self: center;
           }
         }
-        .dml-InputWrapper-label {
+        .framio-InputWrapper-label {
           order: 1;
           align-self: start;
           margin-bottom: 0px;
           text-wrap: auto;
         }
-        .dml-InputWrapper-error {
+        .framio-InputWrapper-error {
           order: 3;
           align-self: start;
           text-align: left;
         }
-        .dml-Input-wrapper,
+        .framio-Input-wrapper,
         & > div {
           order: 2;
         }
       }
     }
     &-label {
-      font-size: var(--dml-label-fs-lg);
-      line-height: var(--dml-label-lh-lg);
-      margin-bottom: var(--dml-input-label-mb);
+      font-size: var(--framio-label-fs-lg);
+      line-height: var(--framio-label-lh-lg);
+      margin-bottom: var(--framio-input-label-mb);
       align-self: end;
-      color: var(--dml-color-foreground);
+      color: var(--framio-color-foreground);
       @media screen and (max-width: 768px) {
-        font-size: var(--dml-label-fs-md);
+        font-size: var(--framio-label-fs-md);
       }
     }
     &-error {
       align-self: end;
       justify-self: end;
-      margin-bottom: var(--dml-input-label-mb);
-      font-size: var(--dml-para-fs-sm);
-      line-height: var(--dml-label-lh-lg);
+      margin-bottom: var(--framio-input-label-mb);
+      font-size: var(--framio-para-fs-sm);
+      line-height: var(--framio-label-lh-lg);
       text-align: right;
     }
     &-required {
       color: transparent;
-      width: var(--dml-input-asterisk-size);
-      height: var(--dml-input-asterisk-size);
+      width: var(--framio-input-asterisk-size);
+      height: var(--framio-input-asterisk-size);
       border-radius: 100%;
-      background-color: var(--dml-color-danger);
+      background-color: var(--framio-color-danger);
       display: inline-block;
       line-height: 8px;
       margin-left: 8px;
@@ -214,7 +214,7 @@ input[readonly].dml-control:focus {
   }
 
   &-Input-wrapper:focus-within &-InputWrapper-label {
-    color: var(--dml-color-primary);
+    color: var(--framio-color-primary);
   }
 
   &-Input-wrapper:focus-within &-InputWrapper-required {
@@ -222,11 +222,11 @@ input[readonly].dml-control:focus {
   }
 }
 
-.dml-FileInput-placeholder {
+.framio-FileInput-placeholder {
   @apply dark:!text-white;
 }
 
-.dml-Input-Calendar {
+.framio-Input-Calendar {
   [data-baseweb="base-input"] {
     position: relative;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -240,7 +240,7 @@ input[readonly].dml-control:focus {
       right: 22.54px;
       top: 50%;
       transform: translateY(-50%);
-      color: var(--dml-color-grey);
+      color: var(--framio-color-grey);
       transition: color 0.2s ease-in-out;
     }
   }
@@ -249,18 +249,18 @@ input[readonly].dml-control:focus {
 .baseWeb {
   &-error {
     [data-baseweb="input"] {
-      border: 1px solid var(--dml-color-danger);
+      border: 1px solid var(--framio-color-danger);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 }
 
-/* [data-error] .dml-Input-input:focus {
-  border: calc(rem(1px) * var(--mantine-scale)) solid var(--dml-color-primary);
+/* [data-error] .framio-Input-input:focus {
+  border: calc(rem(1px) * var(--mantine-scale)) solid var(--framio-color-primary);
 } */
 
 [data-error] {
-  .dml {
+  .framio {
     &-PasswordInput-input {
       border: calc(rem(1px) * var(--mantine-scale)) solid transparent;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -291,7 +291,7 @@ input[readonly].dml-control:focus {
 }
 
 .pac-container {
-  border-radius: var(--dml-border-radius-md);
+  border-radius: var(--framio-border-radius-md);
   margin-left: 1px;
   &.pac-logo {
     .pac-item {
@@ -325,7 +325,7 @@ input[readonly].dml-control:focus {
 }
 /* Custom Search Filter Override */
 .custom-search-filter {
-  /* &.dml-control {
+  /* &.framio-control {
     background-color: #ffffff !important;
 
     &:hover {
@@ -333,8 +333,8 @@ input[readonly].dml-control:focus {
     }
   }
 
-  .dark &.dml-control {
-    background-color: var(--dml-color-v2foreground) !important;
+  .dark &.framio-control {
+    background-color: var(--framio-color-v2foreground) !important;
     color: white !important;
 
     &:hover {
@@ -348,13 +348,13 @@ input[readonly].dml-control:focus {
   @apply dark:!text-white !border-transparent shadow-[0px_0px_12px_0px_#00000014]
  dark:!border-transparent hover:!border-v2primary dark:hover:!border-v2primary-100 dark:placeholder:text-white placeholder:text-v2foreground;
 }
-.dml-InputPlaceholder-placeholder {
+.framio-InputPlaceholder-placeholder {
   @apply text-v2foreground dark:text-white text-sm;
 }
 
 /* Checkbox icon transition */
 /* Checkbox icon transition */
-.dml-Checkbox {
+.framio-Checkbox {
   &-icon,
   &-input {
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -379,7 +379,7 @@ input[readonly].dml-control:focus {
 .ai-chat-viewport > div {
   display: block !important;
 } /* Light mode — all inputs hover */
-.dml-datepicker-input {
+.framio-datepicker-input {
   @apply relative overflow-hidden z-10;
   /* after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:w-0 after:h-0 after:rounded-full after:-translate-x-1/2 after:-translate-y-1/2 after:z-[-1] after:bg-[rgba(0,0,0,0.08)] after:transition-[width,height] after:duration-[1000ms] after:ease-[cubic-bezier(0.4,0,0.2,1)]; */
 
@@ -441,7 +441,7 @@ input[readonly].dml-control:focus {
   &-badge {
     @apply bg-transparent p-0 text-foreground dark:text-white  font-medium leading-none;
   }
-  .dml-ActionIcon-root {
+  .framio-ActionIcon-root {
     @apply md:relative absolute  md:top-0 md:right-0 top-2 right-2;
   }
 }

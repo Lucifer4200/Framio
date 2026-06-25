@@ -101,6 +101,35 @@ export default function AdminCategoriesPage() {
     }
   };
 
+  const columns = useMemo(() => [
+    { id: 'name', label: 'Name', accessor: 'name', align: 'left' as const },
+    { id: 'slug', label: 'Slug', accessor: 'slug', align: 'left' as const },
+    {
+      id: 'status',
+      label: 'Status',
+      accessor: (cat: any) => (
+        <Text size="xs" c={cat.status === 'active' ? 'green' : 'red'}>
+          {cat.status}
+        </Text>
+      ),
+      align: 'left' as const,
+    },
+    {
+      id: 'actions',
+      label: 'Actions',
+      accessor: (cat: any) => (
+        <Group gap={4}>
+          <Button size="xs" variant="light" onClick={() => handleEdit(cat)}>
+            <IconEdit size={14} />
+          </Button>
+          <Button size="xs" variant="light" color="red" onClick={() => handleDelete(cat.id)}>
+            <IconTrash size={14} />
+          </Button>
+        </Group>
+      ),
+      align: 'center' as const,
+    },
+  ], []);
   if (loading) {
     return <Container size="xl"><Text>Loading...</Text></Container>;
   }
@@ -116,35 +145,7 @@ export default function AdminCategoriesPage() {
 
       <div className="card">
         <DynamicTable
-          columns={useMemo(() => [
-            { id: 'name', label: 'Name', accessor: 'name', align: 'left' as const },
-            { id: 'slug', label: 'Slug', accessor: 'slug', align: 'left' as const },
-            {
-              id: 'status',
-              label: 'Status',
-              accessor: (cat: any) => (
-                <Text size="xs" c={cat.status === 'active' ? 'green' : 'red'}>
-                  {cat.status}
-                </Text>
-              ),
-              align: 'left' as const,
-            },
-            {
-              id: 'actions',
-              label: 'Actions',
-              accessor: (cat: any) => (
-                <Group gap={4}>
-                  <Button size="xs" variant="light" onClick={() => handleEdit(cat)}>
-                    <IconEdit size={14} />
-                  </Button>
-                  <Button size="xs" variant="light" color="red" onClick={() => handleDelete(cat.id)}>
-                    <IconTrash size={14} />
-                  </Button>
-                </Group>
-              ),
-              align: 'center' as const,
-            },
-          ], [])}
+          columns={columns}
           data={categories}
           isLoading={loading}
           emptyMessage="No categories found"

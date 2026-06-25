@@ -30,6 +30,15 @@ export default function AdminCustomersPage() {
     }
   };
 
+  const columns = useMemo(() => [
+    { id: 'name', label: 'Name', accessor: 'name', align: 'left' as const },
+    { id: 'email', label: 'Email', accessor: 'email', align: 'left' as const },
+    { id: 'phone', label: 'Phone', accessor: (c: any) => c.phone || '-', align: 'left' as const },
+    { id: 'orders', label: 'Orders', accessor: (c: any) => c.order_count || 0, align: 'right' as const },
+    { id: 'total_spent', label: 'Total Spent', accessor: (c: any) => `$${formatCurrency(c.total_spent)}`, align: 'right' as const },
+    { id: 'status', label: 'Status', accessor: (c: any) => <Text size="xs" c={c.status === 'active' ? 'green' : 'red'}>{c.status}</Text>, align: 'left' as const },
+  ], []);
+
   if (loading) {
     return <Container size="xl"><Text>Loading...</Text></Container>;
   }
@@ -40,14 +49,7 @@ export default function AdminCustomersPage() {
 
       <div className="card">
         <DynamicTable
-          columns={useMemo(() => [
-            { id: 'name', label: 'Name', accessor: 'name', align: 'left' as const },
-            { id: 'email', label: 'Email', accessor: 'email', align: 'left' as const },
-            { id: 'phone', label: 'Phone', accessor: (c: any) => c.phone || '-', align: 'left' as const },
-            { id: 'orders', label: 'Orders', accessor: (c: any) => c.order_count || 0, align: 'right' as const },
-            { id: 'total_spent', label: 'Total Spent', accessor: (c: any) => `$${formatCurrency(c.total_spent)}`, align: 'right' as const },
-            { id: 'status', label: 'Status', accessor: (c: any) => <Text size="xs" c={c.status === 'active' ? 'green' : 'red'}>{c.status}</Text>, align: 'left' as const },
-          ], [])}
+          columns={columns}
           data={customers}
           isLoading={loading}
           emptyMessage="No customers found"

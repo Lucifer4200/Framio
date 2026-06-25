@@ -1,12 +1,12 @@
-.dml-Pagination {
+.framio-Pagination {
   &-control {
     border-color: transparent;
     background-color: transparent;
-    color: var(--dml-color-foreground);
-    font-weight: var(--dml-fw-medium);
+    color: var(--framio-color-foreground);
+    font-weight: var(--framio-fw-medium);
     &[data-active="true"] {
-      background-color: var(--dml-color-foreground);
-      color: var(--dml-color-natural-white);
+      background-color: var(--framio-color-foreground);
+      color: var(--framio-color-natural-white);
     }
   }
 }

@@ -8,7 +8,7 @@
     /* img,
     video {
       border-radius: 8px;
-      border: 4px solid var(--dml-color-grey-low);
+      border: 4px solid var(--framio-color-grey-low);
     } */
     .webcam {
       &-frame {
@@ -69,7 +69,7 @@
         height: 400px;
         overflow: hidden;
         border-radius: 8px;
-        border: 4px solid var(--dml-color-grey-low);
+        border: 4px solid var(--framio-color-grey-low);
       }
     }
     @media all and (max-width: 768px) {

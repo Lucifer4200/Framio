@@ -1,4 +1,4 @@
-.dml {
+.framio {
   &-Modal {
     &-root {
       @apply dark:bg-v2foreground-900 bg-v2foreground-50;
@@ -7,10 +7,10 @@
       /* padding: 17px 40px; */
       padding: 0;
       min-height: 0;
-      color: var(--dml-color-foreground);
+      color: var(--framio-color-foreground);
       border-radius: 0;
-      box-shadow: var(--dml-v2box-shadow-light);
-      /* border-color: var(--dml-color-v2grey-200); */
+      box-shadow: var(--framio-v2box-shadow-light);
+      /* border-color: var(--framio-color-v2grey-200); */
       @apply border-b border-b-grey-low dark:border-b-v2foreground-700 bg-v2foreground-50 dark:bg-v2foreground-900 dark:border-v2grey-200;
       /* &.pt-17 {
         padding-top: 17px;
@@ -26,8 +26,8 @@
     &-title {
       padding: 16px 40px;
       font-weight: 600;
-      line-height: var(--dml-heading-lh-xs);
-      font-size: var(--dml-heading-fs-xs-alt);
+      line-height: var(--framio-heading-lh-xs);
+      font-size: var(--framio-heading-fs-xs-alt);
       text-transform: uppercase;
       @apply dark:text-white;
     }
@@ -37,7 +37,7 @@
     }
 
     &--full {
-      .dml-Modal-content {
+      .framio-Modal-content {
         @apply flex flex-col h-screen max-h-screen;
       }
     }
@@ -103,11 +103,11 @@
   }
 }
 
-[role="dialog"]:has(.dml-Modal-footer) {
+[role="dialog"]:has(.framio-Modal-footer) {
   @apply flex h-screen max-h-screen flex-col;
 }
 
-[role="dialog"]:has(.dml-Modal-footer) > form:has(> .dml-Modal-footer) {
+[role="dialog"]:has(.framio-Modal-footer) > form:has(> .framio-Modal-footer) {
   @apply flex min-h-0 flex-1 flex-col;
 }
 
