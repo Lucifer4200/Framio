@@ -1,32 +1,20 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import {
-  Container,
-  Title,
-  Text,
-  Button,
-  Group,
-  Stack,
-  Card,
-  Table,
-  Modal,
-  TextInput,
-  NumberInput,
-  Select,
-  Textarea,
-} from "@mantine/core";
+import { Container, Title, Text, Button, Group } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import DynamicTable from "@/components/table/DynamicTable";
 import { IconPlus, IconEdit, IconTrash } from "@tabler/icons-react";
+import ProductModal, { type ProductFormData } from "../components/Product";
 import { API_URL } from "../../../services/api";
 import { formatCurrency } from "../../../utils/format";
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [modalOpened, setModalOpened] = useState(false);
+  const [opened, handlers] = useDisclosure(false);
   const [editingProduct, setEditingProduct] = useState<any>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ProductFormData>({
     name: "",
     category_id: "",
     description: "",
@@ -71,7 +59,7 @@ export default function AdminProductsPage() {
       size: "",
       color: "",
     });
-    setModalOpened(true);
+    handlers.open();
   };
 
   const handleEdit = (product: any) => {
@@ -87,7 +75,7 @@ export default function AdminProductsPage() {
       size: product.size || "",
       color: product.color || "",
     });
-    setModalOpened(true);
+    handlers.open();
   };
 
   const handleDelete = async (id: number) => {
@@ -132,7 +120,7 @@ export default function AdminProductsPage() {
         }),
       });
 
-      setModalOpened(false);
+      handlers.close();
       fetchProducts();
     } catch (error) {
       console.error("Error saving product:", error);
@@ -230,104 +218,14 @@ export default function AdminProductsPage() {
         />
       </div>
 
-      <Modal
-        opened={modalOpened}
-        onClose={() => setModalOpened(false)}
-        title={editingProduct ? "Edit Product" : "Add Product"}
-        size="xl"
-      >
-        <form onSubmit={handleSubmit}>
-          <Stack>
-            <TextInput
-              label="Name"
-              required
-              value={formData.name}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
-            />
-            <Select
-              label="Category"
-              placeholder="Select category"
-              data={[
-                { value: "1", label: "Photo Frames" },
-                { value: "2", label: "Art Frames" },
-                { value: "3", label: "Wall Décor" },
-                { value: "4", label: "Mirror Frames" },
-              ]}
-              value={formData.category_id}
-              onChange={(val) =>
-                setFormData({ ...formData, category_id: val || "" })
-              }
-            />
-            <Textarea
-              label="Description"
-              value={formData.description}
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
-              }
-            />
-            <Group>
-              <NumberInput
-                label="Price"
-                required
-                value={parseFloat(formData.price)}
-                onChange={(val) =>
-                  setFormData({ ...formData, price: (val || 0).toString() })
-                }
-              />
-              <NumberInput
-                label="Discount Price"
-                value={
-                  formData.discount_price
-                    ? parseFloat(formData.discount_price)
-                    : undefined
-                }
-                onChange={(val) =>
-                  setFormData({
-                    ...formData,
-                    discount_price: val ? val.toString() : "",
-                  })
-                }
-              />
-            </Group>
-            <NumberInput
-              label="Stock"
-              required
-              value={parseInt(formData.stock)}
-              onChange={(val) =>
-                setFormData({ ...formData, stock: (val || 0).toString() })
-              }
-            />
-            <Group>
-              <TextInput
-                label="Frame Type"
-                value={formData.frame_type}
-                onChange={(e) =>
-                  setFormData({ ...formData, frame_type: e.target.value })
-                }
-              />
-              <TextInput
-                label="Size"
-                value={formData.size}
-                onChange={(e) =>
-                  setFormData({ ...formData, size: e.target.value })
-                }
-              />
-              <TextInput
-                label="Color"
-                value={formData.color}
-                onChange={(e) =>
-                  setFormData({ ...formData, color: e.target.value })
-                }
-              />
-            </Group>
-            <Button type="submit" fullWidth>
-              {editingProduct ? "Update" : "Create"} Product
-            </Button>
-          </Stack>
-        </form>
-      </Modal>
+      <ProductModal
+        opened={opened}
+        editingProduct={editingProduct}
+        formData={formData}
+        onClose={handlers.close}
+        onSubmit={handleSubmit}
+        setFormData={setFormData}
+      />
     </Container>
   );
 }

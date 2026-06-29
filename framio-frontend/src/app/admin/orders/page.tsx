@@ -1,16 +1,18 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { Container, Title, Text, Button, Group, Stack, Card, Table, Modal, Select, Badge } from '@mantine/core';
+import { Container, Title, Text, Button, Badge } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import DynamicTable from '@/components/table/DynamicTable';
 import { IconEye } from '@tabler/icons-react';
+import OrderModal from '../components/Order';
 import { API_URL } from '../../../services/api';
 import { formatCurrency } from '../../../utils/format';
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [modalOpened, setModalOpened] = useState(false);
+  const [opened, handlers] = useDisclosure(false);
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [status, setStatus] = useState('');
 
@@ -37,7 +39,7 @@ export default function AdminOrdersPage() {
   const handleView = (order: any) => {
     setSelectedOrder(order);
     setStatus(order.order_status);
-    setModalOpened(true);
+    handlers.open();
   };
 
   const handleStatusUpdate = async () => {
@@ -51,7 +53,7 @@ export default function AdminOrdersPage() {
         },
         body: JSON.stringify({ status }),
       });
-      setModalOpened(false);
+      handlers.close();
       fetchOrders();
     } catch (error) {
       console.error('Error updating order status:', error);
@@ -99,48 +101,14 @@ export default function AdminOrdersPage() {
         />
       </div>
 
-      <Modal opened={modalOpened} onClose={() => setModalOpened(false)} title={`Order ${selectedOrder?.order_number}`} size="xl">
-        {selectedOrder && (
-          <Stack>
-            <Group>
-              <Text fw={500}>Customer:</Text>
-              <Text>{selectedOrder.customer_name}</Text>
-              <Text c="dimmed">{selectedOrder.customer_email}</Text>
-            </Group>
-
-            <Group>
-              <Text fw={500}>Total:</Text>
-              <Text>${formatCurrency(selectedOrder.total_amount)}</Text>
-            </Group>
-
-            <Group>
-              <Text fw={500}>Shipping Address:</Text>
-              <Text>{selectedOrder.shipping_address}</Text>
-            </Group>
-
-            <Group>
-              <Text fw={500}>Phone:</Text>
-              <Text>{selectedOrder.phone || 'N/A'}</Text>
-            </Group>
-
-            <Select
-              label="Update Status"
-              data={[
-                { value: 'pending', label: 'Pending' },
-                { value: 'confirmed', label: 'Confirmed' },
-                { value: 'processing', label: 'Processing' },
-                { value: 'shipped', label: 'Shipped' },
-                { value: 'delivered', label: 'Delivered' },
-                { value: 'cancelled', label: 'Cancelled' },
-              ]}
-              value={status}
-              onChange={(val) => setStatus(val || '')}
-            />
-
-            <Button onClick={handleStatusUpdate}>Update Status</Button>
-          </Stack>
-        )}
-      </Modal>
+      <OrderModal
+        opened={opened}
+        selectedOrder={selectedOrder}
+        status={status}
+        onClose={handlers.close}
+        onStatusChange={setStatus}
+        onStatusUpdate={handleStatusUpdate}
+      />
     </Container>
   );
 }

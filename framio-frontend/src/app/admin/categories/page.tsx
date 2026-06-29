@@ -1,17 +1,19 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { Container, Title, Text, Button, Group, Stack, Card, Table, Modal, TextInput, Switch } from '@mantine/core';
+import { Container, Title, Text, Button, Group } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import DynamicTable from '@/components/table/DynamicTable';
 import { IconPlus, IconEdit, IconTrash } from '@tabler/icons-react';
+import CategoryModal, { type CategoryFormData } from '../components/Category';
 import { API_URL } from '../../../services/api';
 
 export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [modalOpened, setModalOpened] = useState(false);
+  const [opened, handlers] = useDisclosure(false);
   const [editingCategory, setEditingCategory] = useState<any>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<CategoryFormData>({
     name: '',
     slug: '',
     image: '',
@@ -46,7 +48,7 @@ export default function AdminCategoriesPage() {
       image: '',
       status: 'active',
     });
-    setModalOpened(true);
+    handlers.open();
   };
 
   const handleEdit = (category: any) => {
@@ -57,7 +59,7 @@ export default function AdminCategoriesPage() {
       image: category.image || '',
       status: category.status,
     });
-    setModalOpened(true);
+    handlers.open();
   };
 
   const handleDelete = async (id: number) => {
@@ -94,7 +96,7 @@ export default function AdminCategoriesPage() {
         body: JSON.stringify(formData),
       });
 
-      setModalOpened(false);
+      handlers.close();
       fetchCategories();
     } catch (error) {
       console.error('Error saving category:', error);
@@ -153,37 +155,14 @@ export default function AdminCategoriesPage() {
         />
       </div>
 
-      <Modal opened={modalOpened} onClose={() => setModalOpened(false)} title={editingCategory ? 'Edit Category' : 'Add Category'}>
-        <form onSubmit={handleSubmit}>
-          <Stack>
-            <TextInput
-              label="Name"
-              required
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            />
-            <TextInput
-              label="Slug"
-              required
-              value={formData.slug}
-              onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-            />
-            <TextInput
-              label="Image URL"
-              value={formData.image}
-              onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-            />
-            <Switch
-              label="Active"
-              checked={formData.status === 'active'}
-              onChange={(e) => setFormData({ ...formData, status: e.currentTarget.checked ? 'active' : 'inactive' })}
-            />
-            <Button type="submit" fullWidth>
-              {editingCategory ? 'Update' : 'Create'} Category
-            </Button>
-          </Stack>
-        </form>
-      </Modal>
+      <CategoryModal
+        opened={opened}
+        editingCategory={editingCategory}
+        formData={formData}
+        onClose={handlers.close}
+        onSubmit={handleSubmit}
+        setFormData={setFormData}
+      />
     </Container>
   );
 }
