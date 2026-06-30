@@ -1,12 +1,14 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { Container, Title, Text, Button, Group } from '@mantine/core';
+import { Container, Title, Button, Group, Badge } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import DynamicTable from '@/components/table/DynamicTable';
 import { IconPlus, IconEdit, IconTrash } from '@tabler/icons-react';
-import CategoryModal, { type CategoryFormData } from '../components/Category';
+import CategoryModal from '../common/components/Category';
+import { type CategoryFormData } from '../common/schemas/category';
 import { API_URL } from '../../../services/api';
+import dmlToast from '../../../common/config/toaster.config';
 
 export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<any[]>([]);
@@ -67,19 +69,22 @@ export default function AdminCategoriesPage() {
 
     try {
       const token = localStorage.getItem('token');
-      await fetch(`${API_URL}/categories/${id}`, {
+      const response = await fetch(`${API_URL}/categories/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });
+      if (!response.ok) {
+        throw new Error('Failed to delete category');
+      }
+      dmlToast.success({ title: 'Category deleted successfully' });
       fetchCategories();
     } catch (error) {
       console.error('Error deleting category:', error);
+      dmlToast.error({ title: 'Failed to delete category' });
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleSubmit = async (values: CategoryFormData) => {
     try {
       const token = localStorage.getItem('token');
       const url = editingCategory
@@ -87,19 +92,32 @@ export default function AdminCategoriesPage() {
         : `${API_URL}/categories`;
       const method = editingCategory ? 'PUT' : 'POST';
 
-      await fetch(url, {
+      const response = await fetch(url, {
         method,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(values),
       });
+      if (!response.ok) {
+        throw new Error('Failed to save category');
+      }
 
+      dmlToast.success({
+        title: editingCategory
+          ? 'Category updated successfully'
+          : 'Category added successfully',
+      });
       handlers.close();
       fetchCategories();
     } catch (error) {
       console.error('Error saving category:', error);
+      dmlToast.error({
+        title: editingCategory
+          ? 'Failed to update category'
+          : 'Failed to add category',
+      });
     }
   };
 
@@ -110,9 +128,9 @@ export default function AdminCategoriesPage() {
       id: 'status',
       label: 'Status',
       accessor: (cat: any) => (
-        <Text size="xs" c={cat.status === 'active' ? 'green' : 'red'}>
+        <Badge color={cat.status === 'active' ? 'green' : 'red'}>
           {cat.status}
-        </Text>
+        </Badge>
       ),
       align: 'left' as const,
     },
@@ -132,10 +150,6 @@ export default function AdminCategoriesPage() {
       align: 'center' as const,
     },
   ], []);
-  if (loading) {
-    return <Container size="xl"><Text>Loading...</Text></Container>;
-  }
-
   return (
     <Container size="xl">
       <Group justify="space-between" mb="xl">
@@ -151,7 +165,16 @@ export default function AdminCategoriesPage() {
           data={categories}
           isLoading={loading}
           emptyMessage="No categories found"
-          tableProps={{ miw: 800 }}
+          tableProps={{
+            miw: 1000,
+            verticalSpacing: "sm",
+            withRowBorders: false,
+            striped: true,
+            stripedColor: "background",
+            highlightOnHover: true,
+            highlightOnHoverColor: "primary",
+            className: "framio-list-table",
+          }}
         />
       </div>
 
@@ -161,7 +184,6 @@ export default function AdminCategoriesPage() {
         formData={formData}
         onClose={handlers.close}
         onSubmit={handleSubmit}
-        setFormData={setFormData}
       />
     </Container>
   );

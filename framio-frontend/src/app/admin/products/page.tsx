@@ -5,9 +5,11 @@ import { Container, Title, Text, Button, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import DynamicTable from "@/components/table/DynamicTable";
 import { IconPlus, IconEdit, IconTrash } from "@tabler/icons-react";
-import ProductModal, { type ProductFormData } from "../components/Product";
+import ProductModal from "../common/components/Product";
+import { type ProductFormData } from "../common/schemas/product";
 import { API_URL } from "../../../services/api";
 import { formatCurrency } from "../../../utils/format";
+import dmlToast from "../../../common/config/toaster.config";
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
@@ -83,19 +85,22 @@ export default function AdminProductsPage() {
 
     try {
       const token = localStorage.getItem("token");
-      await fetch(`${API_URL}/products/${id}`, {
+      const response = await fetch(`${API_URL}/products/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
+      if (!response.ok) {
+        throw new Error("Failed to delete product");
+      }
+      dmlToast.success({ title: "Product deleted successfully" });
       fetchProducts();
     } catch (error) {
       console.error("Error deleting product:", error);
+      dmlToast.error({ title: "Failed to delete product" });
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleSubmit = async (values: ProductFormData) => {
     try {
       const token = localStorage.getItem("token");
       const url = editingProduct
@@ -103,27 +108,40 @@ export default function AdminProductsPage() {
         : `${API_URL}/products`;
       const method = editingProduct ? "PUT" : "POST";
 
-      await fetch(url, {
+      const response = await fetch(url, {
         method,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          ...formData,
-          price: parseFloat(formData.price),
-          discount_price: formData.discount_price
-            ? parseFloat(formData.discount_price)
+          ...values,
+          price: parseFloat(values.price),
+          discount_price: values.discount_price
+            ? parseFloat(values.discount_price)
             : null,
-          stock: parseInt(formData.stock),
-          category_id: parseInt(formData.category_id),
+          stock: parseInt(values.stock),
+          category_id: parseInt(values.category_id),
         }),
       });
+      if (!response.ok) {
+        throw new Error("Failed to save product");
+      }
 
+      dmlToast.success({
+        title: editingProduct
+          ? "Product updated successfully"
+          : "Product added successfully",
+      });
       handlers.close();
       fetchProducts();
     } catch (error) {
       console.error("Error saving product:", error);
+      dmlToast.error({
+        title: editingProduct
+          ? "Failed to update product"
+          : "Failed to add product",
+      });
     }
   };
 
@@ -182,14 +200,6 @@ export default function AdminProductsPage() {
     [],
   );
 
-  if (loading) {
-    return (
-      <Container size="xl">
-        <Text>Loading...</Text>
-      </Container>
-    );
-  }
-
   return (
     <Container size="xl">
       <Group justify="space-between" mb="xl">
@@ -224,7 +234,6 @@ export default function AdminProductsPage() {
         formData={formData}
         onClose={handlers.close}
         onSubmit={handleSubmit}
-        setFormData={setFormData}
       />
     </Container>
   );

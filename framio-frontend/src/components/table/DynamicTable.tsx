@@ -114,8 +114,9 @@ const DynamicTable = <T extends Record<string, any>>({
               return (
                 <Table.Th
                   key={column.id}
+                  align={column.align}
                   className={column.headerClassName}
-                  style={column.headerStyle}
+                  style={{ textAlign: column.align, ...column.headerStyle }}
                 >
                   {headerContent}
                 </Table.Th>
@@ -140,7 +141,7 @@ const DynamicTable = <T extends Record<string, any>>({
                         key={`${column.id}-${index}`}
                         align={column.align}
                         className={column.className}
-                        style={column.style}
+                        style={{ textAlign: column.align, ...column.style }}
                       >
                         {renderCell(item, column.accessor)}
                       </Table.Td>

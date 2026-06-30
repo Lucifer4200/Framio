@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.4.0",
     "@mantine/core": "^7.17.8",
     "@mantine/dates": "^7.17.8",
     "@mantine/hooks": "^7.17.8",
@@ -21,7 +22,9 @@
     "next": "^16.2.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwind-merge": "^2.0.0"
+    "react-hook-form": "^7.80.0",
+    "tailwind-merge": "^2.0.0",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

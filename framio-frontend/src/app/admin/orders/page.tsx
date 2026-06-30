@@ -1,13 +1,14 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { Container, Title, Text, Button, Badge } from '@mantine/core';
+import { Container, Title, Button, Badge } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import DynamicTable from '@/components/table/DynamicTable';
 import { IconEye } from '@tabler/icons-react';
-import OrderModal from '../components/Order';
+import OrderModal from '../common/components/Order';
 import { API_URL } from '../../../services/api';
 import { formatCurrency } from '../../../utils/format';
+import dmlToast from '../../../common/config/toaster.config';
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -42,21 +43,26 @@ export default function AdminOrdersPage() {
     handlers.open();
   };
 
-  const handleStatusUpdate = async () => {
+  const handleStatusUpdate = async (nextStatus = status) => {
     try {
       const token = localStorage.getItem('token');
-      await fetch(`${API_URL}/orders/${selectedOrder.id}/status`, {
+      const response = await fetch(`${API_URL}/orders/${selectedOrder.id}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ status }),
+        body: JSON.stringify({ status: nextStatus }),
       });
+      if (!response.ok) {
+        throw new Error('Failed to update order status');
+      }
+      dmlToast.success({ title: 'Order status updated successfully' });
       handlers.close();
       fetchOrders();
     } catch (error) {
       console.error('Error updating order status:', error);
+      dmlToast.error({ title: 'Failed to update order status' });
     }
   };
 
@@ -82,10 +88,6 @@ export default function AdminOrdersPage() {
     { id: 'actions', label: 'Actions', accessor: (o: any) => <Button size="xs" variant="light" onClick={() => handleView(o)}><IconEye size={14} /></Button>, align: 'center' as const },
   // eslint-disable-next-line react-hooks/exhaustive-deps
   ], []);
-
-  if (loading) {
-    return <Container size="xl"><Text>Loading...</Text></Container>;
-  }
 
   return (
     <Container size="xl">

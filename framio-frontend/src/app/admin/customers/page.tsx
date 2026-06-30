@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { Container, Title, Text, Card, Table } from '@mantine/core';
+import { Container, Title, Text } from '@mantine/core';
 import DynamicTable from '@/components/table/DynamicTable';
 import { API_URL } from '../../../services/api';
 import { formatCurrency } from '../../../utils/format';
@@ -38,10 +38,6 @@ export default function AdminCustomersPage() {
     { id: 'total_spent', label: 'Total Spent', accessor: (c: any) => `$${formatCurrency(c.total_spent)}`, align: 'right' as const },
     { id: 'status', label: 'Status', accessor: (c: any) => <Text size="xs" c={c.status === 'active' ? 'green' : 'red'}>{c.status}</Text>, align: 'left' as const },
   ], []);
-
-  if (loading) {
-    return <Container size="xl"><Text>Loading...</Text></Container>;
-  }
 
   return (
     <Container size="xl">

@@ -34,7 +34,11 @@ const Th = ({ children, sortBy, existingSort, sortDir, onSort, disabled = false,
   const justify = align === "right" ? "end" : align === "center" ? "center" : "start";
 
   return (
-    <Table.Th className={className} style={style}>
+    <Table.Th
+      align={align}
+      className={className}
+      style={{ textAlign: align, ...style }}
+    >
       <UnstyledButton onClick={() => setSorting(sortBy)} disabled={disabled} className="w-full">
         <Group justify={justify} gap={"4px"}>
           <Text
